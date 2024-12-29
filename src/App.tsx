@@ -1,4 +1,6 @@
+import { CtaButton } from "./components/CtaButton";
 import { HeaderClient } from "./components/HeaderClient";
+import { ProductCatalogCard } from "./components/ProductCatalogCard";
 import { SearchInput } from "./components/SearchInput";
 
 function App() {
@@ -6,6 +8,8 @@ function App() {
     <>
       <HeaderClient />
       <SearchInput />
+      <ProductCatalogCard/>
+      <CtaButton/>
     </>
   );
 }

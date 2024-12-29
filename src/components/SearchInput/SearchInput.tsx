@@ -4,7 +4,8 @@ const SearchInputContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 60%;
+  margin: 0 auto;
 
   span {
     padding: 6px;
