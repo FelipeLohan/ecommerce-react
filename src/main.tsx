@@ -19,7 +19,7 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
   
-  background-color: #E8EFFF;
+  background-color: #E8E8E8;
   box-sizing: border-box;
 }
 
