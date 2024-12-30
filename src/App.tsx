@@ -7,12 +7,13 @@ import { LoginCard } from "./components/LoginCard";
 import { ProductCatalogCard } from "./components/ProductCatalogCard";
 import { ProductDetailsCard } from "./components/ProductDetailsCard";
 import { SearchInput } from "./components/SearchInput";
-
+import { ProductDetailsInCart } from "./components/ProductDetailInCart";
 
 function App() {
   return (
     <>
       <HeaderClient />
+      <ProductDetailsInCart />
     </>
   );
 }
