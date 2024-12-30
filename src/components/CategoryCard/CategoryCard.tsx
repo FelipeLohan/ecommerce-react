@@ -5,7 +5,7 @@ const CategoryCardContainer = styled.span`
   color: #fff;
   background-color: #636363;
   border-radius: 8px;
-  font-size: 2vmin;
+  font-size: 1.7vmin;
 `
 
 const CategoryCard = () => {

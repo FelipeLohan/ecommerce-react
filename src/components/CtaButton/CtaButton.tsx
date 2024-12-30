@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
 const ButtonContainer = styled.div`
-  button{
+
+
+  button {
     padding: 16px 5%;
-    background-color: #3483FA;
-    color: #FFFFFF;
+    background-color: #3483fa;
+    color: #ffffff;
     border-radius: 12px;
-    border: 1px solid #3483FA;
-    font-size: 2.2vmin
+    border: 1px solid #3483fa;
+    font-size: 2.2vmin;
   }
 `;
 
