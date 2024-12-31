@@ -11,6 +11,7 @@ const ProductDetailsCardContainer = styled.section`
   padding: 40px 20px;
   width: 90%;
   margin: 0 auto;
+  margin-top: 40px;
   border-radius: 12px;
 `
 

@@ -10,6 +10,7 @@ const ButtonContainer = styled.div`
     border-radius: 12px;
     border: 1px solid #3483fa;
     font-size: 2.2vmin;
+    cursor: pointer;
   }
 `;
 

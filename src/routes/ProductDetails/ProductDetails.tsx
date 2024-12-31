@@ -4,9 +4,9 @@ import { ProductDetailsCard } from "../../components/ProductDetailsCard";
 import { CtaButton } from "../../components/CtaButton";
 
 const CtaButtonContainer = styled.div`
-margin-top: 20px;
 width: 90%;
 margin: 0 auto;
+margin-top: 20px;
 display: flex;
 flex-direction: column;
 gap: 20px;
