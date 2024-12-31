@@ -12,7 +12,7 @@ const CtaLoadMoreContainer = styled.div`
     color: #3483FA;
     border: 1px solid #3483FA;
     background-color: #E8E8E8;
-    border-radius: 12px;
+    border-radius: 8px;
     cursor: pointer;
   }
 `;

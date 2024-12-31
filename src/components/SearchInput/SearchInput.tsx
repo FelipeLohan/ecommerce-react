@@ -1,37 +1,37 @@
 import styled from "styled-components";
 
-const SearchInputContainer = styled.div`
+const SearchInputContainer = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 90%;
   margin: 0 auto;
 
-  span {
-    padding: 6px;
-    background-color: #D9D9D9;
+  button {
+    padding: 2vmin;
+    background-color: #d9d9d9;
+    border: none;
   }
-  
-  input{
-    padding: 7px;
+
+  input {
+    padding: 2vmin;
     width: 100%;
     background-color: #fff;
     outline: none;
-    border: 1px solid #d9d9d9
+    border: 1px solid #d9d9d9;
   }
-`
-
+`;
 
 const SearchInput = () => {
-  return(
+  return (
     <>
       <SearchInputContainer>
-        <span>🔎</span>
-        <input type="text" placeholder="Nome do produto" />
-        <span>X</span>
+          <button type="submit">🔎</button>
+          <input type="text" placeholder="Nome do produto" />
+          <button type="reset">X</button>
       </SearchInputContainer>
     </>
-  )
-}
+  );
+};
 
-export { SearchInput }
+export { SearchInput };

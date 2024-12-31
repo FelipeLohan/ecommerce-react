@@ -9,12 +9,14 @@ const ProductCatalogCardContainer = styled.div`
   gap: 20px;
   padding: 40px;
   background-color: #fff;
-  width: 15%;
+  width: 100%;
   border-radius: 8px;
 `;
 
 const ImageCardContainer = styled.div`
   width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 
 const InfoCardContainer = styled.div`
