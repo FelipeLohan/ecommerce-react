@@ -8,11 +8,15 @@ const CategoryCardContainer = styled.span`
   font-size: 1.7vmin;
 `
 
-const CategoryCard = () => {
+type Props = {
+  name: string;
+}
+
+const CategoryCard = ({name}: Props) => {
   return (
     <>
       <CategoryCardContainer>
-        Eletrônicos
+        {name}
       </CategoryCardContainer>
     </>
   )

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import NotebookProductImg from '../../assets/NotebookProductImg.png'
 import { CategoryCard } from '../CategoryCard'
+import { ProductDTO } from '../../models/product'
 
 const ProductDetailsCardContainer = styled.section`
   display: flex;
@@ -49,21 +49,28 @@ const ProductCardCategoryContainer = styled.div`
   width: 100%;
 `
 
-const ProductDetailsCard = () => {
+type Props = {
+  product: ProductDTO;
+}
+
+
+
+const ProductDetailsCard = ({product}: Props) => {
   return(
     <>
     <ProductDetailsCardContainer>
       <ProductImageContainer>
-        <img src={NotebookProductImg} />
+        <img src={product.imgUrl} />
       </ProductImageContainer>
       <ProductInfoContainer>
-        <h3>R$5000,00</h3>
-        <h4>Computador Gamer XT</h4>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error deserunt hic incidunt repudiandae saepe ipsa voluptate corporis reiciendis, quasi quia! Iure illo qui nostrum omnis veniam perspiciatis obcaecati repellat modi!</p>
+        <h3>{product.price}</h3>
+        <h4>{product.name}</h4>
+        <p>{product.description}</p>
       </ProductInfoContainer>
       <ProductCardCategoryContainer>
-        <CategoryCard/>
-        <CategoryCard/>
+        {product.categories.map(e => {
+          return <CategoryCard key={e.name} name={e.name} />
+        })}
       </ProductCardCategoryContainer>
     </ProductDetailsCardContainer>
     </>
