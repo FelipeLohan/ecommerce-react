@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import NotebookProductImg from "../../assets/NotebookProductImg.png";
+
+import { ProductDTO } from "../../models/product";
 
 const ProductCatalogCardContainer = styled.div`
   display: flex;
@@ -31,17 +32,21 @@ const InfoCardContainer = styled.div`
     }
 `
 
-const ProductCatalogCard = () => {
+type Props = {
+  product: ProductDTO;
+}
+
+const ProductCatalogCard = ({product}: Props) => {
   return (
     <>
       <ProductCatalogCardContainer>
         <ImageCardContainer>
-          <img src={NotebookProductImg} />
+          <img src={product.imgUrl} />
         </ImageCardContainer>
         <span></span>
         <InfoCardContainer>
-          <h3>R$5000,00</h3>
-          <h4>Computador Gamer XT</h4>
+          <h3>{product.price}</h3>
+          <h4>{product.name}</h4>
         </InfoCardContainer>
       </ProductCatalogCardContainer>
     </>

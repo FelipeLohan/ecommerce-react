@@ -3,6 +3,7 @@ import { HeaderClient } from "../../components/HeaderClient";
 import { SearchInput } from "../../components/SearchInput";
 import { ProductCatalogCard } from "../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../components/CtaLoadMore";
+import { ProductDTO } from "../../models/product";
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
@@ -22,6 +23,26 @@ const CtaLoadMoreContainerMargin = styled.div`
   margin-top: 20px;
 `;
 
+const product: ProductDTO = {
+  id: 1,
+  name: "SmartTV Samsung 4k",
+  description:
+    "Smart TV da Samsung modelo 4k, 120hz, com 48 polegadas de imagem",
+  price: 2900,
+  imgUrl:
+    "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/refs/heads/master/backend/img/2-big.jpg",
+  categories: [
+    {
+      id: 1,
+      name: "Eletrônicos",
+    },
+    {
+      id: 2,
+      name: "Computadores",
+    },
+  ],
+};
+
 const Catalog = () => {
   return (
     <>
@@ -30,17 +51,17 @@ const Catalog = () => {
         <SearchInput />
       </SearchInputContainerMargin>
       <ProductsCardsGridContainer>
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
-        <ProductCatalogCard />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
+        <ProductCatalogCard product={product} />
       </ProductsCardsGridContainer>
       <CtaLoadMoreContainerMargin>
         <CtaLoadMore />
