@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { HeaderClient } from "../../components/HeaderClient";
-import { SearchInput } from "../../components/SearchInput";
-import { ProductCatalogCard } from "../../components/ProductCatalogCard";
-import { CtaLoadMore } from "../../components/CtaLoadMore";
-import { ProductDTO } from "../../models/product";
+import { SearchInput } from "../../../components/SearchInput";
+import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
+import { CtaLoadMore } from "../../../components/CtaLoadMore";
+import { ProductDTO } from "../../../models/product";
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
@@ -46,7 +45,6 @@ const product: ProductDTO = {
 const Catalog = () => {
   return (
     <>
-      <HeaderClient />
       <SearchInputContainerMargin>
         <SearchInput />
       </SearchInputContainerMargin>
