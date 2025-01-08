@@ -27,12 +27,15 @@ const button: Button[] = [
   },
 ];
 
+
+
+const ProductDetails = () => {
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const params = useParams()
 
 const product = productService.findById(Number(params.productId));
 
-const ProductDetails = () => {
   return (
     <>
       {
