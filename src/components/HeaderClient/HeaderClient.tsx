@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import CartIcon from '../../assets/CartIcon.svg';
+import CartIcon from "../../assets/CartIcon.svg";
+import { Link } from "react-router-dom";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -7,31 +8,45 @@ const HeaderClientContainer = styled.header`
   align-items: center;
   padding: 40px;
 
-  background-color: #FFE500 ;
+  background-color: #ffe500;
   color: #636363;
-`
+
+  h1 {
+    color: #636363;
+  }
+`;
 
 const LoginCartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 20px;
-`
+
+  a {
+    color: #636363;
+  }
+`;
 
 const HeaderClient = () => {
   return (
     <>
-    <HeaderClientContainer>
-      <div>
-        <h1>Ecommerce</h1>
-      </div>
-      <LoginCartContainer>
-        <img src={CartIcon} />
-        <p>Entrar</p>
-      </LoginCartContainer>
-    </HeaderClientContainer>
+      <HeaderClientContainer>
+        <Link to="/">
+          <div>
+            <h1>Ecommerce</h1>
+          </div>
+        </Link>
+        <LoginCartContainer>
+          <Link to="/cart">
+            <img src={CartIcon} />
+          </Link>
+          <Link to="/login">
+            Entrar
+          </Link>
+        </LoginCartContainer>
+      </HeaderClientContainer>
     </>
-  )
-}
+  );
+};
 
-export { HeaderClient }
+export { HeaderClient };

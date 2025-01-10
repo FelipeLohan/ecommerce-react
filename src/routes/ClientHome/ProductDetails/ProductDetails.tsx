@@ -4,6 +4,7 @@ import { CtaButton } from "../../../components/CtaButton";
 import * as productService from '../../../services/product-service.ts'
 import { Button } from "../../../models/button";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CtaButtonContainer = styled.div`
   width: 90%;
@@ -43,9 +44,15 @@ const product = productService.findById(Number(params.productId));
         <ProductDetailsCard product={product} />
       }
       <CtaButtonContainer>
-        {button.map((e) => (
-          <CtaButton key={e.text} button={e} />
-        ))}
+      {button.map((e) =>
+          e.text === "Início" ? (
+            <Link to="/" key={e.text}>
+              <CtaButton button={e} />
+            </Link>
+          ) : (
+            <CtaButton key={e.text} button={e} />
+          )
+        )}
       </CtaButtonContainer>
     </>
   );
