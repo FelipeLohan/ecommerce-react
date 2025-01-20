@@ -3,6 +3,7 @@ import { SearchInput } from "../../../components/SearchInput";
 import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
 import * as productService from "../../../services/product-service.ts";
+import { Link } from "react-router-dom";
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
@@ -29,11 +30,11 @@ const Catalog = () => {
         <SearchInput />
       </SearchInputContainerMargin>
       <ProductsCardsGridContainer>
-        {
-          productService.findAll().map(
-            product => <ProductCatalogCard key={product.id} product={product} />
-          )
-        }
+        {productService.findAll().map((product) => (
+          <Link to={`/product-details/${product.id}`}>
+            <ProductCatalogCard key={product.id} product={product} />
+          </Link>
+        ))}
       </ProductsCardsGridContainer>
       <CtaLoadMoreContainerMargin>
         <CtaLoadMore />
