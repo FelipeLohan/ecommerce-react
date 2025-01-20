@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { ProductDetailsCard } from "../../../components/ProductDetailsCard";
 import { CtaButton } from "../../../components/CtaButton";
-import * as productService from '../../../services/product-service.ts'
 import { Button } from "../../../models/button";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ProductDTO } from "../../../models/product.ts";
+import axios from "axios";
 
 const CtaButtonContainer = styled.div`
   width: 90%;
@@ -28,22 +30,23 @@ const button: Button[] = [
   },
 ];
 
-
-
 const ProductDetails = () => {
+  const params = useParams();
 
-const params = useParams()
+  const [product, setProduct] = useState<ProductDTO>();
 
-const product = productService.findById(Number(params.productId));
+  useEffect(() => {
+    axios.get("http://localhost:8080/products/1").then((response) => {
+      console.log(response.data);
+      setProduct(response.data);
+    });
+  }, []);
 
   return (
     <>
-      {
-        product &&
-        <ProductDetailsCard product={product} />
-      }
+      {product && <ProductDetailsCard product={product} />}
       <CtaButtonContainer>
-      {button.map((e) =>
+        {button.map((e) =>
           e.text === "Início" ? (
             <Link to="/" key={e.text}>
               <CtaButton button={e} />
