@@ -4,6 +4,9 @@ import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
 import * as productService from "../../../services/product-service.ts";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ProductDTO } from "../../../models/product.ts";
+import axios from "axios";
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
@@ -24,13 +27,21 @@ const CtaLoadMoreContainerMargin = styled.div`
 `;
 
 const Catalog = () => {
+  const [products, setProducts] = useState<ProductDTO[]>([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/products?size=12").then((response) => {
+      setProducts(response.data.content);
+    });
+  }, []);
+
   return (
     <>
       <SearchInputContainerMargin>
         <SearchInput />
       </SearchInputContainerMargin>
       <ProductsCardsGridContainer>
-        {productService.findAll().map((product) => (
+        {products.map((product) => (
           <Link to={`/product-details/${product.id}`}>
             <ProductCatalogCard key={product.id} product={product} />
           </Link>
