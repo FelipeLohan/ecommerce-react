@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ProductDetailsCard } from "../../../components/ProductDetailsCard";
 import { CtaButton } from "../../../components/CtaButton";
 import { Button } from "../../../models/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
@@ -33,12 +33,17 @@ const button: Button[] = [
 const ProductDetails = () => {
   const params = useParams();
 
+  const navigate = useNavigate()
+
   const [product, setProduct] = useState<ProductDTO>();
 
   useEffect(() => {
-    productService.findById(Number(params.productId)).then((response) => {
+    productService.findById(Number(params.productId))
+    .then((response) => {
       setProduct(response.data);
-    });
+    }).catch(() => {
+      navigate("/")
+    })
   }, []);
 
   return (
