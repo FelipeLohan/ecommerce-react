@@ -1,9 +1,82 @@
-const Cart = () => {
-  return(
-    <>
-    
-    </>
-  )
-}
+import styled from "styled-components";
+import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
+import { CtaButton } from "../../../components/CtaButton";
+import { Button } from "../../../models/button";
+import { Link } from "react-router-dom";
 
-export { Cart }
+
+const ProductDetailsInCartContainer = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+`;
+
+const ProductsTotalPrice = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #c2c2c2;
+  padding: 20px;
+  font-size: 2.5vmin;
+
+
+  span {
+    color: #0caf1d;
+    align-items: center;
+  }
+`;
+
+const CtaButtonContainer = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const button: Button[] = [
+  {
+    primaryColor: "#3483fa",
+    secondaryColor: "#fff",
+    text: "Finalizar pedido",
+  },
+  {
+    primaryColor: "#fff",
+    secondaryColor: "#3483fa",
+    text: "Continuar comprando",
+  },
+];
+
+
+const Cart = () => {
+  return (
+    <>
+      <ProductDetailsInCartContainer>
+        <ProductDetailsInCart />
+        <ProductDetailsInCart />
+        <ProductsTotalPrice>
+          <p>
+            Total: <span>R$10000,00</span>
+          </p>
+        </ProductsTotalPrice>
+      </ProductDetailsInCartContainer>
+      <CtaButtonContainer>
+              {button.map((e) =>
+                e.text === "Finalizar pedido" ? (
+                  <Link to="/" key={e.text}>
+                    <CtaButton button={e} />
+                  </Link>
+                ) : (
+                  <CtaButton key={e.text} button={e} />
+                )
+              )}
+            </CtaButtonContainer>
+    </>
+  );
+};
+
+export { Cart };

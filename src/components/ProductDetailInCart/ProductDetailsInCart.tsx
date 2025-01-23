@@ -8,9 +8,8 @@ const ProductDetailsInCartContainer = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #c2c2c2;
   padding: 20px;
-  border-radius: 12px 12px 0px 0px;
 
-  img{
+  img {
     width: 40%;
   }
 `;
@@ -26,6 +25,19 @@ const ProductCartInfo = styled.div`
   p {
     font-size: 2vmin;
   }
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  div span {
+    padding: 5px;
+    border: 1px solid #000;
+    border-radius: 12px;
+    cursor: pointer;
+  }
 `;
 
 const ProductCartPrice = styled.div`
@@ -38,7 +50,7 @@ const ProductCartPrice = styled.div`
 const ProductCartInfoImageContainer = styled.div`
   display: flex;
   gap: 20px;
-`
+`;
 
 const ProductDetailsInCart = () => {
   return (
@@ -48,7 +60,11 @@ const ProductDetailsInCart = () => {
           <img src={NotebookProductImg} alt="NotebookProduct" />
           <ProductCartInfo>
             <h3>Computador Gamer XT</h3>
-            <p>1</p>
+            <div>
+              <span>-</span>
+              <p>1</p>
+              <span>+</span>
+            </div>
           </ProductCartInfo>
         </ProductCartInfoImageContainer>
         <ProductCartPrice>
