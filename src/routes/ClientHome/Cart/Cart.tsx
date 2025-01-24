@@ -4,7 +4,6 @@ import { CtaButton } from "../../../components/CtaButton";
 import { Button } from "../../../models/button";
 import { Link } from "react-router-dom";
 
-
 const ProductDetailsInCartContainer = styled.div`
   width: 90%;
   margin: 0 auto;
@@ -21,7 +20,6 @@ const ProductsTotalPrice = styled.div`
   border-bottom: 1px solid #c2c2c2;
   padding: 20px;
   font-size: 2.5vmin;
-
 
   span {
     color: #0caf1d;
@@ -51,13 +49,35 @@ const button: Button[] = [
   },
 ];
 
+const cartItem = 
+{
+  items: [
+    {
+      productId: 4,
+      quantity: 1,
+      name: "PC Gamer",
+      price: 1200,
+      imgUrl:
+        "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg",
+    },
+    {
+      productId: 5,
+      quantity: 2,
+      name: "Rails for Dummies",
+      price: 100.99,
+      imgUrl:
+        "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg",
+    },
+  ],
+};
 
 const Cart = () => {
   return (
     <>
       <ProductDetailsInCartContainer>
-        <ProductDetailsInCart />
-        <ProductDetailsInCart />
+      {
+        cartItem.items.map(e => <ProductDetailsInCart key={e.productId} quantity={e.quantity} name={e.name} price={e.price} imgUrl={e.imgUrl} />)
+      }
         <ProductsTotalPrice>
           <p>
             Total: <span>R$10000,00</span>
@@ -65,16 +85,16 @@ const Cart = () => {
         </ProductsTotalPrice>
       </ProductDetailsInCartContainer>
       <CtaButtonContainer>
-              {button.map((e) =>
-                e.text === "Finalizar pedido" ? (
-                  <Link to="/" key={e.text}>
-                    <CtaButton button={e} />
-                  </Link>
-                ) : (
-                  <CtaButton key={e.text} button={e} />
-                )
-              )}
-            </CtaButtonContainer>
+        {button.map((e) =>
+          e.text === "Finalizar pedido" ? (
+            <Link to="/" key={e.text}>
+              <CtaButton button={e} />
+            </Link>
+          ) : (
+            <CtaButton key={e.text} button={e} />
+          )
+        )}
+      </CtaButtonContainer>
     </>
   );
 };

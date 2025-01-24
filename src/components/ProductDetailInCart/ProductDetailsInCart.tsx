@@ -52,23 +52,30 @@ const ProductCartInfoImageContainer = styled.div`
   gap: 20px;
 `;
 
-const ProductDetailsInCart = () => {
+type Props = {
+  quantity: number,
+  name: string,
+  price: number,
+  imgUrl: string
+}
+
+const ProductDetailsInCart = ({quantity, name, price, imgUrl}: Props) => {
   return (
     <>
       <ProductDetailsInCartContainer>
         <ProductCartInfoImageContainer>
-          <img src={NotebookProductImg} alt="NotebookProduct" />
+          <img src={imgUrl} alt={name} />
           <ProductCartInfo>
-            <h3>Computador Gamer XT</h3>
+            <h3>{name}</h3>
             <div>
               <span>-</span>
-              <p>1</p>
+              <p>{quantity}</p>
               <span>+</span>
             </div>
           </ProductCartInfo>
         </ProductCartInfoImageContainer>
         <ProductCartPrice>
-          <p>R$ 5000,00</p>
+          <p>{price.toFixed(2)}</p>
         </ProductCartPrice>
       </ProductDetailsInCartContainer>
     </>
