@@ -75,7 +75,7 @@ const ProductDetailsInCart = ({quantity, name, price, imgUrl}: Props) => {
           </ProductCartInfo>
         </ProductCartInfoImageContainer>
         <ProductCartPrice>
-          <p>{price.toFixed(2)}</p>
+          <p>{(price * quantity).toFixed(2)}</p>
         </ProductCartPrice>
       </ProductDetailsInCartContainer>
     </>
