@@ -3,7 +3,7 @@ import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { Button } from "../../../models/button";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as cartService from "../../../services/cart-service"
 import { OrderDTO, OrderItemDTO } from "../../../models/order";
 
@@ -60,43 +60,15 @@ const item2 : OrderItemDTO = new OrderItemDTO(
   5, 2, "Rails for Dummies", 100.99, "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg"
 )
 
-const cartItem = 
-{
-  items: [
-    {
-      productId: 4,
-      quantity: 1,
-      name: "PC Gamer",
-      price: 1200,
-      imgUrl:
-        "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/4-big.jpg",
-    },
-    {
-      productId: 5,
-      quantity: 2,
-      name: "Rails for Dummies",
-      price: 100.99,
-      imgUrl:
-        "https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/5-big.jpg",
-    },
-  ],
-};
-
 const Cart = () => {
 
-  const cart : OrderDTO = new OrderDTO();
-  
-  useEffect(() => {
-    cart.items.push(item1)
-    cart.items.push(item2)
-    cartService.saveCart(cart)
-  }, [])
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart())
 
   return (
     <>
       <ProductDetailsInCartContainer>
       {
-        cartItem.items.map(e => <ProductDetailsInCart key={e.productId} quantity={e.quantity} name={e.name} price={e.price} imgUrl={e.imgUrl} />)
+        cart.items.map(e => <ProductDetailsInCart key={e.productId} quantity={e.quantity} name={e.name} price={e.price} imgUrl={e.imgUrl} />)
       }
         <ProductsTotalPrice>
           <p>
