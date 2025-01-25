@@ -50,6 +50,11 @@ const Cart = () => {
     setCart(cartService.getCart())
   }
 
+    function handleIncrease(productId: number){
+      cartService.increaseItem(productId)
+      setCart(cartService.getCart())
+    }
+
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
 
@@ -70,6 +75,7 @@ const Cart = () => {
                 name={e.name}
                 price={e.price}
                 imgUrl={e.imgUrl}
+                handleIncreaseClick={() => handleIncrease(e.productId)}
               />
             ))}
             <ProductsTotalPrice>

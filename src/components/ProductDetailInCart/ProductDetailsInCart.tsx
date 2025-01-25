@@ -55,10 +55,11 @@ type Props = {
   quantity: number,
   name: string,
   price: number,
-  imgUrl: string
+  imgUrl: string,
+  handleIncreaseClick: any
 }
 
-const ProductDetailsInCart = ({quantity, name, price, imgUrl}: Props) => {
+const ProductDetailsInCart = ({quantity, name, price, imgUrl, handleIncreaseClick}: Props) => {
   return (
     <>
       <ProductDetailsInCartContainer>
@@ -69,7 +70,7 @@ const ProductDetailsInCart = ({quantity, name, price, imgUrl}: Props) => {
             <div>
               <span>-</span>
               <p>{quantity}</p>
-              <span>+</span>
+              <span onClick={handleIncreaseClick}>+</span>
             </div>
           </ProductCartInfo>
         </ProductCartInfoImageContainer>
