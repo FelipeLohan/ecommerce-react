@@ -27,6 +27,7 @@ const ProductDetails = () => {
   function handleBuyProduct(){
     if(product){
       cartService.addProduct(product)
+      navigate("/cart")
     }
   }
 
