@@ -55,6 +55,11 @@ const Cart = () => {
       setCart(cartService.getCart())
     }
 
+    function handleDecrease(productId: number){
+      cartService.decreaseItem(productId)
+      setCart(cartService.getCart())
+    }
+
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
 
@@ -76,6 +81,7 @@ const Cart = () => {
                 price={e.price}
                 imgUrl={e.imgUrl}
                 handleIncreaseClick={() => handleIncrease(e.productId)}
+                handleDecreaseClick={() => handleDecrease(e.productId)}
               />
             ))}
             <ProductsTotalPrice>
