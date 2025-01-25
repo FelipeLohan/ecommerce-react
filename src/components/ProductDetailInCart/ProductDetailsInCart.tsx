@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import NotebookProductImg from "../../assets/NotebookProductImg.png";
 
 const ProductDetailsInCartContainer = styled.div`
   display: flex;

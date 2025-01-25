@@ -46,18 +46,34 @@ const Cart = () => {
   }
 
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart())
-
+ 
   return (
     <>
       <ProductDetailsInCartContainer>
-      {
-        cart.items.map(e => <ProductDetailsInCart key={e.productId} quantity={e.quantity} name={e.name} price={e.price} imgUrl={e.imgUrl} />)
-      }
-        <ProductsTotalPrice>
-          <p>
-            Total: <span>R$10000,00</span>
-          </p>
-        </ProductsTotalPrice>
+        {
+          cart.items.length === 0 
+          ? (
+            <div><h2>Carrinho Vazio!</h2></div>
+          ) 
+          : (
+            <>
+              {cart.items.map(e => (
+                <ProductDetailsInCart 
+                  key={e.productId} 
+                  quantity={e.quantity} 
+                  name={e.name} 
+                  price={e.price} 
+                  imgUrl={e.imgUrl} 
+                />
+              ))}
+              <ProductsTotalPrice>
+                <p>
+                  Total: <span>R$ {cart.total.toFixed(2)}</span>
+                </p>
+              </ProductsTotalPrice>
+            </>
+          )
+        }
       </ProductDetailsInCartContainer>
       <CtaButtonContainer>
         <CtaButton text="Finalizar pedido" primaryColor="#3483FA" secondaryColor="#fff" handleClick={null} />
