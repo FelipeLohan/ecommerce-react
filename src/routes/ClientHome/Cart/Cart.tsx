@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import * as cartService from "../../../services/cart-service"
+import { useEffect, useState } from "react";
+import * as cartService from "../../../services/cart-service";
 import { OrderDTO } from "../../../models/order";
 
 const ProductDetailsInCartContainer = styled.div`
@@ -42,42 +42,63 @@ const Cart = () => {
   const navigate = useNavigate();
 
   function handleWhileBuying() {
-    navigate("/")
+    navigate("/");
   }
 
-  const [cart, setCart] = useState<OrderDTO>(cartService.getCart())
- 
+  function handleClearCart(){
+    cartService.clearCart()
+    setCart(cartService.getCart())
+  }
+
+  const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
+
+
+
   return (
     <>
       <ProductDetailsInCartContainer>
-        {
-          cart.items.length === 0 
-          ? (
-            <div><h2>Carrinho Vazio!</h2></div>
-          ) 
-          : (
-            <>
-              {cart.items.map(e => (
-                <ProductDetailsInCart 
-                  key={e.productId} 
-                  quantity={e.quantity} 
-                  name={e.name} 
-                  price={e.price} 
-                  imgUrl={e.imgUrl} 
-                />
-              ))}
-              <ProductsTotalPrice>
-                <p>
-                  Total: <span>R$ {cart.total.toFixed(2)}</span>
-                </p>
-              </ProductsTotalPrice>
-            </>
-          )
-        }
+        {cart.items.length === 0 ? (
+          <div>
+            <h2>Carrinho Vazio!</h2>
+          </div>
+        ) : (
+          <>
+            {cart.items.map((e) => (
+              <ProductDetailsInCart
+                key={e.productId}
+                quantity={e.quantity}
+                name={e.name}
+                price={e.price}
+                imgUrl={e.imgUrl}
+              />
+            ))}
+            <ProductsTotalPrice>
+              <p>
+                Total: <span>R$ {cart.total.toFixed(2)}</span>
+              </p>
+            </ProductsTotalPrice>
+          </>
+        )}
       </ProductDetailsInCartContainer>
       <CtaButtonContainer>
-        <CtaButton text="Finalizar pedido" primaryColor="#3483FA" secondaryColor="#fff" handleClick={null} />
-      <CtaButton text="Continuar comprando" primaryColor="#fff" secondaryColor="#3483FA" handleClick={handleWhileBuying} />
+        <CtaButton
+          text="Finalizar pedido"
+          primaryColor="#3483FA"
+          secondaryColor="#fff"
+          handleClick={null}
+        />
+        <CtaButton
+          text="Continuar comprando"
+          primaryColor="#fff"
+          secondaryColor="#3483FA"
+          handleClick={handleWhileBuying}
+        />
+        <CtaButton
+        text="Limpar carrinho"
+        primaryColor="#fff"
+        secondaryColor="#3483FA"
+        handleClick={handleClearCart}
+        />
       </CtaButtonContainer>
     </>
   );
