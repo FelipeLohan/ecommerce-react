@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { ProductDetailsCard } from "../../../components/ProductDetailsCard";
 import { CtaButton } from "../../../components/CtaButton";
-import { Button } from "../../../models/button";
 import { useNavigate, useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
 import * as productService from "../../../services/product-service.ts";
+import * as cartService from "../../../services/cart-service.ts";
 
 const CtaButtonContainer = styled.div`
   width: 90%;
@@ -17,18 +16,6 @@ const CtaButtonContainer = styled.div`
   gap: 20px;
 `;
 
-const button: Button[] = [
-  {
-    primaryColor: "#3483fa",
-    secondaryColor: "#fff",
-    text: "Comprar",
-  },
-  {
-    primaryColor: "#fff",
-    secondaryColor: "#3483fa",
-    text: "Início",
-  },
-];
 
 const ProductDetails = () => {
   const params = useParams();
@@ -36,6 +23,16 @@ const ProductDetails = () => {
   const navigate = useNavigate()
 
   const [product, setProduct] = useState<ProductDTO>();
+
+  function handleBuyProduct(){
+    if(product){
+      cartService.addProduct(product)
+    }
+  }
+
+  function handleHomeClick(){
+    navigate("/")
+  }
 
   useEffect(() => {
     productService.findById(Number(params.productId))
@@ -50,15 +47,8 @@ const ProductDetails = () => {
     <>
       {product && <ProductDetailsCard product={product} />}
       <CtaButtonContainer>
-        {button.map((e) =>
-          e.text === "Início" ? (
-            <Link to="/" key={e.text}>
-              <CtaButton button={e} />
-            </Link>
-          ) : (
-            <CtaButton key={e.text} button={e} />
-          )
-        )}
+        <CtaButton text="Inicio" primaryColor="#fff" secondaryColor="#3483FA" handleClick={handleHomeClick} />
+        <CtaButton text="Comprar" primaryColor="#3483FA" secondaryColor="#fff" handleClick={handleBuyProduct} />
       </CtaButtonContainer>
     </>
   );

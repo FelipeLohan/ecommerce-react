@@ -1,21 +1,23 @@
 import styled from "styled-components";
-import { Button } from "../../models/button";
 
 
 
 type Props = {
-  button: Button;
+  text: string;
+  primaryColor: string;
+  secondaryColor: string;
+  handleClick: any;
 }
 
-const CtaButton = ({button}: Props) => {
+const CtaButton = ({text, primaryColor, secondaryColor, handleClick}: Props) => {
 
   const ButtonContainer = styled.div`
   button {
     padding: 16px 5%;
-    background-color: ${button.primaryColor};
-    color: ${button.secondaryColor};
+    background-color: ${primaryColor};
+    color: ${secondaryColor};
     border-radius: 12px;
-    border: 1px solid ${button.primaryColor};
+    border: 1px solid ${primaryColor};
     font-size: 2.2vmin;
     cursor: pointer;
   }
@@ -24,7 +26,7 @@ const CtaButton = ({button}: Props) => {
   return (
     <>
       <ButtonContainer>
-        <button>{button.text}</button>
+        <button onClick={handleClick} >{text}</button>
       </ButtonContainer>
     </>
   );
