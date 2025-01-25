@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import * as cartService from "../../../services/cart-service";
 import { OrderDTO } from "../../../models/order";
 
