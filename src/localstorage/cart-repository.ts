@@ -1,12 +1,13 @@
 import { OrderDTO } from "../models/order";
+import { CART_KEY } from "../utils/system";
 
 export function save(cart: OrderDTO){
   const str = JSON.stringify(cart)
-  localStorage.setItem("com.celestialcommerce/Cart", str);
+  localStorage.setItem(CART_KEY, str);
 }
 
 export function get() : OrderDTO {
-  const str = localStorage.getItem("com.celestialcommerce/Cart") || '{"items"=[]}'
+  const str = localStorage.getItem(CART_KEY) || '{"items"=[]}'
 
   return JSON.parse(str)
 }
