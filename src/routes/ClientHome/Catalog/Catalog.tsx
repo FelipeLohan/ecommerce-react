@@ -25,19 +25,27 @@ const CtaLoadMoreContainerMargin = styled.div`
   margin-top: 20px;
 `;
 
+type QueryParams = {
+  page: number;
+  name: string;
+}
+
 const Catalog = () => {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
-  const [productName, setProductName] = useState("")
+  const [queryParams, setQueryParam] = useState<QueryParams>({
+    page: 0,
+    name: ""
+  })
 
   useEffect(() => {
-    productService.findPageRequest(0, productName).then((response) => {
+    productService.findPageRequest(queryParams.page, queryParams.name).then((response) => {
       setProducts(response.data.content);
     });
-  }, [productName]);
+  }, [queryParams]);
 
   function handleSearch(searchText: string){
-    setProductName(searchText)
+    setQueryParam({...queryParams, name: searchText})
   }
 
   return (
