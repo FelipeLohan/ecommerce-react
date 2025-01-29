@@ -28,24 +28,35 @@ const CtaLoadMoreContainerMargin = styled.div`
 type QueryParams = {
   page: number;
   name: string;
-}
+};
 
 const Catalog = () => {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [queryParams, setQueryParam] = useState<QueryParams>({
     page: 0,
-    name: ""
-  })
+    name: "",
+  });
+
+  const [isLast, setIsLast] = useState(false);
 
   useEffect(() => {
-    productService.findPageRequest(queryParams.page, queryParams.name).then((response) => {
-      setProducts(response.data.content);
-    });
+    productService
+      .findPageRequest(queryParams.page, queryParams.name)
+      .then((response) => {
+        setIsLast(response.data.last);
+        const nextPage = response.data.content;
+        setProducts(products.concat(nextPage));
+      });
   }, [queryParams]);
 
-  function handleSearch(searchText: string){
-    setQueryParam({...queryParams, name: searchText})
+  function handleSearch(searchText: string) {
+    setProducts([]);
+    setQueryParam({ ...queryParams, page: 0, name: searchText });
+  }
+
+  function handleNextPage() {
+    setQueryParam({ ...queryParams, page: queryParams.page + 1 });
   }
 
   return (
@@ -60,9 +71,13 @@ const Catalog = () => {
           </Link>
         ))}
       </ProductsCardsGridContainer>
-      <CtaLoadMoreContainerMargin>
-        <CtaLoadMore />
-      </CtaLoadMoreContainerMargin>
+
+      { 
+        !isLast && (
+        <CtaLoadMoreContainerMargin onClick={handleNextPage}>
+          <CtaLoadMore />
+        </CtaLoadMoreContainerMargin>
+      )}
     </>
   );
 };
