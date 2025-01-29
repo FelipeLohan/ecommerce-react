@@ -28,16 +28,22 @@ const CtaLoadMoreContainerMargin = styled.div`
 const Catalog = () => {
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
+  const [productName, setProductName] = useState("")
+
   useEffect(() => {
-    productService.findPageRequest(0, "").then((response) => {
+    productService.findPageRequest(0, productName).then((response) => {
       setProducts(response.data.content);
     });
-  }, []);
+  }, [productName]);
+
+  function handleSearch(searchText: string){
+    setProductName(searchText)
+  }
 
   return (
     <>
       <SearchInputContainerMargin>
-        <SearchInput />
+        <SearchInput onSearch={handleSearch} />
       </SearchInputContainerMargin>
       <ProductsCardsGridContainer>
         {products.map((product) => (

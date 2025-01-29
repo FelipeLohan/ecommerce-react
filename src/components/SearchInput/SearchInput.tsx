@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
 import styled from "styled-components";
 
 const SearchInputContainer = styled.form`
@@ -11,6 +13,7 @@ const SearchInputContainer = styled.form`
     padding: 2vmin;
     background-color: #d9d9d9;
     border: none;
+    cursor: pointer;
   }
 
   input {
@@ -22,13 +25,35 @@ const SearchInputContainer = styled.form`
   }
 `;
 
-const SearchInput = () => {
+type Props = {
+  onSearch: Function;
+}
+
+const SearchInput = ({onSearch}: Props) => {
+
+  const [inputValue, setInputValue] = useState("");
+
+  function handleInputValue(e: any){
+    setInputValue(e.target.value)
+  }
+
+  function handleSubmit(e: any){
+    e.preventDefault()
+    onSearch(inputValue)
+  }
+
+  function handleReset(e: any){
+    e.preventDefault()
+    setInputValue("")
+    onSearch("")
+  }
+
   return (
     <>
-      <SearchInputContainer>
+      <SearchInputContainer onSubmit={handleSubmit}>
           <button type="submit">🔎</button>
-          <input type="text" placeholder="Nome do produto" />
-          <button type="reset">X</button>
+          <input onChange={handleInputValue} value={inputValue} type="text" placeholder="Nome do produto" />
+          <button onClick={handleReset} type="reset">X</button>
       </SearchInputContainer>
     </>
   );
