@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import CartIcon from "../../assets/CartIcon.svg";
 import { Link } from "react-router-dom";
+import { CartIcon } from "../CartIcon";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -38,11 +38,9 @@ const HeaderClient = () => {
         </Link>
         <LoginCartContainer>
           <Link to="/cart">
-            <img src={CartIcon} />
+            <CartIcon />
           </Link>
-          <Link to="/login">
-            Entrar
-          </Link>
+          <Link to="/login">Entrar</Link>
         </LoginCartContainer>
       </HeaderClientContainer>
     </>
