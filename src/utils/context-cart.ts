@@ -5,7 +5,7 @@ export type ContextCartQuantityType = {
   setContextCartQuantity: (contextCartQuantity: number) => void;
 }
 
-export const ContextCartCount = createContext<ContextCartQuantityType>({
+export const ContextCartQuantity = createContext<ContextCartQuantityType>({
   contextCartQuantity: 0,
   setContextCartQuantity: () => {}
 })

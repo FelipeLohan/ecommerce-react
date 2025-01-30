@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import * as cartService from "../../../services/cart-service";
 import { OrderDTO } from "../../../models/order";
+import { ContextCartQuantity } from "../../../utils/context-cart";
 
 const ProductDetailsInCartContainer = styled.div`
   width: 90%;
@@ -48,6 +49,7 @@ const Cart = () => {
   function handleClearCart(){
     cartService.clearCart()
     setCart(cartService.getCart())
+    setContextCartQuantity(cartService.getCart().items.length);
   }
 
     function handleIncrease(productId: number){
@@ -58,10 +60,12 @@ const Cart = () => {
     function handleDecrease(productId: number){
       cartService.decreaseItem(productId)
       setCart(cartService.getCart())
+      setContextCartQuantity(cartService.getCart().items.length);
     }
 
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
+  const { setContextCartQuantity } = useContext(ContextCartQuantity);
 
 
   return (

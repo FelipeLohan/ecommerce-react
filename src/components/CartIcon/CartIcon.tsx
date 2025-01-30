@@ -1,17 +1,17 @@
-import * as cartService from '../../services/cart-service.ts'
 import CartIconSvg from "../../assets/CartIcon.svg";
 import styled from "styled-components";
-import { useState } from "react";
+import { useContext } from "react";
+import { ContextCartQuantity } from "../../utils/context-cart.ts";
 
 const CartQuantity = styled.div`
   display: flex;
   justify-content: center;
   background-color: #ff0000;
-  border-radius: 50%;
   position: relative;
+  border-radius: 50%;
   bottom: 10px;
   left: 14px;
-  padding: 3px;
+  padding: 2px 4px;
   font-size: 12px;
   color: #fff;
 `;
@@ -20,15 +20,23 @@ const CartIconImage = styled.img`
   position: absolute;
 `;
 
+const CartIconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const CartIcon = () => {
-  const [cart, setCart] = useState(cartService.getCart());
+  const { contextCartQuantity } = useContext(ContextCartQuantity);
 
   return (
     <>
-      <div>
+      <CartIconContainer>
         <CartIconImage src={CartIconSvg} />
-        <CartQuantity>{cart.items.length}</CartQuantity>
-      </div>
+        {contextCartQuantity !== 0 && (
+          <CartQuantity>{contextCartQuantity}</CartQuantity>
+        )}
+      </CartIconContainer>
     </>
   );
 };
