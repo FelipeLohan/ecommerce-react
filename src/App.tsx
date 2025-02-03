@@ -5,6 +5,7 @@ import { ClientHome } from "./routes/ClientHome";
 import { Cart } from "./routes/ClientHome/Cart";
 import { useState } from "react";
 import { ContextCartQuantity } from "./utils/context-cart";
+import { Login } from "./routes/Login";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
@@ -24,6 +25,7 @@ function App() {
                 element={<ProductDetails />}
               />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
