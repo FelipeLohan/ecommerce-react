@@ -5,7 +5,7 @@ import { ClientHome } from "./routes/ClientHome";
 import { Cart } from "./routes/ClientHome/Cart";
 import { useState } from "react";
 import { ContextCartQuantity } from "./utils/context-cart";
-import { Login } from "./routes/Login";
+import { Login } from "./routes/ClientHome/Login";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);

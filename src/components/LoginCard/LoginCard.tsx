@@ -47,15 +47,19 @@ const LoginCardContainer = styled.div`
   }
 `;
 
-const LoginCard = () => {
+type Props = {
+  handleFormSubmit: Function,
+}
+
+const LoginCard = ({handleFormSubmit}: Props) => {
   return (
     <>
       <LoginCardContainer>
         <h2>Login</h2>
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <input placeholder="Email" />
           <input placeholder="Senha" />
-          <button>Entrar</button>
+          <button type="submit">Entrar</button>
         </form>
       </LoginCardContainer>
     </>
