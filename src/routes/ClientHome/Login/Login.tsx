@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { CredentialsDTO } from "../../../models/auth";
-import { loginRequest } from "../../../services/auth-service";
+
+import * as authService from "../../../services/auth-service.ts";
 
 const LoginCardContainer = styled.div`
   padding: 40px 20px;
@@ -63,7 +64,13 @@ const Login = () => {
 
   function handleFormSubmit(e: any){
     e.preventDefault()
-    loginRequest(formData)
+    authService.loginRequest(formData)
+      .then(response => {
+        console.log(response.data)
+      })
+      .catch(error => {
+        console.log("Erro no login", error)
+      })
   }
 
   function handleInputChange(e: any){
