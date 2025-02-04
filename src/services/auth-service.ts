@@ -8,5 +8,7 @@ export function loginRequest(loginData: CredentialsDTO){
     Authorization: "Basic " + window.btoa(CLIENT_ID + ":" + CLIENT_SECRET)
   }
 
-  console.log(headers)
+  
+
+  console.log(loginData)
 }

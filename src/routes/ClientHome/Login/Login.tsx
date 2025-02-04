@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { LoginCard } from "../../../components/LoginCard";
 import { useState } from "react";
 import { CredentialsDTO } from "../../../models/auth";
 import { loginRequest } from "../../../services/auth-service";
@@ -67,14 +66,21 @@ const Login = () => {
     loginRequest(formData)
   }
 
+  function handleInputChange(e: any){
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData({...formData, [name]: value})
+  }
+
   return (
     <>
       <LoginContainer>
       <LoginCardContainer>
         <h2>Login</h2>
         <form onSubmit={handleFormSubmit}>
-          <input placeholder="Email" type="text" name="username" value={formData.username} />
-          <input placeholder="Senha" type="password" name="password" value={formData.password} />
+          <input placeholder="Email" type="text" name="username" value={formData.username} onChange={handleInputChange} />
+          <input placeholder="Senha" type="password" name="password" value={formData.password} onChange={handleInputChange} />
           <button type="submit">Entrar</button>
         </form>
       </LoginCardContainer>
