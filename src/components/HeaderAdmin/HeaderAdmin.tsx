@@ -14,6 +14,11 @@ const HeaderAdminContent = styled.div`
   align-items: center;
   justify-content: space-between;
   color: #fff;
+
+  img {
+    width: 30px;
+  }
+
 `;
 
 const LogoContainer = styled.div`
@@ -25,25 +30,30 @@ const CategoryContainer = styled.div`
   gap: 40px;
   align-items: center;
 
-  p {
-    font-size: 2.5vmin;
+  h3 {
+    font-size: 3vmin;
   }
 `;
 
 const HomeContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px;
 
 `;
 const ProductsContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 10px;
 `;
 
 const UserContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: end;
+  gap: 10px;
+
+  & h5{
+    font-size: 2.5vmin;
+  }
 `;
 
 const HeaderAdmin = () => {
@@ -55,15 +65,15 @@ const HeaderAdmin = () => {
           <CategoryContainer>
             <HomeContainer>
               <img src={HomeIcon} alt="Home Icon" />
-              <p>Inicio</p>
+              <h3>Inicio</h3>
             </HomeContainer>
             <ProductsContainer>
               <img src={StockIcon} alt="Stock Icon" />
-              <p>Produtos</p>
+              <h3>Produtos</h3>
             </ProductsContainer>
             <UserContainer>
-              <p>Email</p>
-              <p>Senha</p>
+              <h4>alex@gmail.com</h4>
+              <h5>Sair</h5>
             </UserContainer>
           </CategoryContainer>
         </HeaderAdminContent>
