@@ -15,6 +15,7 @@ import { AccessTokenPayloadDTO } from "./models/auth";
 import * as authService from "./services/auth-service.ts";
 import * as cartService from "./services/cart-service.ts";
 import { ContextToken } from "./utils/context-token";
+import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>();
@@ -50,6 +51,10 @@ function App() {
                 />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/login" element={<Login />} />
+                <Route
+                  path="/confirmation/:orderId"
+                  element={<Confirmation />}
+                />
               </Route>
               <Route
                 path="/admin"
