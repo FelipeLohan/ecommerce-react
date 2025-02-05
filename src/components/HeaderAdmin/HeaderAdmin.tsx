@@ -47,18 +47,6 @@ const ProductsContainer = styled.div`
   gap: 10px;
 `;
 
-const UserContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 10px;
-
-  & h5{
-    font-size: 2.5vmin;
-    
-  }
-`;
-
 const HeaderAdmin = () => {
   return (
     <>
