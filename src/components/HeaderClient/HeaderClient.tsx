@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { CartIcon } from "../CartIcon";
 import AdminIcon from "../../assets/AdminIcon.svg";
 import * as authService from "../../services/auth-service.ts";
+import { useContext } from "react";
+import { ContextToken } from "../../utils/context-token.ts";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -30,6 +32,9 @@ const LoginCartContainer = styled.div`
 `;
 
 const HeaderClient = () => {
+
+  const {contextTokenPayload} = useContext(ContextToken)
+
   return (
     <>
       <HeaderClientContainer>
@@ -39,7 +44,9 @@ const HeaderClient = () => {
           </div>
         </Link>
         <LoginCartContainer>
-          {authService.hasAnyRoles(["ROLE_ADMIN"]) && (
+          {
+          contextTokenPayload &&
+          authService.hasAnyRoles(["ROLE_ADMIN"]) && (
             <Link to="/admin">
               <img src={AdminIcon} alt="" />
             </Link>
