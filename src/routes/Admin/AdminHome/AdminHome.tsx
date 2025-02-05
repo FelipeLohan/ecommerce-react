@@ -21,8 +21,6 @@ const AdminHome = () => {
   useState(() => {
     userService.findMe()
       .then(response => setUser(response.data))
-      .catch(error => console.log("Erro na requisição", error))
-      
   }, [])
 
   return (
