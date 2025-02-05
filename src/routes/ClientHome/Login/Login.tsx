@@ -66,6 +66,7 @@ const Login = () => {
     e.preventDefault()
     authService.loginRequest(formData)
       .then(response => {
+        authService.saveAccessToken(response.data.access_token)
         console.log(response.data)
       })
       .catch(error => {
