@@ -18,7 +18,7 @@ import { ContextToken } from "./utils/context-token";
 import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
 
 function App() {
-  const [contextCartQuantity, setContextCartQuantity] = useState<number>();
+  const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
   const [contextTokenPayload, setContextTokenPayload] =
     useState<AccessTokenPayloadDTO>();
 
@@ -38,7 +38,7 @@ function App() {
         value={{ contextTokenPayload, setContextTokenPayload }}
       >
         <ContextCartQuantity.Provider
-          value={{ contextCartQuantity, setContextCartQuantity }}
+          value={{ contextCartQuantity , setContextCartQuantity }}
         >
           <HistoryRouter history={history}>
             <Routes>
