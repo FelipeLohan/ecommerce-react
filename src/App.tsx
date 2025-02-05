@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ContextCartQuantity } from "./utils/context-cart";
 import { Login } from "./routes/ClientHome/Login";
 import { Admin } from "./routes/Admin";
+import { AdminHome } from "./routes/Admin/AdminHome";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
@@ -29,7 +30,7 @@ function App() {
               <Route path="/login" element={<Login />} />
             </Route>
             <Route path="/admin" element={<Admin />}>
-            
+              <Route index element={<AdminHome />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

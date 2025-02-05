@@ -5,6 +5,7 @@ import StockIcon from "../../assets/stockIcon.svg";
 const HeaderAdminContainer = styled.header`
   padding: 40px 0px;
   background-color: #0caf1d;
+  margin-bottom: 40px;
 `;
 
 const HeaderAdminContent = styled.div`
