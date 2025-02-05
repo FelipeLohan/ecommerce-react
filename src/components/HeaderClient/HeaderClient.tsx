@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { CartIcon } from "../CartIcon";
+import AdminIcon from "../../assets/AdminIcon.svg";
+import * as authService from "../../services/auth-service.ts";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -37,6 +39,11 @@ const HeaderClient = () => {
           </div>
         </Link>
         <LoginCartContainer>
+          {authService.hasAnyRoles(["ROLE_ADMIN"]) && (
+            <Link to="/admin">
+              <img src={AdminIcon} alt="" />
+            </Link>
+          )}
           <Link to="/cart">
             <CartIcon />
           </Link>
