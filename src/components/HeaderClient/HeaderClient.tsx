@@ -5,6 +5,7 @@ import AdminIcon from "../../assets/AdminIcon.svg";
 import * as authService from "../../services/auth-service.ts";
 import { useContext } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
+import { LoggedUser } from "../LoggedUser/LoggedUser.tsx";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -54,7 +55,7 @@ const HeaderClient = () => {
           <Link to="/cart">
             <CartIcon />
           </Link>
-          <Link to="/login">Entrar</Link>
+          <LoggedUser/>
         </LoginCartContainer>
       </HeaderClientContainer>
     </>

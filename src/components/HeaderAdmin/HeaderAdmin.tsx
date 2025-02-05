@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import HomeIcon from "../../assets/homeIcon.svg";
 import StockIcon from "../../assets/stockIcon.svg";
+import { LoggedUser } from "../LoggedUser";
 
 const HeaderAdminContainer = styled.header`
   padding: 40px 0px;
@@ -54,6 +55,7 @@ const UserContainer = styled.div`
 
   & h5{
     font-size: 2.5vmin;
+    
   }
 `;
 
@@ -72,10 +74,7 @@ const HeaderAdmin = () => {
               <img src={StockIcon} alt="Stock Icon" />
               <h3>Produtos</h3>
             </ProductsContainer>
-            <UserContainer>
-              <h4>alex@gmail.com</h4>
-              <h5>Sair</h5>
-            </UserContainer>
+              <LoggedUser/>
           </CategoryContainer>
         </HeaderAdminContent>
       </HeaderAdminContainer>
