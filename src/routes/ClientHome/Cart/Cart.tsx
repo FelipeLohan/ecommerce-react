@@ -3,7 +3,8 @@ import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import * as cartService from "../../../services/cart-service";
+import * as cartService from "../../../services/cart-service.ts";
+import * as orderService from "../../../services/order-service.ts";
 import { OrderDTO } from "../../../models/order";
 import { ContextCartQuantity } from "../../../utils/context-cart";
 
@@ -64,7 +65,12 @@ const Cart = () => {
     }
 
     function handlePlaceOrderClick(){
-      //making
+      orderService.placeOrderRequest(cart)
+        .then(response => {
+          cartService.clearCart()
+          setContextCartQuantity(0)
+          navigate(`/confirmation/${response.data.id}`)
+        })
     }
 
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
