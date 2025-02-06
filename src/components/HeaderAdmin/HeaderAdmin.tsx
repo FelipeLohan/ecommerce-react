@@ -2,6 +2,8 @@ import styled from "styled-components";
 import HomeIcon from "../../assets/homeIcon.svg";
 import StockIcon from "../../assets/stockIcon.svg";
 import { LoggedUser } from "../LoggedUser";
+import { NavLink } from "react-router-dom";
+import "./style.css";
 
 const HeaderAdminContainer = styled.header`
   padding: 40px 0px;
@@ -20,7 +22,6 @@ const HeaderAdminContent = styled.div`
   img {
     width: 30px;
   }
-
 `;
 
 const LogoContainer = styled.div`
@@ -35,12 +36,17 @@ const CategoryContainer = styled.div`
   h3 {
     font-size: 3vmin;
   }
+
+  a{
+    color: #fff;
+  }
 `;
 
 const HomeContainer = styled.div`
   display: flex;
   gap: 10px;
 
+  
 `;
 const ProductsContainer = styled.div`
   display: flex;
@@ -54,15 +60,20 @@ const HeaderAdmin = () => {
         <HeaderAdminContent>
           <LogoContainer>Ecommerce</LogoContainer>
           <CategoryContainer>
-            <HomeContainer>
-              <img src={HomeIcon} alt="Home Icon" />
-              <h3>Inicio</h3>
-            </HomeContainer>
-            <ProductsContainer>
-              <img src={StockIcon} alt="Stock Icon" />
-              <h3>Produtos</h3>
-            </ProductsContainer>
-              <LoggedUser/>
+            <NavLink to="/admin/home" className={({isActive}) => isActive ? "header-isActive" : ""}>
+              <HomeContainer>
+                <img src={HomeIcon} alt="Home Icon" />
+                <h3>Inicio</h3>
+              </HomeContainer>
+            </NavLink>
+            <NavLink to="/admin/products" className={({isActive}) => isActive ? "header-isActive" : ""}>
+              <ProductsContainer>
+                <img src={StockIcon} alt="Stock Icon" />
+                <h3>Produtos</h3>
+              </ProductsContainer>
+            </NavLink>
+
+            <LoggedUser />
           </CategoryContainer>
         </HeaderAdminContent>
       </HeaderAdminContainer>
