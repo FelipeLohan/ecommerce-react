@@ -69,7 +69,8 @@ function App() {
                   </PrivateRoute>
                 }
               >
-                <Route index element={<AdminHome />} />
+                <Route index element={<Navigate to="/admin/home" />} />
+                <Route path="home" element={<AdminHome />} />
                 <Route path="products" element={<ProductListing />} />
                 <Route path="products/:productId" element={<ProductForm />} />
               </Route>
