@@ -16,6 +16,7 @@ import * as authService from "./services/auth-service.ts";
 import * as cartService from "./services/cart-service.ts";
 import { ContextToken } from "./utils/context-token";
 import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
+import { ProductListing } from "./routes/Admin/ProductListing/ProductListing.tsx";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
@@ -23,8 +24,7 @@ function App() {
     useState<AccessTokenPayloadDTO>();
 
   useEffect(() => {
-    
-    setContextCartQuantity(cartService.getCart().items.length)
+    setContextCartQuantity(cartService.getCart().items.length);
 
     if (authService.isAuthenticated()) {
       const payload = authService.getAccessTokenPayload();
@@ -38,7 +38,7 @@ function App() {
         value={{ contextTokenPayload, setContextTokenPayload }}
       >
         <ContextCartQuantity.Provider
-          value={{ contextCartQuantity , setContextCartQuantity }}
+          value={{ contextCartQuantity, setContextCartQuantity }}
         >
           <HistoryRouter history={history}>
             <Routes>
@@ -53,11 +53,15 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route
                   path="/confirmation/:orderId"
-                  element={<PrivateRoute><Confirmation /></PrivateRoute>}
+                  element={
+                    <PrivateRoute>
+                      <Confirmation />
+                    </PrivateRoute>
+                  }
                 />
               </Route>
               <Route
-                path="/admin"
+                path="/admin/"
                 element={
                   <PrivateRoute roles={["ROLE_ADMIN"]}>
                     <Admin />
@@ -65,6 +69,7 @@ function App() {
                 }
               >
                 <Route index element={<AdminHome />} />
+                <Route path="products" element={<ProductListing />} />
               </Route>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
