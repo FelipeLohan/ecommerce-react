@@ -63,6 +63,10 @@ const Cart = () => {
       setContextCartQuantity(cartService.getCart().items.length);
     }
 
+    function handlePlaceOrderClick(){
+      //making
+    }
+
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
 
   const { setContextCartQuantity } = useContext(ContextCartQuantity);
@@ -101,7 +105,7 @@ const Cart = () => {
           text="Finalizar pedido"
           primaryColor="#3483FA"
           secondaryColor="#fff"
-          handleClick={null}
+          handleClick={handlePlaceOrderClick}
         />
         <CtaButton
           text="Continuar comprando"
