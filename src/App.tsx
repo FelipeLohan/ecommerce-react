@@ -17,6 +17,7 @@ import * as cartService from "./services/cart-service.ts";
 import { ContextToken } from "./utils/context-token";
 import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
 import { ProductListing } from "./routes/Admin/ProductListing/ProductListing.tsx";
+import { ProductForm } from "./routes/Admin/ProductForm/ProductForm.tsx";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
@@ -70,6 +71,7 @@ function App() {
               >
                 <Route index element={<AdminHome />} />
                 <Route path="products" element={<ProductListing />} />
+                <Route path="products/:productId" element={<ProductForm />} />
               </Route>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
