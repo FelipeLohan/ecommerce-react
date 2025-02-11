@@ -3,6 +3,9 @@ import { CtaButton } from "../../../components/CtaButton";
 import { SearchInput } from "../../../components/SearchInput";
 import { ProductAdminListCard } from "../../../components/ProductAdminListCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
+import { useEffect, useState } from "react";
+import * as productService from "../../../services/product-service.ts";
+import { ProductDTO } from "../../../models/product";
 
 const ProductListContainer = styled.div`
   width: 90%;
@@ -29,7 +32,32 @@ const ProductListContent = styled.div`
   flex-direction: column;
 `;
 
+type QueryParams = {
+  page: number;
+  name: string;
+};
+
 const ProductListing = () => {
+
+  const [isLast, setIsLast] = useState(false);
+
+  const [products, setProducts] = useState<ProductDTO[]>([]);
+
+  const [queryParams, setQueryParam] = useState<QueryParams>({
+      page: 0,
+      name: "",
+    });
+
+  useEffect(() => {
+      productService
+        .findPageRequest(queryParams.page, queryParams.name)
+        .then((response) => {
+          setIsLast(response.data.last);
+          const nextPage = response.data.content;
+          setProducts(products.concat(nextPage));
+        });
+    }, [queryParams]);
+
   return (
     <>
       <NewProductContainer>
@@ -48,10 +76,11 @@ const ProductListing = () => {
 
       <ProductListContainer>
         <ProductListContent>
-          <ProductAdminListCard />
-          <ProductAdminListCard />
-          <ProductAdminListCard />
-          <ProductAdminListCard />
+          {
+            products.map(e => (
+              <ProductAdminListCard id={e.id} name={e.name} price={e.price} imgUrl={e.imgUrl} />
+            ))
+          }
         </ProductListContent>
       </ProductListContainer>
       <CtaLoadMore />

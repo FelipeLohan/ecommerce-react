@@ -23,6 +23,11 @@ const FormContainer = styled.form`
   input::placeholder {
     color: #d9d9d9;
   }
+
+  h1{
+    color: #636363;
+    font-weight: 400;
+  }
 `;
 
 const ButtonsContainer = styled.div`

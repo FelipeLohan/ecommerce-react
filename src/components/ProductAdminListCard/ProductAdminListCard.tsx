@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import NotebookImg from "../../assets/NotebookImg.png";
 import TrashIcon from "../../assets/TrashIcon.svg";
 import PenIcon from "../../assets/PenIcon.svg";
 
@@ -17,6 +16,14 @@ const ProductInfosContainer = styled.div`
   display: flex;
   gap: 30px;
   align-items: center;
+
+  p {
+    font-size: 2.2vmin;
+  }
+
+  img{
+    width: 20%;
+  }
 `;
 
 const ProductEditTrashIcons = styled.div`
@@ -24,21 +31,30 @@ const ProductEditTrashIcons = styled.div`
   gap: 20px;
   padding: 0px 40px;
 
+  
+
   img {
     width: 50%;
   }
 `;
 
-const ProductAdminListCard = () => {
+type Props = {
+  id: number,
+  name: string,
+  price: number,
+  imgUrl: string
+}
+
+const ProductAdminListCard = ({id, name, price, imgUrl}: Props) => {
   return (
     <>
       <ProductCardContainer>
         <ProductCardContent>
           <ProductInfosContainer>
-            <p>314</p>
-            <img src={NotebookImg} />
-            <p>R$ 5000,00</p>
-            <p>Computador Gamer XT</p>
+            <p>{id}</p>
+            <img src={imgUrl} alt={name} />
+            <p>R$ {price.toFixed(2)}</p>
+            <p>{name}</p>
           </ProductInfosContainer>
           <ProductEditTrashIcons>
             <img src={PenIcon} />
