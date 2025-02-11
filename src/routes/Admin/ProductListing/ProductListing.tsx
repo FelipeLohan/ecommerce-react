@@ -32,31 +32,44 @@ const ProductListContent = styled.div`
   flex-direction: column;
 `;
 
+const CtaLoadMoreContainerMargin = styled.div`
+  margin-top: 20px;
+`;
+
 type QueryParams = {
   page: number;
   name: string;
 };
 
 const ProductListing = () => {
-
   const [isLast, setIsLast] = useState(false);
 
   const [products, setProducts] = useState<ProductDTO[]>([]);
 
   const [queryParams, setQueryParam] = useState<QueryParams>({
-      page: 0,
-      name: "",
-    });
+    page: 0,
+    name: "",
+  });
 
   useEffect(() => {
-      productService
-        .findPageRequest(queryParams.page, queryParams.name)
-        .then((response) => {
-          setIsLast(response.data.last);
-          const nextPage = response.data.content;
-          setProducts(products.concat(nextPage));
-        });
-    }, [queryParams]);
+    productService
+      .findPageRequest(queryParams.page, queryParams.name)
+      .then((response) => {
+        setIsLast(response.data.last);
+        const nextPage = response.data.content;
+        setProducts(products.concat(nextPage));
+      });
+  }, [queryParams]);
+
+  function handleSearch(searchText: string) {
+    setProducts([]);
+    setQueryParam({ ...queryParams, page: 0, name: searchText });
+  }
+
+  function handleNextPage() {
+    setQueryParam({ ...queryParams, page: queryParams.page + 1 });
+  }
+
 
   return (
     <>
@@ -71,19 +84,28 @@ const ProductListing = () => {
       </NewProductContainer>
 
       <SearchBarContainer>
-        <SearchInput onSearch={() => {}} />
+        <SearchInput onSearch={handleSearch} />
       </SearchBarContainer>
 
       <ProductListContainer>
         <ProductListContent>
-          {
-            products.map(e => (
-              <ProductAdminListCard id={e.id} name={e.name} price={e.price} imgUrl={e.imgUrl} />
-            ))
-          }
+          {products.map((e) => (
+            <ProductAdminListCard
+              key={e.id}
+              id={e.id}
+              name={e.name}
+              price={e.price}
+              imgUrl={e.imgUrl}
+            />
+          ))}
         </ProductListContent>
       </ProductListContainer>
-      <CtaLoadMore />
+      { 
+              !isLast && (
+              <CtaLoadMoreContainerMargin onClick={handleNextPage}>
+                <CtaLoadMore />
+              </CtaLoadMoreContainerMargin>
+            )}
     </>
   );
 };
