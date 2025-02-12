@@ -14,6 +14,31 @@ const DialogInfoContent = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50% , -50%);
+
+  background-color: #fff;
+  width: 20%;
+  height: 30%;
+  border: 3px solid rgb(165, 165, 165);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+
+  button{
+    font-size: 2.2vmin;
+    background-color: #3483FA;
+    color: #fff;
+    padding: 8px 48px;
+    border: none;
+    border-radius: 8px;
+  }
+
+  h1{
+  color:rgb(126, 126, 126)
+  }
 `
 
 const DialogInfo = () => {

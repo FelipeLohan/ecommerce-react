@@ -6,6 +6,7 @@ import { CtaLoadMore } from "../../../components/CtaLoadMore";
 import { useEffect, useState } from "react";
 import * as productService from "../../../services/product-service.ts";
 import { ProductDTO } from "../../../models/product";
+import { DialogInfo } from "../../../components/DialogInfo/DialogInfo.tsx";
 
 const ProductListContainer = styled.div`
   width: 90%;
@@ -105,7 +106,9 @@ const ProductListing = () => {
               <CtaLoadMoreContainerMargin onClick={handleNextPage}>
                 <CtaLoadMore />
               </CtaLoadMoreContainerMargin>
-            )}
+            )
+      }
+      <DialogInfo />
     </>
   );
 };
