@@ -142,7 +142,7 @@ const ProductListing = () => {
 
       {
         dialogConfirmationData.visible &&
-        <DialogConfirmation message={dialogInfoData.message} onDialogAnswer={handleDialogConfirmationAnswer} />
+        <DialogConfirmation message={dialogConfirmationData.message} onDialogAnswer={handleDialogConfirmationAnswer} />
       }
       
     </>

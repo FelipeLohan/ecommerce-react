@@ -16,7 +16,7 @@ const DialogConfirmationContent = styled.div`
   transform: translate(-50%, -50%);
 
   background-color: #fff;
-  width: 20%;
+  width: 30%;
   height: 30%;
   border: 3px solid rgb(165, 165, 165);
   border-radius: 8px;
@@ -31,6 +31,11 @@ const DialogConfirmationContent = styled.div`
   }
 `;
 
+const ConfirmationButtonsContainer = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 const YesButton = styled.button`
   font-size: 2.2vmin;
   background-color: #3483fa;
@@ -42,15 +47,14 @@ const YesButton = styled.button`
 `;
 
 const NoButton = styled.button`
-font-size: 2.2vmin;
-  background-color:rgb(136, 5, 0);
+  font-size: 2.2vmin;
+  background-color: rgb(136, 5, 0);
   color: #fff;
   padding: 8px 48px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 `;
-
 
 type Props = {
   message: string;
@@ -63,8 +67,10 @@ const DialogConfirmation = ({ message, onDialogAnswer }: Props) => {
       <DialogConfirmationContainer>
         <DialogConfirmationContent>
           <h1>{message}</h1>
-          <NoButton onClick={() => onDialogAnswer(false)}>Não</NoButton>
-          <YesButton onClick={() => onDialogAnswer(true)}>Sim</YesButton>
+          <ConfirmationButtonsContainer>
+            <NoButton onClick={() => onDialogAnswer(false)}>Não</NoButton>
+            <YesButton onClick={() => onDialogAnswer(true)}>Sim</YesButton>
+          </ConfirmationButtonsContainer>
         </DialogConfirmationContent>
       </DialogConfirmationContainer>
     </>
