@@ -34,6 +34,7 @@ const DialogInfoContent = styled.div`
     padding: 8px 48px;
     border: none;
     border-radius: 8px;
+    cursor: pointer;
   }
 
   h1{
@@ -41,13 +42,18 @@ const DialogInfoContent = styled.div`
   }
 `
 
-const DialogInfo = () => {
+type Props = {
+  message: string;
+  onDialogClose: Function;
+}
+
+const DialogInfo = ({message, onDialogClose}: Props) => {
   return(
     <>
     <DialogInfoContainer>
       <DialogInfoContent>
-        <h1>Sucesso!</h1>
-        <button>Ok</button>
+        <h1>{message}</h1>
+        <button onClick={onDialogClose}>Ok</button>
       </DialogInfoContent>
     </DialogInfoContainer>
     </>

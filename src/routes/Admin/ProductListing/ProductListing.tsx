@@ -52,6 +52,11 @@ const ProductListing = () => {
     name: "",
   });
 
+  const [dialogInfoData, setDialogInfoData] = useState({
+    visible: false,
+    message: "Sucesso!"
+  })
+
   useEffect(() => {
     productService
       .findPageRequest(queryParams.page, queryParams.name)
@@ -69,6 +74,15 @@ const ProductListing = () => {
 
   function handleNextPage() {
     setQueryParam({ ...queryParams, page: queryParams.page + 1 });
+  }
+
+  function handleDialogInfoClose(e: any){
+    e.preventDefault()
+    setDialogInfoData({...dialogInfoData , visible: false})
+  }
+
+  function handleDeleteClick(){
+    setDialogInfoData({...dialogInfoData , visible: true})
   }
 
 
@@ -97,6 +111,7 @@ const ProductListing = () => {
               name={e.name}
               price={e.price}
               imgUrl={e.imgUrl}
+              onDeleteClick={handleDeleteClick}
             />
           ))}
         </ProductListContent>
@@ -108,7 +123,11 @@ const ProductListing = () => {
               </CtaLoadMoreContainerMargin>
             )
       }
-      <DialogInfo />
+      {
+        dialogInfoData.visible &&
+        <DialogInfo message={dialogInfoData.message} onDialogClose={handleDialogInfoClose} />
+      }
+      
     </>
   );
 };

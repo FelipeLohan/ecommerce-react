@@ -35,6 +35,7 @@ const ProductEditTrashIcons = styled.div`
 
   img {
     width: 50%;
+    cursor: pointer;
   }
 `;
 
@@ -42,10 +43,11 @@ type Props = {
   id: number,
   name: string,
   price: number,
-  imgUrl: string
+  imgUrl: string,
+  onDeleteClick: Function
 }
 
-const ProductAdminListCard = ({id, name, price, imgUrl}: Props) => {
+const ProductAdminListCard = ({id, name, price, imgUrl, onDeleteClick}: Props) => {
   return (
     <>
       <ProductCardContainer>
@@ -58,7 +60,7 @@ const ProductAdminListCard = ({id, name, price, imgUrl}: Props) => {
           </ProductInfosContainer>
           <ProductEditTrashIcons>
             <img src={PenIcon} />
-            <img src={TrashIcon} />
+            <img onClick={onDeleteClick} src={TrashIcon} />
           </ProductEditTrashIcons>
         </ProductCardContent>
       </ProductCardContainer>
