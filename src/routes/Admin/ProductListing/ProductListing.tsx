@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import * as productService from "../../../services/product-service.ts";
 import { ProductDTO } from "../../../models/product";
 import { DialogInfo } from "../../../components/DialogInfo/DialogInfo.tsx";
+import { DialogConfirmation } from "../../../components/DialogConfirmation/DialogConfirmation.tsx";
 
 const ProductListContainer = styled.div`
   width: 90%;
@@ -57,6 +58,12 @@ const ProductListing = () => {
     message: "Sucesso!"
   })
 
+  const [dialogConfirmationData, setDialogConfirmationData] = useState({
+    visible: false,
+    message: "Tem certeza?"
+  })
+
+
   useEffect(() => {
     productService
       .findPageRequest(queryParams.page, queryParams.name)
@@ -82,7 +89,12 @@ const ProductListing = () => {
   }
 
   function handleDeleteClick(){
-    setDialogInfoData({...dialogInfoData , visible: true})
+    setDialogConfirmationData({...dialogConfirmationData , visible: true})
+  }
+
+  function handleDialogConfirmationAnswer(answer: boolean){
+    console.log("RESPOSTA: " + answer)
+    setDialogConfirmationData({...dialogConfirmationData , visible: false})
   }
 
 
@@ -126,6 +138,11 @@ const ProductListing = () => {
       {
         dialogInfoData.visible &&
         <DialogInfo message={dialogInfoData.message} onDialogClose={handleDialogInfoClose} />
+      }
+
+      {
+        dialogConfirmationData.visible &&
+        <DialogConfirmation message={dialogInfoData.message} onDialogAnswer={handleDialogConfirmationAnswer} />
       }
       
     </>
