@@ -55,15 +55,14 @@ const ProductListing = () => {
 
   const [dialogInfoData, setDialogInfoData] = useState({
     visible: false,
-    message: "Sucesso!"
-  })
+    message: "Sucesso!",
+  });
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
     visible: false,
     message: "Tem certeza?",
-    id: 0
-  })
-
+    id: 0,
+  });
 
   useEffect(() => {
     productService
@@ -84,30 +83,37 @@ const ProductListing = () => {
     setQueryParam({ ...queryParams, page: queryParams.page + 1 });
   }
 
-  function handleDialogInfoClose(e: any){
-    e.preventDefault()
-    setDialogInfoData({...dialogInfoData , visible: false})
+  function handleDialogInfoClose(e: any) {
+    e.preventDefault();
+    setDialogInfoData({ ...dialogInfoData, visible: false });
   }
 
-  function handleDeleteClick(productId: number){
-    setDialogConfirmationData({...dialogConfirmationData , id: productId , visible: true})
+  function handleDeleteClick(productId: number) {
+    setDialogConfirmationData({
+      ...dialogConfirmationData,
+      id: productId,
+      visible: true,
+    });
   }
 
-  function handleDialogConfirmationAnswer(answer: boolean, productId: number){
-    if(answer){
-      productService.deleteById(productId)
+  function handleDialogConfirmationAnswer(answer: boolean, productId: number) {
+    if (answer) {
+      productService
+        .deleteById(productId)
         .then(() => {
           setProducts([]);
           setQueryParam({ ...queryParams, page: 0 });
         })
-        .catch(error => {
-          console.log(error)
-          setDialogInfoData({visible: true, message: error.response.data.error})
-        })
+        .catch((error) => {
+          console.log(error);
+          setDialogInfoData({
+            visible: true,
+            message: error.response.data.error,
+          });
+        });
     }
-    setDialogConfirmationData({...dialogConfirmationData , visible: false})
+    setDialogConfirmationData({ ...dialogConfirmationData, visible: false });
   }
-
 
   return (
     <>
@@ -139,23 +145,25 @@ const ProductListing = () => {
           ))}
         </ProductListContent>
       </ProductListContainer>
-      { 
-              !isLast && (
-              <CtaLoadMoreContainerMargin onClick={handleNextPage}>
-                <CtaLoadMore />
-              </CtaLoadMoreContainerMargin>
-            )
-      }
-      {
-        dialogInfoData.visible &&
-        <DialogInfo message={dialogInfoData.message} onDialogClose={handleDialogInfoClose} />
-      }
+      {!isLast && (
+        <CtaLoadMoreContainerMargin onClick={handleNextPage}>
+          <CtaLoadMore />
+        </CtaLoadMoreContainerMargin>
+      )}
+      {dialogInfoData.visible && (
+        <DialogInfo
+          message={dialogInfoData.message}
+          onDialogClose={handleDialogInfoClose}
+        />
+      )}
 
-      {
-        dialogConfirmationData.visible &&
-        <DialogConfirmation message={dialogConfirmationData.message} onDialogAnswer={handleDialogConfirmationAnswer} id={dialogConfirmationData.id} />
-      }
-      
+      {dialogConfirmationData.visible && (
+        <DialogConfirmation
+          message={dialogConfirmationData.message}
+          onDialogAnswer={handleDialogConfirmationAnswer}
+          id={dialogConfirmationData.id}
+        />
+      )}
     </>
   );
 };
