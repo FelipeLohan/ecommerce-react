@@ -59,17 +59,18 @@ const NoButton = styled.button`
 type Props = {
   message: string;
   onDialogAnswer: Function;
+  id: number;
 };
 
-const DialogConfirmation = ({ message, onDialogAnswer }: Props) => {
+const DialogConfirmation = ({ id , message, onDialogAnswer }: Props) => {
   return (
     <>
       <DialogConfirmationContainer>
         <DialogConfirmationContent>
           <h1>{message}</h1>
           <ConfirmationButtonsContainer>
-            <NoButton onClick={() => onDialogAnswer(false)}>Não</NoButton>
-            <YesButton onClick={() => onDialogAnswer(true)}>Sim</YesButton>
+            <NoButton onClick={() => onDialogAnswer(false, id)}>Não</NoButton>
+            <YesButton onClick={() => onDialogAnswer(true, id)}>Sim</YesButton>
           </ConfirmationButtonsContainer>
         </DialogConfirmationContent>
       </DialogConfirmationContainer>

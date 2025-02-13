@@ -60,7 +60,8 @@ const ProductListing = () => {
 
   const [dialogConfirmationData, setDialogConfirmationData] = useState({
     visible: false,
-    message: "Tem certeza?"
+    message: "Tem certeza?",
+    id: 0
   })
 
 
@@ -88,12 +89,22 @@ const ProductListing = () => {
     setDialogInfoData({...dialogInfoData , visible: false})
   }
 
-  function handleDeleteClick(){
-    setDialogConfirmationData({...dialogConfirmationData , visible: true})
+  function handleDeleteClick(productId: number){
+    setDialogConfirmationData({...dialogConfirmationData , id: productId , visible: true})
   }
 
-  function handleDialogConfirmationAnswer(answer: boolean){
-    console.log("RESPOSTA: " + answer)
+  function handleDialogConfirmationAnswer(answer: boolean, productId: number){
+    if(answer){
+      productService.deleteById(productId)
+        .then(() => {
+          setProducts([]);
+          setQueryParam({ ...queryParams, page: 0 });
+        })
+        .catch(error => {
+          console.log(error)
+          setDialogInfoData({visible: true, message: error.response.data.error})
+        })
+    }
     setDialogConfirmationData({...dialogConfirmationData , visible: false})
   }
 
@@ -123,7 +134,7 @@ const ProductListing = () => {
               name={e.name}
               price={e.price}
               imgUrl={e.imgUrl}
-              onDeleteClick={handleDeleteClick}
+              onDeleteClick={() => handleDeleteClick(e.id)}
             />
           ))}
         </ProductListContent>
@@ -142,7 +153,7 @@ const ProductListing = () => {
 
       {
         dialogConfirmationData.visible &&
-        <DialogConfirmation message={dialogConfirmationData.message} onDialogAnswer={handleDialogConfirmationAnswer} />
+        <DialogConfirmation message={dialogConfirmationData.message} onDialogAnswer={handleDialogConfirmationAnswer} id={dialogConfirmationData.id} />
       }
       
     </>
