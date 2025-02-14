@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
 import { CredentialsDTO } from "../../../models/auth";
-
+import * as forms from "../../../utils/forms.ts";
 import * as authService from "../../../services/auth-service.ts";
 import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../../utils/context-token.ts";
@@ -105,8 +105,7 @@ const Login = () => {
   function handleInputChange(e: any) {
     const value = e.target.value;
     const name = e.target.name;
-
-    setFormData({ ...formData, [name]: { ...formData[name], value: value } });
+    setFormData(forms.update(formData, name, value));
   }
 
   return (
