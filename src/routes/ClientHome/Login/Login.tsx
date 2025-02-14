@@ -114,18 +114,12 @@ const Login = () => {
         <LoginCardContainer>
           <h2>Login</h2>
           <form onSubmit={handleFormSubmit}>
-            <input
-              placeholder="Email"
-              type="text"
-              name="username"
-              value={formData.username.value}
-              onChange={handleInputChange}
+            <input 
+            {...formData.username} 
+            onChange={handleInputChange} 
             />
             <input
-              placeholder="Senha"
-              type="password"
-              name="password"
-              value={formData.password.value}
+              { ...formData.password }
               onChange={handleInputChange}
             />
             <button type="submit">Entrar</button>
