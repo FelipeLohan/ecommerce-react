@@ -5,6 +5,7 @@ import { CredentialsDTO } from "../../../models/auth";
 import * as authService from "../../../services/auth-service.ts";
 import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../../utils/context-token.ts";
+import { FormInput } from "../../../components/Forminput/FormInput.tsx";
 
 const LoginCardContainer = styled.div`
   padding: 40px 20px;
@@ -114,11 +115,11 @@ const Login = () => {
         <LoginCardContainer>
           <h2>Login</h2>
           <form onSubmit={handleFormSubmit}>
-            <input 
+            <FormInput 
             {...formData.username} 
             onChange={handleInputChange} 
             />
-            <input
+            <FormInput
               { ...formData.password }
               onChange={handleInputChange}
             />
