@@ -8,6 +8,7 @@ import * as productService from "../../../services/product-service.ts";
 import { ProductDTO } from "../../../models/product";
 import { DialogInfo } from "../../../components/DialogInfo/DialogInfo.tsx";
 import { DialogConfirmation } from "../../../components/DialogConfirmation/DialogConfirmation.tsx";
+import { useNavigate } from "react-router-dom";
 
 const ProductListContainer = styled.div`
   width: 90%;
@@ -44,6 +45,9 @@ type QueryParams = {
 };
 
 const ProductListing = () => {
+
+  const navigate = useNavigate()
+
   const [isLast, setIsLast] = useState(false);
 
   const [products, setProducts] = useState<ProductDTO[]>([]);
@@ -73,6 +77,10 @@ const ProductListing = () => {
         setProducts(products.concat(nextPage));
       });
   }, [queryParams]);
+
+  function handleNewProductClick(){
+    navigate("/admin/products/create")
+  }
 
   function handleSearch(searchText: string) {
     setProducts([]);
@@ -119,12 +127,14 @@ const ProductListing = () => {
     <>
       <NewProductContainer>
         <h1>Contagem de produtos</h1>
-        <CtaButton
-          text="Novo"
-          primaryColor="#fff"
-          secondaryColor="#3483FA"
-          handleClick={() => {}}
-        />
+        
+          <CtaButton
+            text="Novo"
+            primaryColor="#fff"
+            secondaryColor="#3483FA"
+            handleClick={handleNewProductClick}
+          />
+        
       </NewProductContainer>
 
       <SearchBarContainer>

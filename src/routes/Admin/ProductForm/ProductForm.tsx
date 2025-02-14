@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-
 
 const ProductFormContainer = styled.div`
   width: 40%;
@@ -14,7 +14,7 @@ const FormContainer = styled.form`
   gap: 15px;
 
   input {
-  width: 100%;
+    width: 100%;
     padding: 15px;
     border: 1px solid #d9d9d9;
     border-radius: 8px;
@@ -24,7 +24,7 @@ const FormContainer = styled.form`
     color: #d9d9d9;
   }
 
-  h1{
+  h1 {
     color: #636363;
     font-weight: 400;
   }
@@ -36,33 +36,37 @@ const ButtonsContainer = styled.div`
   width: 100%;
   gap: 20px;
 
-  button{
+  a {
+    width: 100%;
+  }
+
+  button {
     width: 100%;
     padding: 15px;
   }
-`
+`;
 
 const SaveButton = styled.button`
   width: 100%;
-    padding: 15px;
-    background-color: #3483FA;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 2.2vmin;
-    cursor: pointer;
-`
+  padding: 15px;
+  background-color: #3483fa;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 2.2vmin;
+  cursor: pointer;
+`;
 
 const CancelButton = styled.button`
   width: 100%;
-    padding: 15px;
-    color: #3483FA;
-    background-color: #fff;
-    border: 1px solid #3483FA;
-    border-radius: 8px;
-    font-size: 2.2vmin;
-    cursor: pointer;
-`
+  padding: 15px;
+  color: #3483fa;
+  background-color: #fff;
+  border: 1px solid #3483fa;
+  border-radius: 8px;
+  font-size: 2.2vmin;
+  cursor: pointer;
+`;
 
 const ProductForm = () => {
   return (
@@ -76,7 +80,9 @@ const ProductForm = () => {
           <input type="text" placeholder="Categorias" />
           <input type="text" placeholder="Descrição" />
           <ButtonsContainer>
-            <CancelButton>Cancelar</CancelButton>
+            <Link to="/admin/products">
+              <CancelButton>Cancelar</CancelButton>
+            </Link>
             <SaveButton>Salvar</SaveButton>
           </ButtonsContainer>
         </FormContainer>
