@@ -18,7 +18,7 @@ const LoginCardContainer = styled.div`
   border-radius: 8px;
   margin: 0 auto;
 
-  h2{
+  h2 {
     color: #636363;
     font-size: 4vmin;
   }
@@ -32,24 +32,23 @@ const LoginCardContainer = styled.div`
     gap: 30px;
   }
 
-  form input, button{
+  form input,
+  button {
     width: 100%;
     padding: 12px;
     border-radius: 12px;
     outline: none;
   }
 
-  form input{
-    border: 1px solid #D9D9D9;
-    
+  form input {
+    border: 1px solid #d9d9d9;
   }
 
-  form button{
-  background-color: #3483FA;
-  color: #fff;
-  font-size: 2.2vmin;
-  border: none;
-  
+  form button {
+    background-color: #3483fa;
+    color: #fff;
+    font-size: 2.2vmin;
+    border: none;
   }
 `;
 
@@ -58,47 +57,80 @@ const LoginContainer = styled.div`
 `;
 
 const Login = () => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    username: {
+      value: "",
+      id: "username",
+      name: "username",
+      type: "text",
+      placeholder: "Email",
+      validation: function (value: string) {
+        return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+          value.toLowerCase()
+        );
+      },
+      message: "Favor informar um email válido",
+    },
+    password: {
+      value: "",
+      id: "password",
+      name: "password",
+      type: "password",
+      placeholder: "Senha",
+    },
+  });
 
-  const [formData, setFormData] = useState<CredentialsDTO>({
-    username: "",
-    password: ""
-  })
+  const { setContextTokenPayload } = useContext(ContextToken);
 
-   const {setContextTokenPayload} = useContext(ContextToken)
-
-  function handleFormSubmit(e: any){
-    e.preventDefault()
-    authService.loginRequest(formData)
-      .then(response => {
-        authService.saveAccessToken(response.data.access_token)
-        setContextTokenPayload(authService.getAccessTokenPayload())
-        navigate("/cart")
+  function handleFormSubmit(e: any) {
+    e.preventDefault();
+    authService
+      .loginRequest({
+        username: formData.username.value,
+        password: formData.password.value,
       })
-      .catch(error => {
-        console.log("Erro no login", error)
+      .then((response) => {
+        authService.saveAccessToken(response.data.access_token);
+        setContextTokenPayload(authService.getAccessTokenPayload());
+        navigate("/cart");
       })
+      .catch((error) => {
+        console.log("Erro no login", error);
+      });
   }
 
-  function handleInputChange(e: any){
+  function handleInputChange(e: any) {
     const value = e.target.value;
     const name = e.target.name;
 
-    setFormData({...formData, [name]: value})
+    setFormData({ ...formData, [name]: { ...formData[name], value: value } });
   }
 
   return (
     <>
       <LoginContainer>
-      <LoginCardContainer>
-        <h2>Login</h2>
-        <form onSubmit={handleFormSubmit}>
-          <input placeholder="Email" type="text" name="username" value={formData.username} onChange={handleInputChange} />
-          <input placeholder="Senha" type="password" name="password" value={formData.password} onChange={handleInputChange} />
-          <button type="submit">Entrar</button>
-        </form>
-      </LoginCardContainer>
+        <LoginCardContainer>
+          <h2>Login</h2>
+          <form onSubmit={handleFormSubmit}>
+            <input
+              placeholder="Email"
+              type="text"
+              name="username"
+              value={formData.username.value}
+              onChange={handleInputChange}
+            />
+            <input
+              placeholder="Senha"
+              type="password"
+              name="password"
+              value={formData.password.value}
+              onChange={handleInputChange}
+            />
+            <button type="submit">Entrar</button>
+          </form>
+        </LoginCardContainer>
       </LoginContainer>
     </>
   );
