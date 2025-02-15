@@ -1,13 +1,26 @@
-
 const FormInput = (props: any) => {
+  const {
+    validation,
+    invalid = "false",
+    onTurnDirty,
+    dirty = "false",
+    ...inputProps
+  } = props;
 
-  const { validation , invalid,  ...inputProps} = props
+  function handleBlur() {
+    onTurnDirty(props.name);
+  }
 
-  return(
+  return (
     <>
-    <input {...inputProps} data-invalid={invalid} />
+      <input
+        {...inputProps}
+        onBlur={handleBlur}
+        data-invalid={invalid}
+        data-dirty={dirty}
+      />
     </>
-  )
-}
+  );
+};
 
 export { FormInput };
