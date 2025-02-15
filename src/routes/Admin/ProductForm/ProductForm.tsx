@@ -100,7 +100,10 @@ const ProductForm = () => {
       id: "price",
       name: "price",
       type: "number",
-      placeholder: "Preço"
+      placeholder: "Preço",
+      validation: function(value: any){
+        return Number(value) > 0
+      }
     },
     imgUrl: {
       value: "",
