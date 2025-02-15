@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FormInput } from "../../../components/Forminput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
+import * as productService from "../../../services/product-service.ts";
+import { ProductDTO } from "../../../models/product.ts";
 
 const ProductFormContainer = styled.div`
   width: 40%;
@@ -72,6 +74,18 @@ const CancelButton = styled.button`
 `;
 
 const ProductForm = () => {
+
+  const params = useParams();
+
+  const isEditing = params.productId !== 'create';
+
+  useEffect(() => {
+    if(isEditing){
+      productService.findById(Number(params.productId))
+        .then(response => console.log(response.data))
+    }
+  }, [])
+
 
   const [formData, setFormData] = useState({
     name: {
