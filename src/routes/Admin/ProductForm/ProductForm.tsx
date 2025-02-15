@@ -4,7 +4,7 @@ import { FormInput } from "../../../components/Forminput";
 import { useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
-import { ProductDTO } from "../../../models/product.ts";
+
 
 const ProductFormContainer = styled.div`
   width: 40%;
@@ -82,7 +82,7 @@ const ProductForm = () => {
   useEffect(() => {
     if(isEditing){
       productService.findById(Number(params.productId))
-        .then(response => console.log(response.data))
+        .then(response => setFormData(forms.updateAll(formData, response.data)))
     }
   }, [])
 
