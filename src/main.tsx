@@ -47,6 +47,25 @@ img {
 a {
   text-decoration: none;
 }
+
+input{
+  outline: none;
+}
+
+.form-error {
+  color: red;
+  font-size: 12px;
+  padding-left: 4px;
+  display: none;
+  }
+
+  .form-control[data-invalid="true"] {
+  border: 1px solid red;
+  }
+
+  .form-control[data-invalid="true"] ~ span {
+  display: unset;
+  }
 `;
 
 createRoot(document.getElementById("root")!).render(

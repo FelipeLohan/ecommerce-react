@@ -73,6 +73,11 @@ const CancelButton = styled.button`
   cursor: pointer;
 `;
 
+const InputError = styled.div`
+  display: flex;
+  justify-content: start;
+`
+
 const ProductForm = () => {
 
   const params = useParams();
@@ -103,7 +108,8 @@ const ProductForm = () => {
       placeholder: "Preço",
       validation: function(value: any){
         return Number(value) > 0
-      }
+      },
+      message: "Valor inválido"
     },
     imgUrl: {
       value: "",
@@ -115,9 +121,9 @@ const ProductForm = () => {
   })
 
    function handleInputChange(e: any) {
-      const value = e.target.value;
-      const name = e.target.name;
-      setFormData(forms.update(formData, name, value));
+      const dataUpdated = forms.update(formData, e.target.name, e.target.value);
+      const dataValidated = forms.validate(dataUpdated, e.target.name);
+      setFormData(dataValidated);
     }
 
   return (
@@ -130,9 +136,11 @@ const ProductForm = () => {
             onChange={handleInputChange} 
             />
           <FormInput 
-            {...formData.price} 
+            {...formData.price}
+            className="form-control" 
             onChange={handleInputChange} 
             />
+            <span className="form-error">{formData.price.message}</span>
           <FormInput 
             {...formData.imgUrl} 
             onChange={handleInputChange} 
