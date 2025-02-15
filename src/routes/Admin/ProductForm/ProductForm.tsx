@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FormInput } from "../../../components/Forminput";
+import { useState } from "react";
+import * as forms from "../../../utils/forms.ts";
 
 const ProductFormContainer = styled.div`
   width: 40%;
@@ -69,14 +72,54 @@ const CancelButton = styled.button`
 `;
 
 const ProductForm = () => {
+
+  const [formData, setFormData] = useState({
+    name: {
+      value: "",
+      id: "name",
+      name: "name",
+      type: "text",
+      placeholder: "Nome"
+    },
+    price: {
+      value: "",
+      id: "price",
+      name: "price",
+      type: "number",
+      placeholder: "Preço"
+    },
+    imgUrl: {
+      value: "",
+      id: "imgUrl",
+      name: "imgUrl",
+      type: "text",
+      placeholder: "URL da Imagem"
+    }
+  })
+
+   function handleInputChange(e: any) {
+      const value = e.target.value;
+      const name = e.target.name;
+      setFormData(forms.update(formData, name, value));
+    }
+
   return (
     <>
       <ProductFormContainer>
         <FormContainer>
           <h1>DADOS DO PRODUTO</h1>
-          <input type="text" placeholder="Nome" />
-          <input type="text" placeholder="Preço" />
-          <input type="text" placeholder="Imagem" />
+          <FormInput 
+            {...formData.name} 
+            onChange={handleInputChange} 
+            />
+          <FormInput 
+            {...formData.price} 
+            onChange={handleInputChange} 
+            />
+          <FormInput 
+            {...formData.imgUrl} 
+            onChange={handleInputChange} 
+            />
           <input type="text" placeholder="Categorias" />
           <input type="text" placeholder="Descrição" />
           <ButtonsContainer>
