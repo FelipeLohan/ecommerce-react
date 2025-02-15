@@ -125,11 +125,6 @@ const ProductForm = () => {
       setFormData(result);
     }
 
-    function handleTurnDirty(name: string){
-      const newFormData = forms.toDirty(formData, name)
-      setFormData(newFormData)
-    }
-
   return (
     <>
       <ProductFormContainer>
@@ -141,7 +136,7 @@ const ProductForm = () => {
             />
           <FormInput 
             {...formData.price}
-            onTurnDirty={handleTurnDirty}
+
             className="form-control" 
             onChange={handleInputChange} 
             />
