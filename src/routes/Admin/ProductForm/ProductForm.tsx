@@ -121,9 +121,8 @@ const ProductForm = () => {
   })
 
    function handleInputChange(e: any) {
-      const dataUpdated = forms.update(formData, e.target.name, e.target.value);
-      const dataValidated = forms.validate(dataUpdated, e.target.name);
-      setFormData(dataValidated);
+      const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
+      setFormData(result);
     }
 
     function handleTurnDirty(name: string){

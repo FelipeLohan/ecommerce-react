@@ -100,10 +100,14 @@ const Login = () => {
   }
 
   function handleInputChange(e: any) {
-    const value = e.target.value;
-    const name = e.target.name;
-    setFormData(forms.update(formData, name, value));
-  }
+       const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
+       setFormData(result);
+     }
+ 
+     function handleTurnDirty(name: string){
+       const newFormData = forms.toDirty(formData, name)
+       setFormData(newFormData)
+     }
 
   return (
     <>
@@ -112,11 +116,13 @@ const Login = () => {
           <h2>Login</h2>
           <form onSubmit={handleFormSubmit}>
             <FormInput 
-            {...formData.username} 
+            {...formData.username}
+            onTurnDirty={handleTurnDirty} 
             onChange={handleInputChange} 
             />
             <FormInput
               { ...formData.password }
+              onTurnDirty={handleTurnDirty} 
               onChange={handleInputChange}
             />
             <button type="submit">Entrar</button>
