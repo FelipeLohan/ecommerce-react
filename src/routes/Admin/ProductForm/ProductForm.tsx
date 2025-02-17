@@ -4,8 +4,10 @@ import { FormInput } from "../../../components/Forminput";
 import { useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
+import * as categoryService from "../../../services/category-service.ts";
 import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
 import Select from "react-select";
+import { CategoryDTO } from "../../../models/category.ts";
 
 
 const ProductFormContainer = styled.div`
@@ -157,6 +159,13 @@ const ProductForm = () => {
     },
   })
 
+  const [categories, setCategories] = useState<CategoryDTO[]>([]);
+
+  useEffect(() => {
+    categoryService.findAllRequest()
+      .then(response => setCategories(response.data))
+  }, [])
+
    function handleInputChange(e: any) {
       const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
       setFormData(result);
@@ -190,8 +199,10 @@ const ProductForm = () => {
             onChange={handleInputChange} 
             />
           <Select 
-            options={options}
+            options={categories}
             isMulti
+            getOptionLabel={(obj) => obj.name}
+            getOptionValue={(obj) => String(obj.id)}
           />
           <FormTextArea 
             {...formData.description} 
