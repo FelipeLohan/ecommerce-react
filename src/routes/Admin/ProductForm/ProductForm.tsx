@@ -98,7 +98,11 @@ const ProductForm = () => {
       id: "name",
       name: "name",
       type: "text",
-      placeholder: "Nome"
+      placeholder: "Nome",
+      validation: function(value: string){
+        return value.length >= 3 && value.length <= 80;
+      },
+      message: "Infomar um nome de 3 até 80 caracteres"
     },
     price: {
       value: "",
@@ -132,11 +136,12 @@ const ProductForm = () => {
           <h1>DADOS DO PRODUTO</h1>
           <FormInput 
             {...formData.name} 
+            className="form-control"
             onChange={handleInputChange} 
             />
+             <span className="form-error">{formData.name.message}</span>
           <FormInput 
             {...formData.price}
-
             className="form-control" 
             onChange={handleInputChange} 
             />
