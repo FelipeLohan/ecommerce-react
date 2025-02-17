@@ -6,8 +6,8 @@ import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
 import * as categoryService from "../../../services/category-service.ts";
 import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
-import Select from "react-select";
 import { CategoryDTO } from "../../../models/category.ts";
+import { FormSelect } from "../../../components/FormSelect/FormSelect.tsx";
 
 
 const ProductFormContainer = styled.div`
@@ -157,6 +157,16 @@ const ProductForm = () => {
       },
       message: "A descrição deve ter pelo menos 10 caracteres"
     },
+    categories: {
+      value: [],
+      id: "categories",
+      name: "categories",
+      placeholder: "Categorias",
+      validation: function(value: CategoryDTO[]){
+        return value.length > 0;
+      },
+      message: "Escolha ao menos uma categoria"
+    }
   })
 
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
@@ -171,11 +181,6 @@ const ProductForm = () => {
       setFormData(result);
     }
 
-    const options = [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' }
-    ]
 
   return (
     <>
@@ -198,11 +203,16 @@ const ProductForm = () => {
             {...formData.imgUrl} 
             onChange={handleInputChange} 
             />
-          <Select 
+          <FormSelect 
+          {...formData.categories}
             options={categories}
             isMulti
-            getOptionLabel={(obj) => obj.name}
-            getOptionValue={(obj) => String(obj.id)}
+            onChange={(obj: any) => {
+              const newFormData = forms.updateAndValidate(formData, "categories", obj)
+              setFormData(newFormData)
+            }}
+            getOptionLabel={(obj: any) => obj.name}
+            getOptionValue={(obj: any) => String(obj.id)}
           />
           <FormTextArea 
             {...formData.description} 
