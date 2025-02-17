@@ -205,6 +205,7 @@ const ProductForm = () => {
             />
           <FormSelect 
           {...formData.categories}
+           className="form-control"
             options={categories}
             isMulti
             onChange={(obj: any) => {
@@ -214,6 +215,7 @@ const ProductForm = () => {
             getOptionLabel={(obj: any) => obj.name}
             getOptionValue={(obj: any) => String(obj.id)}
           />
+           <span className="form-error">{formData.categories.message}</span>
           <FormTextArea 
             {...formData.description} 
             className="form-control"

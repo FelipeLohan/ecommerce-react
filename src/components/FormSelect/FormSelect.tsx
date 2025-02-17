@@ -1,19 +1,13 @@
 import Select from "react-select";
 
 const FormSelect = (props: any) => {
-  const {
-    validation,
-    invalid = "false",
-    ...selectProps
-  } = props;
-
+  const { validation, className, invalid = "false", ...selectProps } = props;
 
   return (
     <>
-      <Select
-        {...selectProps}
-        data-invalid={invalid}
-      />
+      <div data-invalid={invalid} className={className} >
+        <Select {...selectProps} />
+      </div>
     </>
   );
 };
