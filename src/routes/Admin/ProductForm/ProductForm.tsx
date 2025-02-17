@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
 import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
+import Select from "react-select";
 
 
 const ProductFormContainer = styled.div`
@@ -41,6 +42,17 @@ const FormContainer = styled.form`
   }
 
   textarea::placeholder {
+    color: #d9d9d9;
+  }
+
+  select {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+  }
+
+  select::placeholder {
     color: #d9d9d9;
   }
 
@@ -150,6 +162,12 @@ const ProductForm = () => {
       setFormData(result);
     }
 
+    const options = [
+      { value: 'chocolate', label: 'Chocolate' },
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'vanilla', label: 'Vanilla' }
+    ]
+
   return (
     <>
       <ProductFormContainer>
@@ -171,7 +189,10 @@ const ProductForm = () => {
             {...formData.imgUrl} 
             onChange={handleInputChange} 
             />
-          <input type="text" placeholder="Categorias" />
+          <Select 
+            options={options}
+            isMulti
+          />
           <FormTextArea 
             {...formData.description} 
             className="form-control"
