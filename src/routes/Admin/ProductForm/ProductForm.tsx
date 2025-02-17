@@ -4,6 +4,7 @@ import { FormInput } from "../../../components/Forminput";
 import { useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
+import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
 
 
 const ProductFormContainer = styled.div`
@@ -26,6 +27,20 @@ const FormContainer = styled.form`
   }
 
   input::placeholder {
+    color: #d9d9d9;
+  }
+
+   textarea {
+    width: 100%;
+    height: 150px;
+    padding: 15px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+  }
+
+  textarea::placeholder {
     color: #d9d9d9;
   }
 
@@ -73,11 +88,6 @@ const CancelButton = styled.button`
   cursor: pointer;
 `;
 
-const InputError = styled.div`
-  display: flex;
-  justify-content: start;
-`
-
 const ProductForm = () => {
 
   const params = useParams();
@@ -113,7 +123,7 @@ const ProductForm = () => {
       validation: function(value: any){
         return Number(value) > 0
       },
-      message: "Valor inválido"
+      message: "O valor deve ser acima de 0"
     },
     imgUrl: {
       value: "",
@@ -121,7 +131,18 @@ const ProductForm = () => {
       name: "imgUrl",
       type: "text",
       placeholder: "URL da Imagem"
-    }
+    },
+    description: {
+      value: "",
+      id: "description",
+      name: "description",
+      type: "text",
+      placeholder: "Descrição",
+      validation: function(value: string){
+        return value.length >= 10;
+      },
+      message: "A descrição deve ter pelo menos 10 caracteres"
+    },
   })
 
    function handleInputChange(e: any) {
@@ -151,7 +172,12 @@ const ProductForm = () => {
             onChange={handleInputChange} 
             />
           <input type="text" placeholder="Categorias" />
-          <input type="text" placeholder="Descrição" />
+          <FormTextArea 
+            {...formData.description} 
+            className="form-control"
+            onChange={handleInputChange} 
+            />
+             <span className="form-error">{formData.description.message}</span>
           <ButtonsContainer>
             <Link to="/admin/products">
               <CancelButton>Cancelar</CancelButton>
