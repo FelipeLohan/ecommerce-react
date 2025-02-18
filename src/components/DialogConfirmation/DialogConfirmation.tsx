@@ -58,7 +58,7 @@ const NoButton = styled.button`
 
 type Props = {
   message: string;
-  onDialogAnswer: Function;
+  onDialogAnswer: any;
   id: number;
 };
 

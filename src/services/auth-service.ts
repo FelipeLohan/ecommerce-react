@@ -46,6 +46,7 @@ export function getAccessTokenPayload(): AccessTokenPayloadDTO | undefined {
       ? undefined
       : (jwtDecode(token) as AccessTokenPayloadDTO);
   } catch (error) {
+    console.log(error)
     return undefined;
   }
 }

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useContext, useState } from "react";
-import { CredentialsDTO } from "../../../models/auth";
 import * as forms from "../../../utils/forms.ts";
 import * as authService from "../../../services/auth-service.ts";
 import { useNavigate } from "react-router-dom";

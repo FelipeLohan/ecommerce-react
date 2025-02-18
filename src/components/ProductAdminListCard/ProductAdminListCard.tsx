@@ -44,8 +44,8 @@ type Props = {
   name: string,
   price: number,
   imgUrl: string,
-  onDeleteClick: Function
-  onUpdateClick: Function
+  onDeleteClick: any
+  onUpdateClick: any
 }
 
 const ProductAdminListCard = ({id, name, price, imgUrl, onDeleteClick, onUpdateClick}: Props) => {

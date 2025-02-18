@@ -44,7 +44,7 @@ const DialogInfoContent = styled.div`
 
 type Props = {
   message: string;
-  onDialogClose: Function;
+  onDialogClose: any;
 }
 
 const DialogInfo = ({message, onDialogClose}: Props) => {
