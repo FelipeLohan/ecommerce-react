@@ -45,9 +45,10 @@ type Props = {
   price: number,
   imgUrl: string,
   onDeleteClick: Function
+  onUpdateClick: Function
 }
 
-const ProductAdminListCard = ({id, name, price, imgUrl, onDeleteClick}: Props) => {
+const ProductAdminListCard = ({id, name, price, imgUrl, onDeleteClick, onUpdateClick}: Props) => {
   return (
     <>
       <ProductCardContainer>
@@ -59,7 +60,7 @@ const ProductAdminListCard = ({id, name, price, imgUrl, onDeleteClick}: Props) =
             <p>{name}</p>
           </ProductInfosContainer>
           <ProductEditTrashIcons>
-            <img src={PenIcon} />
+            <img onClick={onUpdateClick} src={PenIcon} />
             <img onClick={onDeleteClick} src={TrashIcon} />
           </ProductEditTrashIcons>
         </ProductCardContent>

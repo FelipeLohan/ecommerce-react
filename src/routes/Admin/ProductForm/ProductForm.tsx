@@ -171,11 +171,17 @@ const ProductForm = () => {
       setFormData(result);
     }
 
+    function handleSubmitForm(e: any){
+      e.preventDefault()
+
+      console.log(forms.toValues(formData))
+    }
+
 
   return (
     <>
       <ProductFormContainer>
-        <FormContainer>
+        <FormContainer onSubmit={handleSubmitForm}>
           <h1>DADOS DO PRODUTO</h1>
           <FormInput 
             {...formData.name} 
@@ -216,7 +222,7 @@ const ProductForm = () => {
             <Link to="/admin/products">
               <CancelButton>Cancelar</CancelButton>
             </Link>
-            <SaveButton>Salvar</SaveButton>
+            <SaveButton type="submit">Salvar</SaveButton>
           </ButtonsContainer>
         </FormContainer>
       </ProductFormContainer>

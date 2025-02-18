@@ -104,6 +104,10 @@ const ProductListing = () => {
     });
   }
 
+ function handleUpdateClick(productId: number){
+  navigate(`/admin/products/${productId}`)
+ }
+
   function handleDialogConfirmationAnswer(answer: boolean, productId: number) {
     if (answer) {
       productService
@@ -151,6 +155,7 @@ const ProductListing = () => {
               price={e.price}
               imgUrl={e.imgUrl}
               onDeleteClick={() => handleDeleteClick(e.id)}
+              onUpdateClick={() => handleUpdateClick(e.id)}
             />
           ))}
         </ProductListContent>
