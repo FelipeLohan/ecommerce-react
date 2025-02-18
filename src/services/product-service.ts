@@ -5,8 +5,8 @@ import { ProductDTO } from "../models/product";
 export function findPageRequest(
   page: number,
   name: string,
-  size: 12,
-  sort: "name"
+  size?: number,
+  sort?: string,
 ) {
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -14,8 +14,8 @@ export function findPageRequest(
     params: {
       page,
       name,
-      size,
-      sort,
+      size: size ?? 12,
+      sort: sort ?? "name"
     },
   };
 

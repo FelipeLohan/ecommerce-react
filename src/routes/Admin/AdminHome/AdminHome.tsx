@@ -21,7 +21,7 @@ const AdminHome = () => {
   useState(() => {
     userService.findMe()
       .then(response => setUser(response.data))
-  }, [])
+  })
 
   return (
     <>
