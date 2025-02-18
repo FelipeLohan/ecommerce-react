@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FormInput } from "../../../components/Forminput";
 import { useEffect, useState } from "react";
@@ -9,7 +9,6 @@ import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx"
 import { CategoryDTO } from "../../../models/category.ts";
 import { FormSelect } from "../../../components/FormSelect/FormSelect.tsx";
 
-
 const ProductFormContainer = styled.div`
   width: 40%;
   margin: 0 auto;
@@ -19,7 +18,7 @@ const ProductFormContainer = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
- 
+
   gap: 15px;
 
   input {
@@ -33,7 +32,7 @@ const FormContainer = styled.form`
     color: #d9d9d9;
   }
 
-   textarea {
+  textarea {
     width: 100%;
     height: 150px;
     padding: 15px;
@@ -46,7 +45,6 @@ const FormContainer = styled.form`
   textarea::placeholder {
     color: #d9d9d9;
   }
-
 
   h1 {
     color: #636363;
@@ -93,18 +91,21 @@ const CancelButton = styled.button`
 `;
 
 const ProductForm = () => {
-
   const params = useParams();
 
-  const isEditing = params.productId !== 'create';
+  const navigate = useNavigate();
+
+  const isEditing = params.productId !== "create";
 
   useEffect(() => {
-    if(isEditing){
-      productService.findById(Number(params.productId))
-        .then(response => setFormData(forms.updateAll(formData, response.data)))
+    if (isEditing) {
+      productService
+        .findById(Number(params.productId))
+        .then((response) =>
+          setFormData(forms.updateAll(formData, response.data))
+        );
     }
-  }, [])
-
+  }, []);
 
   const [formData, setFormData] = useState({
     name: {
@@ -113,10 +114,10 @@ const ProductForm = () => {
       name: "name",
       type: "text",
       placeholder: "Nome",
-      validation: function(value: string){
+      validation: function (value: string) {
         return value.length >= 3 && value.length <= 80;
       },
-      message: "Infomar um nome de 3 até 80 caracteres"
+      message: "Infomar um nome de 3 até 80 caracteres",
     },
     price: {
       value: "",
@@ -124,17 +125,17 @@ const ProductForm = () => {
       name: "price",
       type: "number",
       placeholder: "Preço",
-      validation: function(value: any){
-        return Number(value) > 0
+      validation: function (value: any) {
+        return Number(value) > 0;
       },
-      message: "O valor deve ser acima de 0"
+      message: "O valor deve ser acima de 0",
     },
     imgUrl: {
       value: "",
       id: "imgUrl",
       name: "imgUrl",
       type: "text",
-      placeholder: "URL da Imagem"
+      placeholder: "URL da Imagem",
     },
     description: {
       value: "",
@@ -142,82 +143,115 @@ const ProductForm = () => {
       name: "description",
       type: "text",
       placeholder: "Descrição",
-      validation: function(value: string){
+      validation: function (value: string) {
         return value.length >= 10;
       },
-      message: "A descrição deve ter pelo menos 10 caracteres"
+      message: "A descrição deve ter pelo menos 10 caracteres",
     },
     categories: {
       value: [],
       id: "categories",
       name: "categories",
       placeholder: "Categorias",
-      validation: function(value: CategoryDTO[]){
+      validation: function (value: CategoryDTO[]) {
         return value.length > 0;
       },
-      message: "Escolha ao menos uma categoria"
-    }
-  })
+      message: "Escolha ao menos uma categoria",
+    },
+  });
 
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
 
   useEffect(() => {
-    categoryService.findAllRequest()
-      .then(response => setCategories(response.data))
-  }, [])
+    categoryService
+      .findAllRequest()
+      .then((response) => setCategories(response.data));
+  }, []);
 
-   function handleInputChange(e: any) {
-      const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
-      setFormData(result);
+  function handleInputChange(e: any) {
+    const result = forms.updateAndValidate(
+      formData,
+      e.target.name,
+      e.target.value
+    );
+    setFormData(result);
+  }
+
+  function handleSubmitForm(e: any) {
+    e.preventDefault();
+
+    // Verifica se todos os campos obrigatórios são válidos
+    const isValid = Object.values(formData).every((field) =>
+      "validation" in field ? field.validation(field.value) : true
+    );
+
+    if (!isValid) {
+      console.log("Formulário inválido, verifique os campos!");
+      return;
     }
 
-    function handleSubmitForm(e: any){
-      e.preventDefault()
-
-      console.log(forms.toValues(formData))
+    console.log("Formulário válido, enviando os dados...");
+    const requestBody = forms.toValues(formData);
+    if (isEditing) {
+      requestBody.id = params.productId;
+      productService.updateRequest(requestBody).then(() => {
+        navigate("/admin/products");
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    } else {
+      productService.insertRequest(requestBody)
+        .then(() => {
+          navigate("/admin/products");
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
-
+  }
 
   return (
     <>
       <ProductFormContainer>
         <FormContainer onSubmit={handleSubmitForm}>
           <h1>DADOS DO PRODUTO</h1>
-          <FormInput 
-            {...formData.name} 
+          <FormInput
+            {...formData.name}
             className="form-control"
-            onChange={handleInputChange} 
-            />
-             <span className="form-error">{formData.name.message}</span>
-          <FormInput 
+            onChange={handleInputChange}
+          />
+          <span className="form-error">{formData.name.message}</span>
+          <FormInput
             {...formData.price}
-            className="form-control" 
-            onChange={handleInputChange} 
-            />
-            <span className="form-error">{formData.price.message}</span>
-          <FormInput 
-            {...formData.imgUrl} 
-            onChange={handleInputChange} 
-            />
-          <FormSelect 
-          {...formData.categories}
-           className="form-control"
+            className="form-control"
+            onChange={handleInputChange}
+          />
+          <span className="form-error">{formData.price.message}</span>
+          <FormInput {...formData.imgUrl} onChange={handleInputChange} />
+          <FormSelect
+            {...formData.categories}
+            className="form-control"
             options={categories}
             isMulti
             onChange={(obj: any) => {
-              const newFormData = forms.updateAndValidate(formData, "categories", obj)
-              setFormData(newFormData)
+              const newFormData = forms.updateAndValidate(
+                formData,
+                "categories",
+                obj
+              );
+              setFormData(newFormData);
             }}
             getOptionLabel={(obj: any) => obj.name}
             getOptionValue={(obj: any) => String(obj.id)}
           />
-           <span className="form-error">{formData.categories.message}</span>
-          <FormTextArea 
-            {...formData.description} 
+          <span className="form-error">{formData.categories.message}</span>
+          <FormTextArea
+            {...formData.description}
             className="form-control"
-            onChange={handleInputChange} 
-            />
-             <span className="form-error">{formData.description.message}</span>
+            onChange={handleInputChange}
+          />
+          <span className="form-error">{formData.description.message}</span>
           <ButtonsContainer>
             <Link to="/admin/products">
               <CancelButton>Cancelar</CancelButton>

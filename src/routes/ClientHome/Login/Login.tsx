@@ -57,8 +57,19 @@ const LoginContainer = styled.div`
   margin-top: 10%;
 `;
 
+const InvalidErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  color: red;
+  border: 1px solid red;
+  width: 100%;
+`;
+
 const Login = () => {
   const navigate = useNavigate();
+
+  const [submitResponseFail, setSubmitResponseFail] = useState(false);
 
   const [formData, setFormData] = useState({
     username: {
@@ -92,10 +103,12 @@ const Login = () => {
       .then((response) => {
         authService.saveAccessToken(response.data.access_token);
         setContextTokenPayload(authService.getAccessTokenPayload());
+        setSubmitResponseFail(false)
         navigate("/cart");
       })
       .catch((error) => {
         console.log("Erro no login", error);
+        setSubmitResponseFail(true)
       });
   }
 
@@ -108,8 +121,6 @@ const Login = () => {
     setFormData(result);
   }
 
-
-
   return (
     <>
       <LoginContainer>
@@ -121,11 +132,15 @@ const Login = () => {
               className="form-control"
               onChange={handleInputChange}
             />
-             <span className="form-error">{formData.username.message}</span>
-            <FormInput
-              {...formData.password}
-              onChange={handleInputChange}
-            />
+            <span className="form-error">{formData.username.message}</span>
+            <FormInput {...formData.password} onChange={handleInputChange} />
+            {
+              submitResponseFail &&
+              <InvalidErrorContainer>
+                Usuário ou senha inválidos
+              </InvalidErrorContainer>
+            }
+
             <button type="submit">Entrar</button>
           </form>
         </LoginCardContainer>
