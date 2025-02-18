@@ -19,7 +19,7 @@ const ProductFormContainer = styled.div`
 const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
-  align-items: center;
+ 
   gap: 15px;
 
   input {
@@ -47,16 +47,6 @@ const FormContainer = styled.form`
     color: #d9d9d9;
   }
 
-  select {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
-  }
-
-  select::placeholder {
-    color: #d9d9d9;
-  }
 
   h1 {
     color: #636363;

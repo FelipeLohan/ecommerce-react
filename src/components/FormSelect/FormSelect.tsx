@@ -1,4 +1,5 @@
 import Select from "react-select";
+import { selectStyles } from "../../utils/select-style";
 
 const FormSelect = (props: any) => {
   const { validation, className, invalid = "false", ...selectProps } = props;
@@ -6,7 +7,9 @@ const FormSelect = (props: any) => {
   return (
     <>
       <div data-invalid={invalid} className={className} >
-        <Select {...selectProps} />
+        <Select
+        styles={selectStyles} 
+        {...selectProps} />
       </div>
     </>
   );
