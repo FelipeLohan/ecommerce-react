@@ -50,6 +50,18 @@ const LoginCardContainer = styled.div`
     font-size: 2.2vmin;
     border: none;
   }
+
+  @media (max-width: 800px){
+    width: 60%;
+  }
+
+  @media (max-width: 600px){
+    width: 80%;
+
+    form button{
+      font-size: 3vmin;
+    }
+  }
 `;
 
 const LoginContainer = styled.div`
