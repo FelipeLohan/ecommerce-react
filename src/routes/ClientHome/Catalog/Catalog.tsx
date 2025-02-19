@@ -15,6 +15,20 @@ const ProductsCardsGridContainer = styled.div`
   grid-gap: 40px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
+
+  @media (max-width: 850px) {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 600px) {
+grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+@media (max-width: 420px){
+  grid-template-columns: repeat(1, 1fr);
+  width: 70%;
+}
 `;
 
 const SearchInputContainerMargin = styled.div`

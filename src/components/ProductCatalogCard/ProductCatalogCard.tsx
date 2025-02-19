@@ -18,25 +18,52 @@ const ImageCardContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  @media (max-width: 850px) {
+    img {
+      width: 150px;
+    }
+  }
 `;
 
 const InfoCardContainer = styled.div`
-  h3{
+  h3 {
     font-size: 2.5vmin;
-    color: #0CAF1D;
+    color: #0caf1d;
     margin-bottom: 5px;
   }
-    h4{
-      font-size: 2vmin;
-      color: #636363;
+  h4 {
+    font-size: 2vmin;
+    color: #636363;
+  }
+
+  @media (max-width: 600px) {
+    h3{
+      font-size: 3.5vmin;
     }
-`
+
+     h4{
+      font-size: 3vmin;
+    }
+  }
+
+  @media (max-width: 420px){
+  h3 {
+    font-size: 5vmin;
+    color: #0caf1d;
+    margin-bottom: 5px;
+  }
+  h4 {
+    font-size: 4vmin;
+    color: #636363;
+  }
+}
+`;
 
 type Props = {
   product: ProductDTO;
-}
+};
 
-const ProductCatalogCard = ({product}: Props) => {
+const ProductCatalogCard = ({ product }: Props) => {
   return (
     <>
       <ProductCatalogCardContainer>
@@ -45,7 +72,7 @@ const ProductCatalogCard = ({product}: Props) => {
         </ImageCardContainer>
         <span></span>
         <InfoCardContainer>
-          <h3>{product.price}</h3>
+          <h3>R$ {product.price}</h3>
           <h4>{product.name}</h4>
         </InfoCardContainer>
       </ProductCatalogCardContainer>

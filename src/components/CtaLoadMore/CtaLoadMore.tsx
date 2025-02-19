@@ -3,6 +3,7 @@ import styled from "styled-components";
 const CtaLoadMoreContainer = styled.div`
   width: 90%;
   margin: 0 auto;
+  margin-bottom: 20px;
 
 
   button {
@@ -15,6 +16,13 @@ const CtaLoadMoreContainer = styled.div`
     border-radius: 8px;
     cursor: pointer;
   }
+
+  @media (max-width: 420px){
+  button{
+  font-size: 3vmin;
+  }
+  width: 70%;
+}
 `;
 
 const CtaLoadMore = () => {

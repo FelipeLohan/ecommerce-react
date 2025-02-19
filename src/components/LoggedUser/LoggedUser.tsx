@@ -14,6 +14,26 @@ const UserContainer = styled.div`
     font-size: 2.5vmin;
     cursor: pointer;
   }
+
+  @media (max-width: 600px) {
+  h4{
+  font-size: 2.5vmin;
+  }
+
+  h5{
+  font-size: 2.2vmin;
+  }
+}
+
+@media (max-width: 420px){
+  h4{
+  font-size: 3vmin;
+  }
+
+  h5{
+  font-size: 3vmin;
+  }
+}
 `;
 
 const LoggedUser = () => {

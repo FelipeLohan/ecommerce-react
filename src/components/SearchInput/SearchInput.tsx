@@ -24,6 +24,10 @@ const SearchInputContainer = styled.form`
     outline: none;
     border: 1px solid #d9d9d9;
   }
+
+  @media (max-width: 420px){
+  width: 70%;
+}
 `;
 
 type Props = {

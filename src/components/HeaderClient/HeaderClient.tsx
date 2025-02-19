@@ -19,22 +19,54 @@ const HeaderClientContainer = styled.header`
   h1 {
     color: #636363;
   }
+
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 3.5vmin;
+    }
+  }
+
+  @media (max-width: 420px) {
+    justify-content: center;
+    gap: 30px;
+
+    h1 {
+      font-size: 4vmin;
+    }
+  }
 `;
 
 const LoginCartContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 
   a {
     color: #636363;
   }
+
+  @media (max-width: 600px) {
+    width: 130px;
+
+    a {
+      font-size: 2.5vmin;
+    }
+
+    img {
+      width: 20px;
+    }
+
+    @media (max-width: 420px) {
+      img {
+        width: 20px;
+      }
+    }
+  }
 `;
 
 const HeaderClient = () => {
-
-  const {contextTokenPayload} = useContext(ContextToken)
+  const { contextTokenPayload } = useContext(ContextToken);
 
   return (
     <>
@@ -45,9 +77,7 @@ const HeaderClient = () => {
           </div>
         </Link>
         <LoginCartContainer>
-          {
-          contextTokenPayload &&
-          authService.hasAnyRoles(["ROLE_ADMIN"]) && (
+          {contextTokenPayload && authService.hasAnyRoles(["ROLE_ADMIN"]) && (
             <Link to="/admin">
               <img src={AdminIcon} alt="" />
             </Link>
@@ -55,7 +85,7 @@ const HeaderClient = () => {
           <Link to="/cart">
             <CartIcon />
           </Link>
-          <LoggedUser/>
+          <LoggedUser />
         </LoginCartContainer>
       </HeaderClientContainer>
     </>
