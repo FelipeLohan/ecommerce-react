@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-//import { BASE_URL } from "./system";
+import { BASE_URL } from "./system";
 import * as authService from "../services/auth-service.ts"
 import { history } from "./history.ts";
 
@@ -11,7 +11,7 @@ export function requestBackend(config: AxiosRequestConfig){
     Authorization: "Bearer " + authService.getAccessToken() 
   } : config.headers;
 
-  return axios({...config, baseURL: "https://ecommerce-spring-ec44b57ed84d.herokuapp.com", headers})
+  return axios({...config, baseURL: BASE_URL, headers})
 }
 
 // REQUEST INTERCEPTOR
