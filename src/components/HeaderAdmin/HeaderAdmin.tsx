@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import HomeIcon from "../../assets/homeIcon.svg";
-import StockIcon from "../../assets/stockIcon.svg";
+import HomeIcon from "../../assets/HomeIcon.svg";
+import StockIcon from "../../assets/StockIcon.svg";
 import { LoggedUser } from "../LoggedUser";
 import { NavLink } from "react-router-dom";
 import "./style.css";
