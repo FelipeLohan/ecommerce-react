@@ -1,50 +1,41 @@
-# React + TypeScript + Vite
+# Ecommerce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Sobre o projeto
 
-Currently, two official plugins are available:
+https://ecommerce-lohan.netlify.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este é um template de aplicação para Ecommerce, desenvolvido com o objetivo de consolidar minhas habilidades em **React** e **TypeScript**.
 
-## Expanding the ESLint configuration
+A aplicação conta com diversos recursos essenciais para um ecommerce, incluindo:
+- **Sistema de login** com autenticação baseada em **Token JWT**.
+- **Carrinho de compras**, permitindo ao usuário adicionar, remover e modificar itens antes da finalização do pedido.
+- **Finalização de pedidos**, com um processo simples e intuitivo de checkout.
+- **Área administrativa**, acessível exclusivamente a usuários com o **role de ADMIN**, onde é possível cadastrar, atualizar e remover produtos no banco de dados.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Este projeto demonstra minha capacidade de implementar funcionalidades complexas e de gerenciar diferentes permissões de usuário em uma aplicação de ecommerce.
 
-- Configure the top-level `parserOptions` property like this:
+## Layout
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+![Web 1](https://raw.githubusercontent.com/FelipeLohan/felipelohan-assets/refs/heads/main/ecommerce/Desktop1.png?token=GHSAT0AAAAAAC7H3UKOT7ZZCC2XCW6NN5YGZ5WNRBQ)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+![Web 2](https://raw.githubusercontent.com/FelipeLohan/felipelohan-assets/refs/heads/main/ecommerce/Desktop2.png?token=GHSAT0AAAAAAC7H3UKPF4L4CIHEV777OVZEZ5WNSLQ)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Tecnologias utilizadas:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Back end:
+- Java
+- Spring Boot
+- JPA / Hibernate
+- Maven
+  
+### Front end
+- HTML / CSS / JavaScript / TypeScript
+- ReactJS
+- Styled Components
+- Axios
+- React Router
+
+### Implantação em produção:
+- Back end: Heroku
+- Front end web: Netlify
+- Banco de dados: MySQL
