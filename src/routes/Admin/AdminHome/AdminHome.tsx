@@ -8,20 +8,24 @@ const AdminHomeContainer = styled.main`
   margin: 0 auto;
 
   color: #636363;
-  
-  h1{
+
+  h1 {
     font-size: 4vmin;
+  }
+
+  @media (max-width: 420px) {
+    h1 {
+      font-size: 5vmin;
+    }
   }
 `;
 
 const AdminHome = () => {
-
-  const [user, setUser] = useState<UserDTO>()
+  const [user, setUser] = useState<UserDTO>();
 
   useState(() => {
-    userService.findMe()
-      .then(response => setUser(response.data))
-  })
+    userService.findMe().then((response) => setUser(response.data));
+  });
 
   return (
     <>

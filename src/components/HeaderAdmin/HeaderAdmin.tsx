@@ -22,10 +22,22 @@ const HeaderAdminContent = styled.div`
   img {
     width: 30px;
   }
+
+   @media (max-width: 600px){
+    img{
+      width: 25px;
+    }
+  }
+
+  @media (max-width: 420px){
+    img{
+      width: 18px;
+    }
+  }
 `;
 
 const LogoContainer = styled.div`
-  font-size: 4vmin;
+  font-size: 3.5vmin;
 `;
 
 const CategoryContainer = styled.div`
@@ -34,22 +46,34 @@ const CategoryContainer = styled.div`
   align-items: center;
 
   h3 {
-    font-size: 3vmin;
+    font-size: 2.2vmin;
   }
 
   a{
     color: #fff;
   }
+
+  @media (max-width: 800px){
+    h3{
+      display: none;
+    }
+  }
+
+  @media (max-width: 800px){
+    gap: 20px;
+  }
 `;
 
 const HomeContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
 
   
 `;
 const ProductsContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
 `;
 
@@ -58,7 +82,7 @@ const HeaderAdmin = () => {
     <>
       <HeaderAdminContainer>
         <HeaderAdminContent>
-          <LogoContainer>Ecommerce</LogoContainer>
+          <LogoContainer>Admin</LogoContainer>
           <CategoryContainer>
             <NavLink to="/admin/home" className={({isActive}) => isActive ? "header-isActive" : ""}>
               <HomeContainer>
