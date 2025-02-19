@@ -16,9 +16,9 @@ Este projeto demonstra minha capacidade de implementar funcionalidades complexas
 
 ## Layout
 
-![Web 1](https://imgur.com/L5BdIdw)
+![Web 1](https://imgur.com/L5BdIdw.png)
 
-![Web 2](https://imgur.com/TYzS4Wy)
+![Web 2](https://imgur.com/TYzS4Wy.png)
 
 ## Tecnologias utilizadas:
 
