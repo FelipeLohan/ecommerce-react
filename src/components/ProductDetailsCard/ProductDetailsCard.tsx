@@ -18,6 +18,11 @@ const ProductDetailsCardContainer = styled.section`
 const ProductImageContainer = styled.div`
   box-sizing: fit-content;
   margin: 0 auto;
+  width: 50%;
+
+  @media (max-width: 600px) {
+   width: 50%;
+}
 `
 
 const ProductInfoContainer = styled.div`
@@ -40,6 +45,41 @@ const ProductInfoContainer = styled.div`
     font-size: 1.7vmin;
     color: #636363;
   }
+
+
+@media (max-width: 600px) {
+   h3{
+    font-size: 3.5vmin;
+    color: #0CAF1D;
+  }
+
+  h4{
+    font-size: 3vmin;
+    color: #636363;
+  }
+  
+  p{
+    font-size: 2.5vmin;
+    color: #636363;
+  }
+}
+
+@media (max-width: 420px){
+   h3{
+    font-size: 4.5vmin;
+    color: #0CAF1D;
+  }
+
+  h4{
+    font-size: 4vmin;
+    color: #636363;
+  }
+  
+  p{
+    font-size: 3vmin;
+    color: #636363;
+  }
+}
 `
 
 const ProductCardCategoryContainer = styled.div`
@@ -63,7 +103,7 @@ const ProductDetailsCard = ({product}: Props) => {
         <img src={product.imgUrl} />
       </ProductImageContainer>
       <ProductInfoContainer>
-        <h3>{product.price}</h3>
+        <h3>R$ {product.price}</h3>
         <h4>{product.name}</h4>
         <p>{product.description}</p>
       </ProductInfoContainer>
