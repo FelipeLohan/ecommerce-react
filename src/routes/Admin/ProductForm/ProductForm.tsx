@@ -14,6 +14,18 @@ const ProductFormContainer = styled.div`
   margin: 0 auto;
   padding: 40px;
   background-color: #fff;
+
+  @media (max-width: 800px){
+    width: 60%;
+  }
+
+  @media (max-width: 600px){
+    width: 80%;
+  }
+
+  @media (max-width: 420px){
+    width: 90%;
+  }
 `;
 const FormContainer = styled.form`
   display: flex;
