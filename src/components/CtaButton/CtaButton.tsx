@@ -13,7 +13,7 @@ const CtaButton = ({text, primaryColor, secondaryColor, handleClick}: Props) => 
 
   const ButtonContainer = styled.div`
   button {
-    width: 200px;
+    width: 220px;
     height: 50px;
     background-color: ${primaryColor};
     color: ${secondaryColor};

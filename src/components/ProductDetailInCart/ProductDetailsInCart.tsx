@@ -9,7 +9,7 @@ const ProductDetailsInCartContainer = styled.div`
   padding: 20px;
 
   img {
-    width: 40%;
+    width: 30%;
   }
 `;
 
@@ -33,9 +33,21 @@ const ProductCartInfo = styled.div`
 
   div span {
     padding: 5px;
-    border: 1px solid #000;
+    border: 1px solid #666;
     border-radius: 12px;
     cursor: pointer;
+  }
+
+  @media (max-width: 600px){
+  h3, p{
+    font-size: 3.2vmin;
+  }
+  }
+
+  @media (max-width: 420px){
+  h3, p{
+    font-size: 4vmin;
+  }
   }
 `;
 
@@ -45,6 +57,18 @@ const ProductCartPrice = styled.div`
   color: #0caf1d;
   font-size: 2.5vmin;
   align-items: center;
+
+  @media (max-width: 600px){
+  h3, p{
+    font-size: 3.2vmin;
+  }
+  }
+
+  @media (max-width: 420px){
+  h3, p{
+    font-size: 4vmin;
+  }
+  }
 `;
 const ProductCartInfoImageContainer = styled.div`
   display: flex;
@@ -76,7 +100,7 @@ const ProductDetailsInCart = ({quantity, name, price, imgUrl, handleIncreaseClic
           </ProductCartInfo>
         </ProductCartInfoImageContainer>
         <ProductCartPrice>
-          <p>{(price * quantity).toFixed(2)}</p>
+          <p>R$ {(price * quantity).toFixed(2)}</p>
         </ProductCartPrice>
       </ProductDetailsInCartContainer>
     </>

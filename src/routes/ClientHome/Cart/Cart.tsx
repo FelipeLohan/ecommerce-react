@@ -29,6 +29,18 @@ const ProductsTotalPrice = styled.div`
     color: #0caf1d;
     align-items: center;
   }
+
+   @media (max-width: 600px){
+  h3, p{
+    font-size: 3.2vmin;
+  }
+  }
+
+  @media (max-width: 420px){
+  h3, p{
+    font-size: 4vmin;
+  }
+  }
 `;
 
 const CtaButtonContainer = styled.div`
