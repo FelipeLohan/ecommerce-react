@@ -24,6 +24,18 @@ const ProductInfosContainer = styled.div`
   img{
     width: 20%;
   }
+
+  @media (max-width: 600px){
+    p{
+      font-size: 2.5vmin;
+    }
+  }
+    @media (max-width: 420px){
+    p{
+      font-size: 2.8vmin;
+    }
+
+  }
 `;
 
 const ProductEditTrashIcons = styled.div`
@@ -36,6 +48,13 @@ const ProductEditTrashIcons = styled.div`
   img {
     width: 50%;
     cursor: pointer;
+  }
+
+   @media (max-width: 420px){
+    img{
+    width: 70%;
+    }
+
   }
 `;
 
