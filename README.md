@@ -41,3 +41,9 @@ Este projeto demonstra minha capacidade de implementar funcionalidades complexas
 - Back end: Heroku
 - Front end web: Netlify
 - Banco de dados: MySQL
+
+# Autor
+
+Felipe Lohan
+
+https://www.linkedin.com/in/felipe-lohan-767294213/
