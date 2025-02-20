@@ -16,9 +16,9 @@ Este projeto demonstra minha capacidade de implementar funcionalidades complexas
 
 ## Layout
 
-![Web 1](https://raw.githubusercontent.com/FelipeLohan/felipelohan-assets/refs/heads/main/ecommerce/Desktop1.png?token=GHSAT0AAAAAAC7H3UKOT7ZZCC2XCW6NN5YGZ5WNRBQ)
+![Web 1](https://imgur.com/L5BdIdw.png)
 
-![Web 2](https://raw.githubusercontent.com/FelipeLohan/felipelohan-assets/refs/heads/main/ecommerce/Desktop2.png?token=GHSAT0AAAAAAC7H3UKPF4L4CIHEV777OVZEZ5WNSLQ)
+![Web 2](https://imgur.com/TYzS4Wy.png)
 
 ## Tecnologias utilizadas:
 
