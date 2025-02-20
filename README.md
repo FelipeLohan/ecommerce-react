@@ -1,5 +1,7 @@
 # Ecommerce
 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/FelipeLohan/ecommerce-react/blob/main/LICENSE)
+
 # Sobre o projeto
 
 https://ecommerce-lohan.netlify.app/
