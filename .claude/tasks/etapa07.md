@@ -1,6 +1,6 @@
 # Etapa 07 — ProductCatalogCard e Grid
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton)
 
 ---
@@ -146,10 +146,10 @@ animation: pulse 1.5s ease-in-out infinite;
 
 ## Critério de Conclusão
 
-- [ ] Imagem sangrada até a borda do card (sem padding ao redor)
-- [ ] Hover com `translateY(-4px)` + sombra lg
-- [ ] Botão "Ver detalhes" aparece no hover (fade + slide)
-- [ ] Preço via `token.primary.600` (sem `#0caf1d`)
-- [ ] Categorias como pills neutros
-- [ ] Grid fluido com `auto-fill` e `minmax(280px, 1fr)`
-- [ ] Skeleton cards durante loading
+- [x] Imagem sangrada até a borda do card (sem padding ao redor)
+- [x] Hover com `translateY(-4px)` + sombra lg
+- [x] Botão "Ver detalhes" aparece no hover (fade + slide)
+- [x] Preço via `token.primary.600` (sem `#0caf1d`)
+- [x] Categorias como pills neutros
+- [x] Grid fluido com `auto-fill` e `minmax(280px, 1fr)`
+- [x] Skeleton cards durante loading

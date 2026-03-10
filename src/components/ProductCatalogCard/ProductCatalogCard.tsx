@@ -1,63 +1,84 @@
 import styled from "styled-components";
-
 import { ProductDTO } from "../../models/product";
+import { CategoryCard } from "../CategoryCard/CategoryCard.tsx";
 import { tokens } from "../../styles/tokens.ts";
 
-const ProductCatalogCardContainer = styled.div`
+const DetailsButton = styled.div`
+  margin-top: ${tokens.spacing[1]};
+  padding: 8px 0;
+  background: ${tokens.colors.primary[600]};
+  color: #ffffff;
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.medium};
+  text-align: center;
+  border-radius: ${tokens.radius.md};
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity ${tokens.transition.base}, transform ${tokens.transition.base};
+`;
+
+const CardImage = styled.img`
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform ${tokens.transition.slow};
+`;
+
+const CardContainer = styled.div`
+  background: #ffffff;
+  border: 1px solid ${tokens.colors.neutral[100]};
+  border-radius: ${tokens.radius.lg};
+  box-shadow: ${tokens.shadow.sm};
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow ${tokens.transition.base}, transform ${tokens.transition.base};
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 40px;
-  background-color: #fff;
   width: 100%;
-  border-radius: 8px;
+
+  &:hover {
+    box-shadow: ${tokens.shadow.lg};
+    transform: translateY(-4px);
+  }
+
+  &:hover ${CardImage} {
+    transform: scale(1.03);
+  }
+
+  &:hover ${DetailsButton} {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
-const ImageCardContainer = styled.div`
-  width: 100%;
+const CardBody = styled.div`
+  padding: 16px 20px 20px;
   display: flex;
-  justify-content: center;
-  @media (max-width: 850px) {
-    img {
-      width: 150px;
-    }
-  }
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
 `;
 
-const InfoCardContainer = styled.div`
-  h3 {
-    font-size: ${tokens.fontSize.lg};
-    color: #0caf1d;
-    margin-bottom: 5px;
-  }
-  h4 {
-    font-size: ${tokens.fontSize.sm};
-    color: #636363;
-  }
+const ProductName = styled.h4`
+  font-size: ${tokens.fontSize.base};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[800]};
+  line-height: ${tokens.lineHeight.snug};
+  margin: 0;
+`;
 
-  @media (max-width: 600px) {
-    h3{
-      font-size: ${tokens.fontSize["2xl"]};
-    }
+const CategoriesRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+`;
 
-     h4{
-      font-size: ${tokens.fontSize.xl};
-    }
-  }
-
-  @media (max-width: 420px){
-  h3 {
-    font-size: ${tokens.fontSize["4xl"]};
-    color: #0caf1d;
-    margin-bottom: 5px;
-  }
-  h4 {
-    font-size: ${tokens.fontSize["3xl"]};
-    color: #636363;
-  }
-}
+const Price = styled.p`
+  font-size: ${tokens.fontSize.xl};
+  font-weight: ${tokens.fontWeight.bold};
+  color: ${tokens.colors.primary[600]};
+  margin: 4px 0 0;
 `;
 
 type Props = {
@@ -66,18 +87,21 @@ type Props = {
 
 const ProductCatalogCard = ({ product }: Props) => {
   return (
-    <>
-      <ProductCatalogCardContainer>
-        <ImageCardContainer>
-          <img src={product.imgUrl} />
-        </ImageCardContainer>
-        <span></span>
-        <InfoCardContainer>
-          <h3>R$ {product.price}</h3>
-          <h4>{product.name}</h4>
-        </InfoCardContainer>
-      </ProductCatalogCardContainer>
-    </>
+    <CardContainer>
+      <CardImage src={product.imgUrl} alt={product.name} />
+      <CardBody>
+        <ProductName>{product.name}</ProductName>
+        {product.categories?.length > 0 && (
+          <CategoriesRow>
+            {product.categories.map((cat) => (
+              <CategoryCard key={cat.id} name={cat.name} />
+            ))}
+          </CategoriesRow>
+        )}
+        <Price>R$ {product.price.toFixed(2)}</Price>
+        <DetailsButton>Ver detalhes</DetailsButton>
+      </CardBody>
+    </CardContainer>
   );
 };
 

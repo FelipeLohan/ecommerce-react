@@ -1,34 +1,23 @@
 import styled from "styled-components";
 import { tokens } from "../../styles/tokens.ts";
 
-const CategoryCardContainer = styled.span`
-  padding: 8px 20px;
-  color: #fff;
-  background-color: #636363;
-  border-radius: 8px;
+const CategoryPill = styled.span`
+  display: inline-block;
+  padding: 3px 10px;
+  background: ${tokens.colors.neutral[100]};
+  color: ${tokens.colors.neutral[600]};
   font-size: ${tokens.fontSize.xs};
-  
-  @media (max-width: 600px) {
-   font-size: ${tokens.fontSize.base};
-}
-
-@media (max-width: 420px){
-   font-size: ${tokens.fontSize.lg};
-}
-`
+  font-weight: ${tokens.fontWeight.medium};
+  border-radius: ${tokens.radius.full};
+  white-space: nowrap;
+`;
 
 type Props = {
   name: string;
-}
+};
 
-const CategoryCard = ({name}: Props) => {
-  return (
-    <>
-      <CategoryCardContainer>
-        {name}
-      </CategoryCardContainer>
-    </>
-  )
-}
+const CategoryCard = ({ name }: Props) => {
+  return <CategoryPill>{name}</CategoryPill>;
+};
 
-export { CategoryCard }
+export { CategoryCard };
