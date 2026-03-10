@@ -1,6 +1,6 @@
 # Etapa 08 — Página ProductDetails
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton), Etapa 07 (CategoryCard pills)
 
 ---
@@ -118,10 +118,10 @@ margin-top: 8px;
 
 ## Critério de Conclusão
 
-- [ ] Layout dois painéis no desktop, stack no mobile
-- [ ] Imagem com aspect-ratio 1:1 e sombra
-- [ ] Breadcrumb visível acima do nome
-- [ ] Hierarquia clara: categorias → nome → preço → descrição → ação
-- [ ] Quantity selector estilizado
-- [ ] Botão "Adicionar ao carrinho" proeminente, full width
-- [ ] Sem `vmin` nos font-sizes
+- [x] Layout dois painéis no desktop, stack no mobile
+- [x] Imagem com aspect-ratio 1:1 e sombra
+- [x] Breadcrumb visível acima do nome
+- [x] Hierarquia clara: categorias → nome → preço → descrição → ação
+- [x] Quantity selector estilizado
+- [x] Botão "Adicionar ao carrinho" proeminente, full width
+- [x] Sem `vmin` nos font-sizes

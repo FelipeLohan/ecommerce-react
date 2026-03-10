@@ -1,41 +1,29 @@
-import styled from "styled-components";
-import { ProductDetailsCard } from "../../../components/ProductDetailsCard";
-import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
+import { ProductDetailsCard } from "../../../components/ProductDetailsCard";
 import * as productService from "../../../services/product-service.ts";
 import * as cartService from "../../../services/cart-service.ts";
 import { ContextCartQuantity } from "../../../utils/context-cart.ts";
-
-const CtaButtonContainer = styled.div`
-  width: 90%;
-  margin: 0 auto;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
+import { ContextToast } from "../../../utils/context-toast.ts";
 
 const ProductDetails = () => {
   const params = useParams();
-
   const navigate = useNavigate();
 
   const [product, setProduct] = useState<ProductDTO>();
-
   const { setContextCartQuantity } = useContext(ContextCartQuantity);
+  const { addToast } = useContext(ContextToast);
 
-  function handleBuyProduct() {
+  function handleBuyProduct(quantity: number) {
     if (product) {
-      cartService.addProduct(product);
+      for (let i = 0; i < quantity; i++) {
+        cartService.addProduct(product);
+      }
       setContextCartQuantity(cartService.getCart().items.length);
+      addToast("success", "Item adicionado ao carrinho!");
       navigate("/cart");
     }
-  }
-
-  function handleHomeClick() {
-    navigate("/");
   }
 
   useEffect(() => {
@@ -49,18 +37,14 @@ const ProductDetails = () => {
       });
   }, []);
 
+  if (!product) return null;
+
   return (
-    <>
-      {product && <ProductDetailsCard product={product} />}
-      <CtaButtonContainer>
-        <CtaButton variant="secondary" fullWidth onClick={handleHomeClick}>
-          Início
-        </CtaButton>
-        <CtaButton variant="primary" fullWidth onClick={handleBuyProduct}>
-          Comprar
-        </CtaButton>
-      </CtaButtonContainer>
-    </>
+    <ProductDetailsCard
+      product={product}
+      onBuy={handleBuyProduct}
+      onBack={() => navigate("/")}
+    />
   );
 };
 
