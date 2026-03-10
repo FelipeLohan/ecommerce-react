@@ -1,6 +1,6 @@
 # Etapa 12 — Admin Pages
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton), Etapa 05 (FormInput, FormSelect)
 
 ---
@@ -176,11 +176,11 @@ Legenda: "* Campos obrigatórios" no rodapé do form
 
 ## Critério de Conclusão
 
-- [ ] Tabela com header destacado e hover por linha
-- [ ] Ações com ícones SVG (sem texto "editar"/"excluir")
-- [ ] Delete com hover vermelho
-- [ ] Botão "Novo produto" no header da página
-- [ ] ProductForm com seções agrupadas visualmente
-- [ ] Preview da imagem ao digitar URL
-- [ ] Rodapé fixo com botões save/cancel
-- [ ] Indicador de campos obrigatórios
+- [x] Tabela com header destacado e hover por linha
+- [x] Ações com ícones SVG (sem texto "editar"/"excluir")
+- [x] Delete com hover vermelho
+- [x] Botão "Novo produto" no header da página
+- [x] ProductForm com seções agrupadas visualmente
+- [x] Preview da imagem ao digitar URL
+- [x] Rodapé fixo com botões save/cancel
+- [x] Indicador de campos obrigatórios

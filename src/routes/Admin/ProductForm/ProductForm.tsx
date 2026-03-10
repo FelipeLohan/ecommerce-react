@@ -1,124 +1,127 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { FormInput } from "../../../components/Forminput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as productService from "../../../services/product-service.ts";
 import * as categoryService from "../../../services/category-service.ts";
 import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
 import { CategoryDTO } from "../../../models/category.ts";
 import { FormSelect } from "../../../components/FormSelect/FormSelect.tsx";
+import { CtaButton } from "../../../components/CtaButton";
 import { tokens } from "../../../styles/tokens.ts";
+import { ContextToast } from "../../../utils/context-toast.ts";
 
-const ProductFormContainer = styled.div`
-  width: 40%;
+/* ── Card ────────────────────────────────────────────────── */
+const PageWrapper = styled.div`
+  max-width: 700px;
   margin: 0 auto;
-  padding: 40px;
-  background-color: #fff;
-
-  @media (max-width: 800px){
-    width: 60%;
-  }
-
-  @media (max-width: 600px){
-    width: 80%;
-  }
-
-  @media (max-width: 420px){
-    width: 90%;
-  }
+  padding: 0 24px 40px;
 `;
-const FormContainer = styled.form`
+
+const FormCard = styled.div`
+  background: #ffffff;
+  border-radius: ${tokens.radius.lg};
+  box-shadow: ${tokens.shadow.md};
+  overflow: hidden;
+`;
+
+const CardHeader = styled.div`
+  padding: 24px 32px;
+  border-bottom: 1px solid ${tokens.colors.neutral[100]};
+`;
+
+const CardTitle = styled.h1`
+  font-size: ${tokens.fontSize.xl};
+  font-weight: ${tokens.fontWeight.bold};
+  color: ${tokens.colors.neutral[900]};
+  margin: 0;
+`;
+
+const CardBody = styled.div`
+  padding: 32px;
   display: flex;
   flex-direction: column;
-
-  gap: 15px;
-
-  input {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
-  }
-
-  input::placeholder {
-    color: #d9d9d9;
-  }
-
-  textarea {
-    width: 100%;
-    height: 150px;
-    padding: 15px;
-    border: 1px solid #d9d9d9;
-    border-radius: 8px;
-    resize: none;
-    outline: none;
-  }
-
-  textarea::placeholder {
-    color: #d9d9d9;
-  }
-
-  h1 {
-    color: #636363;
-    font-weight: 400;
-  }
+  gap: 24px;
 `;
 
-const ButtonsContainer = styled.div`
+const CardFooter = styled.div`
+  padding: 20px 32px;
+  border-top: 1px solid ${tokens.colors.neutral[100]};
   display: flex;
-  justify-content: center;
-  width: 100%;
-  gap: 20px;
+  justify-content: flex-end;
+  gap: 12px;
+`;
 
-  a {
-    width: 100%;
+/* ── Section ─────────────────────────────────────────────── */
+const SectionLabel = styled.p`
+  font-size: ${tokens.fontSize.xs};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[500]};
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid ${tokens.colors.neutral[100]};
+  margin: 0 0 16px;
+`;
+
+const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+/* ── Field ───────────────────────────────────────────────── */
+const FieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+const FieldLabel = styled.label`
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.medium};
+  color: ${tokens.colors.neutral[700]};
+
+  .required {
+    color: ${tokens.colors.danger[500]};
+    margin-left: 2px;
   }
-
-  button {
-    width: 100%;
-    padding: 15px;
-  }
 `;
 
-const SaveButton = styled.button`
+const FieldError = styled.span`
+  font-size: ${tokens.fontSize.xs};
+  color: ${tokens.colors.danger[500]};
+`;
+
+const FieldHint = styled.span`
+  font-size: ${tokens.fontSize.xs};
+  color: ${tokens.colors.neutral[400]};
+`;
+
+/* ── Image preview ───────────────────────────────────────── */
+const ImagePreview = styled.img`
   width: 100%;
-  padding: 15px;
-  background-color: #3483fa;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: ${tokens.fontSize.base};
-  cursor: pointer;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: ${tokens.radius.md};
+  border: 1px solid ${tokens.colors.neutral[100]};
+  display: block;
 `;
 
-const CancelButton = styled.button`
-  width: 100%;
-  padding: 15px;
-  color: #3483fa;
-  background-color: #fff;
-  border: 1px solid #3483fa;
-  border-radius: 8px;
-  font-size: ${tokens.fontSize.base};
-  cursor: pointer;
+const RequiredNote = styled.p`
+  font-size: ${tokens.fontSize.xs};
+  color: ${tokens.colors.neutral[400]};
+  margin: 0;
 `;
 
+/* ── Component ───────────────────────────────────────────── */
 const ProductForm = () => {
   const params = useParams();
-
   const navigate = useNavigate();
-
+  const { addToast } = useContext(ContextToast);
   const isEditing = params.productId !== "create";
-
-  useEffect(() => {
-    if (isEditing) {
-      productService
-        .findById(Number(params.productId))
-        .then((response) =>
-          setFormData(forms.updateAll(formData, response.data))
-        );
-    }
-  }, []);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     name: {
@@ -126,46 +129,46 @@ const ProductForm = () => {
       id: "name",
       name: "name",
       type: "text",
-      placeholder: "Nome",
+      placeholder: "Ex: Camiseta Básica Preta",
       validation: function (value: string) {
         return value.length >= 3 && value.length <= 80;
       },
-      message: "Infomar um nome de 3 até 80 caracteres",
+      message: "Informe um nome de 3 até 80 caracteres",
     },
     price: {
       value: "",
       id: "price",
       name: "price",
       type: "number",
-      placeholder: "Preço",
-      validation: function (value: any) {
+      placeholder: "0,00",
+      validation: function (value: string) {
         return Number(value) > 0;
       },
-      message: "O valor deve ser acima de 0",
+      message: "O valor deve ser maior que 0",
     },
     imgUrl: {
       value: "",
       id: "imgUrl",
       name: "imgUrl",
       type: "text",
-      placeholder: "URL da Imagem",
+      placeholder: "https://...",
     },
     description: {
       value: "",
       id: "description",
       name: "description",
       type: "text",
-      placeholder: "Descrição",
+      placeholder: "Descreva o produto em detalhes...",
       validation: function (value: string) {
         return value.length >= 10;
       },
       message: "A descrição deve ter pelo menos 10 caracteres",
     },
     categories: {
-      value: [],
+      value: [] as CategoryDTO[],
       id: "categories",
       name: "categories",
-      placeholder: "Categorias",
+      placeholder: "Selecione as categorias...",
       validation: function (value: CategoryDTO[]) {
         return value.length > 0;
       },
@@ -181,21 +184,26 @@ const ProductForm = () => {
       .then((response) => setCategories(response.data));
   }, []);
 
-  function handleInputChange(e: any) {
-    const result = forms.updateAndValidate(
-      formData,
-      e.target.name,
-      e.target.value
-    );
+  useEffect(() => {
+    if (isEditing) {
+      productService
+        .findById(Number(params.productId))
+        .then((response) =>
+          setFormData(forms.updateAll(formData, response.data))
+        );
+    }
+  }, []);
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
     setFormData(result);
   }
 
-  function handleSubmitForm(e: any) {
+  function handleSubmitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    // Verifica se todos os campos obrigatórios são válidos
     const isValid = Object.values(formData).every((field) =>
-      "validation" in field ? field.validation(field.value) : true
+      "validation" in field ? field.validation(field.value as never) : true
     );
 
     if (!isValid) {
@@ -203,77 +211,147 @@ const ProductForm = () => {
       return;
     }
 
-    console.log("Formulário válido, enviando os dados...");
     const requestBody = forms.toValues(formData);
+    setIsSubmitting(true);
+
     if (isEditing) {
       requestBody.id = params.productId;
-      productService.updateRequest(requestBody).then(() => {
-        navigate("/admin/products");
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    } else {
-      productService.insertRequest(requestBody)
+      productService
+        .updateRequest(requestBody)
         .then(() => {
+          addToast("success", "Produto salvo com sucesso!");
           navigate("/admin/products");
         })
-        .catch(error => {
-          console.log(error)
+        .catch((err) => {
+          console.log(err);
+          addToast("error", "Erro ao salvar produto.");
         })
+        .finally(() => setIsSubmitting(false));
+    } else {
+      productService
+        .insertRequest(requestBody)
+        .then(() => {
+          addToast("success", "Produto criado com sucesso!");
+          navigate("/admin/products");
+        })
+        .catch((err) => {
+          console.log(err);
+          addToast("error", "Erro ao criar produto.");
+        })
+        .finally(() => setIsSubmitting(false));
     }
   }
 
   return (
-    <>
-      <ProductFormContainer>
-        <FormContainer onSubmit={handleSubmitForm}>
-          <h1>DADOS DO PRODUTO</h1>
-          <FormInput
-            {...formData.name}
-            className="form-control"
-            onChange={handleInputChange}
-          />
-          <span className="form-error">{formData.name.message}</span>
-          <FormInput
-            {...formData.price}
-            className="form-control"
-            onChange={handleInputChange}
-          />
-          <span className="form-error">{formData.price.message}</span>
-          <FormInput {...formData.imgUrl} onChange={handleInputChange} />
-          <FormSelect
-            {...formData.categories}
-            className="form-control"
-            options={categories}
-            isMulti
-            onChange={(obj: any) => {
-              const newFormData = forms.updateAndValidate(
-                formData,
-                "categories",
-                obj
-              );
-              setFormData(newFormData);
-            }}
-            getOptionLabel={(obj: any) => obj.name}
-            getOptionValue={(obj: any) => String(obj.id)}
-          />
-          <span className="form-error">{formData.categories.message}</span>
-          <FormTextArea
-            {...formData.description}
-            className="form-control"
-            onChange={handleInputChange}
-          />
-          <span className="form-error">{formData.description.message}</span>
-          <ButtonsContainer>
-            <Link to="/admin/products">
-              <CancelButton>Cancelar</CancelButton>
-            </Link>
-            <SaveButton type="submit">Salvar</SaveButton>
-          </ButtonsContainer>
-        </FormContainer>
-      </ProductFormContainer>
-    </>
+    <PageWrapper>
+      <FormCard>
+        <CardHeader>
+          <CardTitle>{isEditing ? "Editar produto" : "Novo produto"}</CardTitle>
+        </CardHeader>
+
+        <form onSubmit={handleSubmitForm}>
+          <CardBody>
+            {/* Section 1 — Basic info */}
+            <div>
+              <SectionLabel>Informações básicas</SectionLabel>
+              <Section>
+                <FieldWrapper>
+                  <FieldLabel htmlFor="name">
+                    Nome <span className="required">*</span>
+                  </FieldLabel>
+                  <FormInput {...formData.name} onChange={handleInputChange} />
+                  {formData.name.value && !formData.name.validation(formData.name.value) && (
+                    <FieldError>{formData.name.message}</FieldError>
+                  )}
+                </FieldWrapper>
+
+                <FieldWrapper>
+                  <FieldLabel htmlFor="price">
+                    Preço (R$) <span className="required">*</span>
+                  </FieldLabel>
+                  <FormInput {...formData.price} onChange={handleInputChange} />
+                  {formData.price.value && !formData.price.validation(formData.price.value) && (
+                    <FieldError>{formData.price.message}</FieldError>
+                  )}
+                </FieldWrapper>
+
+                <FieldWrapper>
+                  <FieldLabel htmlFor="description">
+                    Descrição <span className="required">*</span>
+                  </FieldLabel>
+                  <FormTextArea {...formData.description} onChange={handleInputChange} />
+                  {formData.description.value && !formData.description.validation(formData.description.value) && (
+                    <FieldError>{formData.description.message}</FieldError>
+                  )}
+                </FieldWrapper>
+              </Section>
+            </div>
+
+            {/* Section 2 — Media */}
+            <div>
+              <SectionLabel>Mídia</SectionLabel>
+              <Section>
+                <FieldWrapper>
+                  <FieldLabel htmlFor="imgUrl">URL da imagem</FieldLabel>
+                  <FormInput {...formData.imgUrl} onChange={handleInputChange} />
+                </FieldWrapper>
+                {formData.imgUrl.value && (
+                  <ImagePreview
+                    src={formData.imgUrl.value}
+                    alt="Preview"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+                    onLoad={(e) => { (e.target as HTMLImageElement).style.display = "block"; }}
+                  />
+                )}
+              </Section>
+            </div>
+
+            {/* Section 3 — Categories */}
+            <div>
+              <SectionLabel>Categorias</SectionLabel>
+              <Section>
+                <FieldWrapper>
+                  <FieldLabel htmlFor="categories">
+                    Categorias <span className="required">*</span>
+                  </FieldLabel>
+                  <FormSelect
+                    {...formData.categories}
+                    options={categories}
+                    isMulti
+                    onChange={(obj: CategoryDTO[]) => {
+                      const newFormData = forms.updateAndValidate(formData, "categories", obj);
+                      setFormData(newFormData);
+                    }}
+                    getOptionLabel={(obj: CategoryDTO) => obj.name}
+                    getOptionValue={(obj: CategoryDTO) => String(obj.id)}
+                  />
+                  <FieldHint>Segure Ctrl para selecionar múltiplas categorias.</FieldHint>
+                  {formData.categories.value.length === 0 && (
+                    <FieldError>{formData.categories.message}</FieldError>
+                  )}
+                </FieldWrapper>
+              </Section>
+            </div>
+          </CardBody>
+
+          <CardFooter>
+            <RequiredNote>* Campos obrigatórios</RequiredNote>
+            <div style={{ display: "flex", gap: "12px" }}>
+              <CtaButton
+                variant="secondary"
+                type="button"
+                onClick={() => navigate("/admin/products")}
+              >
+                Cancelar
+              </CtaButton>
+              <CtaButton variant="primary" type="submit" isLoading={isSubmitting}>
+                {isEditing ? "Salvar alterações" : "Criar produto"}
+              </CtaButton>
+            </div>
+          </CardFooter>
+        </form>
+      </FormCard>
+    </PageWrapper>
   );
 };
 
