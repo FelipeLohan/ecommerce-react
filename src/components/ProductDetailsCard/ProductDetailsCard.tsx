@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { CategoryCard } from "../CategoryCard";
 import { CtaButton } from "../CtaButton";
 import { ProductDTO } from "../../models/product";
@@ -210,10 +211,10 @@ const ProductDetailsCard = ({ product, onBuy, onBack }: Props) => {
 
         <ActionsColumn>
           <CtaButton variant="primary" fullWidth size="lg" onClick={() => onBuy(quantity)}>
-            🛒 Adicionar ao carrinho
+            <ShoppingCart size={16} style={{ marginRight: 8 }} /> Adicionar ao carrinho
           </CtaButton>
           <CtaButton variant="secondary" fullWidth onClick={onBack}>
-            ← Voltar ao catálogo
+            <ArrowLeft size={16} style={{ marginRight: 8 }} /> Voltar ao catálogo
           </CtaButton>
         </ActionsColumn>
       </InfoPanel>

@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { X, Info } from "lucide-react";
 import { CtaButton } from "../CtaButton";
 import { tokens } from "../../styles/tokens.ts";
 
@@ -99,8 +100,8 @@ const DialogInfo = ({ message, onDialogClose }: Props) => {
   return (
     <Overlay onClick={onDialogClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onDialogClose} aria-label="Fechar">✕</CloseButton>
-        <IconCircle>ℹ️</IconCircle>
+        <CloseButton onClick={onDialogClose} aria-label="Fechar"><X size={18} /></CloseButton>
+        <IconCircle><Info size={22} /></IconCircle>
         <ModalTitle>Informação</ModalTitle>
         <ModalMessage>{message}</ModalMessage>
         <CtaButton variant="primary" fullWidth onClick={onDialogClose}>

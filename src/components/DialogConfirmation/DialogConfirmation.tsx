@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { AlertTriangle } from "lucide-react";
 import { CtaButton } from "../CtaButton";
 import { tokens } from "../../styles/tokens.ts";
 
@@ -86,7 +87,7 @@ const DialogConfirmation = ({ id, message, onDialogAnswer }: Props) => {
   return (
     <Overlay onClick={() => onDialogAnswer(false, id)}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
-        <IconCircle>⚠️</IconCircle>
+        <IconCircle><AlertTriangle size={22} /></IconCircle>
         <ModalTitle>Confirmar ação</ModalTitle>
         <ModalMessage>{message}</ModalMessage>
         <ButtonRow>

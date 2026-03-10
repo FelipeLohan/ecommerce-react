@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Search, X } from "lucide-react";
 import { tokens } from "../../styles/tokens.ts";
 
 const SearchInputContainer = styled.form`
@@ -100,7 +101,7 @@ const SearchInput = ({ onSearch }: Props) => {
 
   return (
     <SearchInputContainer onSubmit={handleSubmit}>
-      <SearchIcon>🔍</SearchIcon>
+      <SearchIcon><Search size={16} /></SearchIcon>
       <SearchField
         onChange={handleInputValue}
         value={inputValue}
@@ -109,7 +110,7 @@ const SearchInput = ({ onSearch }: Props) => {
       />
       {inputValue && (
         <ClearButton onClick={handleReset} type="reset" aria-label="Limpar">
-          ✕
+          <X size={14} />
         </ClearButton>
       )}
       <SearchButton type="submit">Buscar</SearchButton>
