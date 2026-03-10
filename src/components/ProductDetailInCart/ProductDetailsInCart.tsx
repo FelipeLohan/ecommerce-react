@@ -1,110 +1,163 @@
 import styled from "styled-components";
 import { tokens } from "../../styles/tokens.ts";
 
-const ProductDetailsInCartContainer = styled.div`
+/* ── Item card ───────────────────────────────────────────── */
+const ItemCard = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #c2c2c2;
-  padding: 20px;
-
-  img {
-    width: 30%;
-  }
-`;
-
-const ProductCartInfo = styled.div`
-  box-sizing: fit-content;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-
-  h3,
-  p {
-    font-size: ${tokens.fontSize.sm};
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  div span {
-    padding: 5px;
-    border: 1px solid #666;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-
-  @media (max-width: 600px){
-  h3, p{
-    font-size: ${tokens.fontSize["2xl"]};
-  }
-  }
-
-  @media (max-width: 420px){
-  h3, p{
-    font-size: ${tokens.fontSize["3xl"]};
-  }
-  }
-`;
-
-const ProductCartPrice = styled.div`
-  box-sizing: fit-content;
-  display: flex;
-  color: #0caf1d;
-  font-size: ${tokens.fontSize.lg};
   align-items: center;
-
-  @media (max-width: 600px){
-  h3, p{
-    font-size: ${tokens.fontSize["2xl"]};
-  }
-  }
-
-  @media (max-width: 420px){
-  h3, p{
-    font-size: ${tokens.fontSize["3xl"]};
-  }
-  }
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid ${tokens.colors.neutral[100]};
+  border-radius: ${tokens.radius.lg};
+  box-shadow: ${tokens.shadow.sm};
 `;
-const ProductCartInfoImageContainer = styled.div`
+
+const ItemImage = styled.img`
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: ${tokens.radius.md};
+  flex-shrink: 0;
+`;
+
+const ItemInfo = styled.div`
+  flex: 1;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 `;
 
-type Props = {
-  quantity: number,
-  name: string,
-  price: number,
-  imgUrl: string,
-  handleIncreaseClick: any,
-  handleDecreaseClick: any
-}
+const ItemName = styled.p`
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[800]};
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 
-const ProductDetailsInCart = ({quantity, name, price, imgUrl, handleIncreaseClick, handleDecreaseClick}: Props) => {
+const ItemUnitPrice = styled.p`
+  font-size: ${tokens.fontSize.xs};
+  color: ${tokens.colors.neutral[500]};
+  margin: 0;
+`;
+
+const QtyRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+`;
+
+const QtyBtn = styled.button`
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid ${tokens.colors.neutral[200]};
+  border-radius: ${tokens.radius.md};
+  background: #ffffff;
+  font-size: ${tokens.fontSize.base};
+  font-weight: ${tokens.fontWeight.medium};
+  color: ${tokens.colors.neutral[600]};
+  cursor: pointer;
+  transition: border-color ${tokens.transition.fast}, background ${tokens.transition.fast},
+    color ${tokens.transition.fast};
+  line-height: 1;
+
+  &:hover {
+    border-color: ${tokens.colors.primary[400]};
+    background: ${tokens.colors.primary[50]};
+    color: ${tokens.colors.primary[600]};
+  }
+`;
+
+const QtyValue = styled.span`
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[800]};
+  min-width: 28px;
+  text-align: center;
+`;
+
+const ItemPrice = styled.p`
+  font-size: ${tokens.fontSize.base};
+  font-weight: ${tokens.fontWeight.bold};
+  color: ${tokens.colors.neutral[900]};
+  min-width: 80px;
+  text-align: right;
+  margin: 0;
+  flex-shrink: 0;
+`;
+
+const RemoveButton = styled.button`
+  background: transparent;
+  border: none;
+  color: ${tokens.colors.neutral[400]};
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color ${tokens.transition.fast};
+  flex-shrink: 0;
+
+  &:hover {
+    color: ${tokens.colors.danger[500]};
+  }
+`;
+
+/* ── Types ───────────────────────────────────────────────── */
+type Props = {
+  quantity: number;
+  name: string;
+  price: number;
+  imgUrl: string;
+  handleIncreaseClick: () => void;
+  handleDecreaseClick: () => void;
+};
+
+/* ── Component ───────────────────────────────────────────── */
+const ProductDetailsInCart = ({
+  quantity,
+  name,
+  price,
+  imgUrl,
+  handleIncreaseClick,
+  handleDecreaseClick,
+}: Props) => {
   return (
-    <>
-      <ProductDetailsInCartContainer>
-        <ProductCartInfoImageContainer>
-          <img src={imgUrl} alt={name} />
-          <ProductCartInfo>
-            <h3>{name}</h3>
-            <div>
-              <span onClick={handleDecreaseClick} >-</span>
-              <p>{quantity}</p>
-              <span onClick={handleIncreaseClick}>+</span>
-            </div>
-          </ProductCartInfo>
-        </ProductCartInfoImageContainer>
-        <ProductCartPrice>
-          <p>R$ {(price * quantity).toFixed(2)}</p>
-        </ProductCartPrice>
-      </ProductDetailsInCartContainer>
-    </>
+    <ItemCard>
+      <ItemImage src={imgUrl} alt={name} />
+
+      <ItemInfo>
+        <ItemName>{name}</ItemName>
+        <ItemUnitPrice>R$ {price.toFixed(2)} cada</ItemUnitPrice>
+        <QtyRow>
+          <QtyBtn onClick={handleDecreaseClick} aria-label="Diminuir">
+            −
+          </QtyBtn>
+          <QtyValue>{quantity}</QtyValue>
+          <QtyBtn onClick={handleIncreaseClick} aria-label="Aumentar">
+            +
+          </QtyBtn>
+        </QtyRow>
+      </ItemInfo>
+
+      <ItemPrice>R$ {(price * quantity).toFixed(2)}</ItemPrice>
+
+      <RemoveButton onClick={handleDecreaseClick} aria-label="Remover item" title="Remover">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14H6L5 6"/>
+          <path d="M10 11v6M14 11v6"/>
+          <path d="M9 6V4h6v2"/>
+        </svg>
+      </RemoveButton>
+    </ItemCard>
   );
 };
 

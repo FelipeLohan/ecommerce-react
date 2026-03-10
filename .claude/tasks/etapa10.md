@@ -1,6 +1,6 @@
 # Etapa 10 — Página Cart (Carrinho)
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton)
 
 ---
@@ -170,11 +170,11 @@ margin-top: 8px;
 
 ## Critério de Conclusão
 
-- [ ] Layout split 65/35 desktop, stack mobile
-- [ ] Cada item como card com sombra
-- [ ] Botão remover com hover vermelho (ícone trash)
-- [ ] Quantity controls estilizados
-- [ ] Painel resumo sticky com fundo neutro
-- [ ] "Compra segura" com ícone de cadeado
-- [ ] Estado vazio com ícone SVG e CTA
-- [ ] Sem `border-bottom: 1px solid #c2c2c2` hardcoded
+- [x] Layout split 65/35 desktop, stack mobile
+- [x] Cada item como card com sombra
+- [x] Botão remover com hover vermelho (ícone trash)
+- [x] Quantity controls estilizados
+- [x] Painel resumo sticky com fundo neutro
+- [x] "Compra segura" com ícone de cadeado
+- [x] Estado vazio com ícone SVG e CTA
+- [x] Sem `border-bottom: 1px solid #c2c2c2` hardcoded
