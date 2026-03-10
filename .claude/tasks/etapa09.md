@@ -1,6 +1,6 @@
 # Etapa 09 — Página Login
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton), Etapa 05 (FormInput)
 
 ---
@@ -127,10 +127,10 @@ margin-top: -8px;
 
 ## Critério de Conclusão
 
-- [ ] Layout split-screen desktop, form centralizado mobile
-- [ ] Painel brand com gradiente `token.primary.600 → token.primary.900`
-- [ ] Card do form com `border-radius: xl` e sombra xl
-- [ ] Campos usando estilo da Etapa 05
-- [ ] Erro inline com background `danger.50` e ícone
-- [ ] Link "Esqueci minha senha" presente
-- [ ] Sem `width: 30%` hardcoded no container
+- [x] Layout split-screen desktop, form centralizado mobile
+- [x] Painel brand com gradiente `token.primary.600 → token.primary.900`
+- [x] Card do form com `border-radius: xl` e sombra xl
+- [x] Campos usando estilo da Etapa 05
+- [x] Erro inline com background `danger.50` e ícone
+- [x] Link "Esqueci minha senha" presente
+- [x] Sem `width: 30%` hardcoded no container
