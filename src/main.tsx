@@ -2,41 +2,45 @@ import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { createGlobalStyle } from "styled-components";
+import { tokens } from "./styles/tokens.ts";
 
 const GlobalStyle = createGlobalStyle`
-* {
-  scroll-behavior: smooth;
+*, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  -webkit-font-smoothing: antialiased; 
-  -moz-osx-font-smoothing: grayscale; 
-  text-rendering: optimizeLegibility; 
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
-  font-optical-sizing: auto;
-  font-style: normal;
-  
-  background-color: #E8E8E8;
-  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: ${tokens.fontSize.base};
+  line-height: ${tokens.lineHeight.normal};
+  color: ${tokens.colors.neutral[800]};
+  background-color: ${tokens.colors.surface.page};
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-p,
-span {
-  margin: 0px;
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.01em;
+  line-height: ${tokens.lineHeight.snug};
+}
+
+p, span {
+  margin: 0;
 }
 
 ul {
-  margin: 0px;
-  padding: 0px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 img {
@@ -46,26 +50,61 @@ img {
 
 a {
   text-decoration: none;
+  color: inherit;
+  transition: color ${tokens.transition.fast};
 }
 
-input{
+input, textarea, select, button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input {
   outline: none;
 }
 
+button, [role="button"] {
+  cursor: pointer;
+}
+
+::selection {
+  background-color: ${tokens.colors.primary[100]};
+  color: ${tokens.colors.primary[900]};
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: ${tokens.colors.neutral[100]};
+}
+
+::-webkit-scrollbar-thumb {
+  background: ${tokens.colors.neutral[300]};
+  border-radius: ${tokens.radius.full};
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: ${tokens.colors.neutral[400]};
+}
+
 .form-error {
-  color: red;
-  font-size: 12px;
+  color: ${tokens.colors.danger[600]};
+  font-size: ${tokens.fontSize.xs};
   padding-left: 4px;
   display: none;
-  }
+}
 
-  .form-control[data-invalid="true"] {
-  border: 1px solid red;
-  }
+.form-control[data-invalid="true"] {
+  border: 1.5px solid ${tokens.colors.danger[500]} !important;
+  box-shadow: 0 0 0 3px ${tokens.colors.danger[100]};
+}
 
-  .form-control[data-invalid="true"] ~ span {
+.form-control[data-invalid="true"] ~ span {
   display: unset;
-  }
+}
 `;
 
   window.React = React;

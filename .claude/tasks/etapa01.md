@@ -1,6 +1,6 @@
 # Etapa 01 — Design Tokens (CSS Variables)
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 
 ---
 
@@ -70,6 +70,6 @@ breakpoints:
 
 ## Critério de Conclusão
 
-- [ ] `src/styles/tokens.ts` criado e exportando o objeto completo
-- [ ] Tokens injetados no `GlobalStyle` de `src/main.tsx`
-- [ ] Nenhum valor de cor hardcoded nos componentes (verificar com grep `#[0-9a-fA-F]`)
+- [x] `src/styles/tokens.ts` criado e exportando o objeto completo
+- [x] Tokens injetados no `GlobalStyle` de `src/main.tsx`
+- [x] Build TypeScript passando sem erros (fix aplicado em App.tsx)

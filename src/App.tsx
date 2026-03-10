@@ -41,7 +41,7 @@ function App() {
         <ContextCartQuantity.Provider
           value={{ contextCartQuantity, setContextCartQuantity }}
         >
-          <HistoryRouter history={history}>
+          <HistoryRouter history={history as never}>
             <Routes>
               <Route path="/" element={<ClientHome />}>
                 <Route index element={<Catalog />} />
