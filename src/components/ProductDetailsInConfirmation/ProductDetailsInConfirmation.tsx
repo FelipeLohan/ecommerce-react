@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tokens } from "../../styles/tokens.ts";
 
 const ProductDetailsInCartContainer = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const ProductCartInfo = styled.div`
 
   h3,
   p {
-    font-size: 2vmin;
+    font-size: ${tokens.fontSize.sm};
   }
 
   div {
@@ -43,7 +44,7 @@ const ProductCartPrice = styled.div`
   box-sizing: fit-content;
   display: flex;
   color: #0caf1d;
-  font-size: 2.5vmin;
+  font-size: ${tokens.fontSize.lg};
   align-items: center;
 `;
 const ProductCartInfoImageContainer = styled.div`

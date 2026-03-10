@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tokens } from "../../styles/tokens.ts";
 
 
 
@@ -19,19 +20,19 @@ const CtaButton = ({text, primaryColor, secondaryColor, handleClick}: Props) => 
     color: ${secondaryColor};
     border-radius: 12px;
     border: 1px solid ${primaryColor};
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
     cursor: pointer;
   }
 
   @media (max-width: 600px){
     button{
-      font-size: 2.7vmin;
+      font-size: ${tokens.fontSize.lg};
     }
   }
 
   @media (max-width: 420px){
     button{
-      font-size: 3.2vmin;
+      font-size: ${tokens.fontSize["2xl"]};
     }
   }
 `;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tokens } from "../../styles/tokens.ts";
 
 const CtaLoadMoreContainer = styled.div`
   width: 90%;
@@ -9,7 +10,7 @@ const CtaLoadMoreContainer = styled.div`
   button {
     padding: 16px;
     width: 100%;
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
     color: #3483FA;
     border: 1px solid #3483FA;
     background-color: #E8E8E8;
@@ -19,7 +20,7 @@ const CtaLoadMoreContainer = styled.div`
 
   @media (max-width: 420px){
   button{
-  font-size: 3vmin;
+  font-size: ${tokens.fontSize.xl};
   }
   width: 70%;
 }

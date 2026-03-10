@@ -5,10 +5,13 @@
       "Bash(npm show:*)",
       "Bash(npm audit:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npx vite:*)",
+      "Bash(/home/work/vscode-ws/ecommerce-react/index.html:*)"
     ],
     "additionalDirectories": [
-      "/home/work/.claude/projects/-home-work-vscode-ws-ecommerce-react"
+      "/home/work/.claude/projects/-home-work-vscode-ws-ecommerce-react",
+      "/home/work/vscode-ws/ecommerce-react/.claude"
     ]
   }
 }

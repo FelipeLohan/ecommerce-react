@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import * as orderService from "../../services/order-service.ts";
 import { ProductDetailsInConfirmation } from "../ProductDetailsInConfirmation/ProductDetailsInConfirmation.tsx";
 import { Link } from "react-router-dom";
+import { tokens } from "../../styles/tokens.ts";
 
 const ProductDetailsInCartContainer = styled.div`
   width: 90%;
@@ -22,7 +23,7 @@ const ProductsTotalPrice = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #c2c2c2;
   padding: 20px;
-  font-size: 2.5vmin;
+  font-size: ${tokens.fontSize.lg};
 
   span {
     color: #0caf1d;

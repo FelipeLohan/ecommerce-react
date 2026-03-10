@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { CategoryCard } from '../CategoryCard'
 import { ProductDTO } from '../../models/product'
+import { tokens } from "../../styles/tokens.ts";
 
 const ProductDetailsCardContainer = styled.section`
   display: flex;
@@ -32,51 +33,51 @@ const ProductInfoContainer = styled.div`
   gap: 10px;
 
   h3{
-    font-size: 3vmin;
+    font-size: ${tokens.fontSize.xl};
     color: #0CAF1D;
   }
 
   h4{
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
     color: #636363;
   }
   
   p{
-    font-size: 1.7vmin;
+    font-size: ${tokens.fontSize.xs};
     color: #636363;
   }
 
 
 @media (max-width: 600px) {
    h3{
-    font-size: 3.5vmin;
+    font-size: ${tokens.fontSize["2xl"]};
     color: #0CAF1D;
   }
 
   h4{
-    font-size: 3vmin;
+    font-size: ${tokens.fontSize.xl};
     color: #636363;
   }
   
   p{
-    font-size: 2.5vmin;
+    font-size: ${tokens.fontSize.lg};
     color: #636363;
   }
 }
 
 @media (max-width: 420px){
    h3{
-    font-size: 4.5vmin;
+    font-size: ${tokens.fontSize["3xl"]};
     color: #0CAF1D;
   }
 
   h4{
-    font-size: 4vmin;
+    font-size: ${tokens.fontSize["3xl"]};
     color: #636363;
   }
   
   p{
-    font-size: 3vmin;
+    font-size: ${tokens.fontSize.xl};
     color: #636363;
   }
 }

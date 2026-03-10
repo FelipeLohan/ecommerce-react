@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { ProductDTO } from "../../models/product";
+import { tokens } from "../../styles/tokens.ts";
 
 const ProductCatalogCardContainer = styled.div`
   display: flex;
@@ -27,33 +28,33 @@ const ImageCardContainer = styled.div`
 
 const InfoCardContainer = styled.div`
   h3 {
-    font-size: 2.5vmin;
+    font-size: ${tokens.fontSize.lg};
     color: #0caf1d;
     margin-bottom: 5px;
   }
   h4 {
-    font-size: 2vmin;
+    font-size: ${tokens.fontSize.sm};
     color: #636363;
   }
 
   @media (max-width: 600px) {
     h3{
-      font-size: 3.5vmin;
+      font-size: ${tokens.fontSize["2xl"]};
     }
 
      h4{
-      font-size: 3vmin;
+      font-size: ${tokens.fontSize.xl};
     }
   }
 
   @media (max-width: 420px){
   h3 {
-    font-size: 5vmin;
+    font-size: ${tokens.fontSize["4xl"]};
     color: #0caf1d;
     margin-bottom: 5px;
   }
   h4 {
-    font-size: 4vmin;
+    font-size: ${tokens.fontSize["3xl"]};
     color: #636363;
   }
 }

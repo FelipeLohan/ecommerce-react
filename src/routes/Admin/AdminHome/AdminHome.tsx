@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { UserDTO } from "../../../models/user";
 import * as userService from "../../../services/user-service.ts";
+import { tokens } from "../../../styles/tokens.ts";
 
 const AdminHomeContainer = styled.main`
   width: 80%;
@@ -10,12 +11,12 @@ const AdminHomeContainer = styled.main`
   color: #636363;
 
   h1 {
-    font-size: 4vmin;
+    font-size: ${tokens.fontSize["3xl"]};
   }
 
   @media (max-width: 420px) {
     h1 {
-      font-size: 5vmin;
+      font-size: ${tokens.fontSize["4xl"]};
     }
   }
 `;

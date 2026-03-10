@@ -11,14 +11,14 @@ const SearchInputContainer = styled.form`
   margin: 0 auto;
 
   button {
-    padding: 2vmin;
+    padding: 16px;
     background-color: #d9d9d9;
     border: none;
     cursor: pointer;
   }
 
   input {
-    padding: 2vmin;
+    padding: 16px;
     width: 100%;
     background-color: #fff;
     outline: none;

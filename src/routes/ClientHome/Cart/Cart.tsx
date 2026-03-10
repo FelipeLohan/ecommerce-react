@@ -7,6 +7,7 @@ import * as cartService from "../../../services/cart-service.ts";
 import * as orderService from "../../../services/order-service.ts";
 import { OrderDTO } from "../../../models/order";
 import { ContextCartQuantity } from "../../../utils/context-cart";
+import { tokens } from "../../../styles/tokens.ts";
 
 const ProductDetailsInCartContainer = styled.div`
   width: 90%;
@@ -23,7 +24,7 @@ const ProductsTotalPrice = styled.div`
   background-color: #fff;
   border-bottom: 1px solid #c2c2c2;
   padding: 20px;
-  font-size: 2.5vmin;
+  font-size: ${tokens.fontSize.lg};
 
   span {
     color: #0caf1d;
@@ -32,13 +33,13 @@ const ProductsTotalPrice = styled.div`
 
    @media (max-width: 600px){
   h3, p{
-    font-size: 3.2vmin;
+    font-size: ${tokens.fontSize["2xl"]};
   }
   }
 
   @media (max-width: 420px){
   h3, p{
-    font-size: 4vmin;
+    font-size: ${tokens.fontSize["3xl"]};
   }
   }
 `;

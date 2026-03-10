@@ -6,6 +6,7 @@ import * as authService from "../../services/auth-service.ts";
 import { useContext } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
 import { LoggedUser } from "../LoggedUser/LoggedUser.tsx";
+import { tokens } from "../../styles/tokens.ts";
 
 const HeaderClientContainer = styled.header`
   display: flex;
@@ -22,7 +23,7 @@ const HeaderClientContainer = styled.header`
 
   @media (max-width: 600px) {
     h1 {
-      font-size: 3.5vmin;
+      font-size: ${tokens.fontSize["2xl"]};
     }
   }
 
@@ -31,7 +32,7 @@ const HeaderClientContainer = styled.header`
     gap: 30px;
 
     h1 {
-      font-size: 4vmin;
+      font-size: ${tokens.fontSize["3xl"]};
     }
   }
 `;
@@ -50,7 +51,7 @@ const LoginCartContainer = styled.div`
     width: 130px;
 
     a {
-      font-size: 2.5vmin;
+      font-size: ${tokens.fontSize.lg};
     }
 
     img {

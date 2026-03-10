@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tokens } from "../../styles/tokens.ts";
 
 const DialogInfoContainer = styled.div`
   position: fixed;
@@ -28,7 +29,7 @@ const DialogInfoContent = styled.div`
 
 
   button{
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
     background-color: #3483FA;
     color: #fff;
     padding: 8px 48px;

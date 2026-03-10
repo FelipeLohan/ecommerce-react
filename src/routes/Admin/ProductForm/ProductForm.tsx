@@ -8,6 +8,7 @@ import * as categoryService from "../../../services/category-service.ts";
 import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx";
 import { CategoryDTO } from "../../../models/category.ts";
 import { FormSelect } from "../../../components/FormSelect/FormSelect.tsx";
+import { tokens } from "../../../styles/tokens.ts";
 
 const ProductFormContainer = styled.div`
   width: 40%;
@@ -87,7 +88,7 @@ const SaveButton = styled.button`
   color: #fff;
   border: none;
   border-radius: 8px;
-  font-size: 2.2vmin;
+  font-size: ${tokens.fontSize.base};
   cursor: pointer;
 `;
 
@@ -98,7 +99,7 @@ const CancelButton = styled.button`
   background-color: #fff;
   border: 1px solid #3483fa;
   border-radius: 8px;
-  font-size: 2.2vmin;
+  font-size: ${tokens.fontSize.base};
   cursor: pointer;
 `;
 

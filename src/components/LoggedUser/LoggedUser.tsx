@@ -3,6 +3,7 @@ import * as authService from "../../services/auth-service.ts";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
+import { tokens } from "../../styles/tokens.ts";
 
 const UserContainer = styled.div`
   display: flex;
@@ -11,27 +12,27 @@ const UserContainer = styled.div`
   gap: 10px;
 
   & h5 {
-    font-size: 2.5vmin;
+    font-size: ${tokens.fontSize.lg};
     cursor: pointer;
   }
 
   @media (max-width: 600px) {
   h4{
-  font-size: 2.5vmin;
+  font-size: ${tokens.fontSize.lg};
   }
 
   h5{
-  font-size: 2.2vmin;
+  font-size: ${tokens.fontSize.base};
   }
 }
 
 @media (max-width: 420px){
   h4{
-  font-size: 3vmin;
+  font-size: ${tokens.fontSize.xl};
   }
 
   h5{
-  font-size: 3vmin;
+  font-size: ${tokens.fontSize.xl};
   }
 }
 `;

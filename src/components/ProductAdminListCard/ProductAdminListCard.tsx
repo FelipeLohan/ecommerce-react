@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import TrashIcon from "../../assets/TrashIcon.svg";
 import PenIcon from "../../assets/PenIcon.svg";
+import { tokens } from "../../styles/tokens.ts";
 
 const ProductCardContainer = styled.div`
 
@@ -18,7 +19,7 @@ const ProductInfosContainer = styled.div`
   align-items: center;
 
   p {
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
   }
 
   img{
@@ -27,12 +28,12 @@ const ProductInfosContainer = styled.div`
 
   @media (max-width: 600px){
     p{
-      font-size: 2.5vmin;
+      font-size: ${tokens.fontSize.lg};
     }
   }
     @media (max-width: 420px){
     p{
-      font-size: 2.8vmin;
+      font-size: ${tokens.fontSize.xl};
     }
 
   }

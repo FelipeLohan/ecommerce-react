@@ -5,6 +5,7 @@ import * as authService from "../../../services/auth-service.ts";
 import { useNavigate } from "react-router-dom";
 import { ContextToken } from "../../../utils/context-token.ts";
 import { FormInput } from "../../../components/Forminput/FormInput.tsx";
+import { tokens } from "../../../styles/tokens.ts";
 
 const LoginCardContainer = styled.div`
   padding: 40px 20px;
@@ -20,7 +21,7 @@ const LoginCardContainer = styled.div`
 
   h2 {
     color: #636363;
-    font-size: 4vmin;
+    font-size: ${tokens.fontSize["3xl"]};
   }
 
   form {
@@ -47,7 +48,7 @@ const LoginCardContainer = styled.div`
   form button {
     background-color: #3483fa;
     color: #fff;
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
     border: none;
   }
 
@@ -59,7 +60,7 @@ const LoginCardContainer = styled.div`
     width: 80%;
 
     form button{
-      font-size: 3vmin;
+      font-size: ${tokens.fontSize.xl};
     }
   }
 `;

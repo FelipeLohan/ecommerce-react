@@ -1,6 +1,6 @@
 # Etapa 02 — Tipografia e Web Font
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens)
 
 ---
@@ -76,7 +76,7 @@ font-size: clamp(14px, 2.5vmin, 20px);
 
 ## Critério de Conclusão
 
-- [ ] Inter carregada no `index.html`
-- [ ] Zero ocorrências de `font-family: Arial` no projeto
-- [ ] Escala tipográfica definida via tokens
-- [ ] Sem `vmin` soltos — substituídos por `clamp()` ou valores fixos
+- [x] Inter carregada no `index.html` (preconnect + display=swap)
+- [x] Zero ocorrências de `font-family: Arial` no projeto
+- [x] Escala tipográfica definida via tokens (xs→4xl) em `tokens.ts`
+- [x] Zero `vmin` restantes — 19 arquivos atualizados com tokens

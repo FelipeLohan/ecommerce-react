@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { tokens } from "../../styles/tokens.ts";
 
 const DialogConfirmationContainer = styled.div`
   position: fixed;
@@ -37,7 +38,7 @@ const ConfirmationButtonsContainer = styled.div`
 `;
 
 const YesButton = styled.button`
-  font-size: 2.2vmin;
+  font-size: ${tokens.fontSize.base};
   background-color: #3483fa;
   color: #fff;
   padding: 8px 48px;
@@ -47,7 +48,7 @@ const YesButton = styled.button`
 `;
 
 const NoButton = styled.button`
-  font-size: 2.2vmin;
+  font-size: ${tokens.fontSize.base};
   background-color: rgb(136, 5, 0);
   color: #fff;
   padding: 8px 48px;

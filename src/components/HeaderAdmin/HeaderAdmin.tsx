@@ -4,6 +4,7 @@ import StockIcon from "../../assets/StockIcon.svg";
 import { LoggedUser } from "../LoggedUser";
 import { NavLink } from "react-router-dom";
 import "./style.css";
+import { tokens } from "../../styles/tokens.ts";
 
 const HeaderAdminContainer = styled.header`
   padding: 40px 0px;
@@ -37,7 +38,7 @@ const HeaderAdminContent = styled.div`
 `;
 
 const LogoContainer = styled.div`
-  font-size: 3.5vmin;
+  font-size: ${tokens.fontSize["2xl"]};
 `;
 
 const CategoryContainer = styled.div`
@@ -46,7 +47,7 @@ const CategoryContainer = styled.div`
   align-items: center;
 
   h3 {
-    font-size: 2.2vmin;
+    font-size: ${tokens.fontSize.base};
   }
 
   a{
