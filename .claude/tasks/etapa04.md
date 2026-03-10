@@ -1,6 +1,6 @@
 # Etapa 04 — Componente CtaButton
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens)
 
 ---
@@ -90,9 +90,10 @@ interface CtaButtonProps {
 
 ## Critério de Conclusão
 
-- [ ] Variantes primary, secondary, danger e ghost funcionando
-- [ ] Hover com elevação (translateY + shadow)
-- [ ] Disabled sem interação visual
-- [ ] `focus-visible` com ring visível
-- [ ] Sem `width: 220px` fixo — tamanho por conteúdo ou `fullWidth`
-- [ ] Nenhum `vmin` no font-size
+- [x] Variantes primary, secondary, danger e ghost funcionando
+- [x] Hover com elevação (`translateY(-1px)` + `shadow.md`)
+- [x] Disabled com `opacity: 0.5` e `cursor: not-allowed`
+- [x] `focus-visible` com ring `primary.500` 2px
+- [x] Sem `width: 220px` fixo — tamanho por conteúdo ou `fullWidth`
+- [x] Sem `vmin` — escala `sm/md/lg` via tokens
+- [x] Todos os 4 arquivos consumidores migrados para a nova API

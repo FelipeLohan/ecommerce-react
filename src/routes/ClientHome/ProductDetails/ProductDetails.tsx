@@ -53,18 +53,12 @@ const ProductDetails = () => {
     <>
       {product && <ProductDetailsCard product={product} />}
       <CtaButtonContainer>
-        <CtaButton
-          text="Inicio"
-          primaryColor="#fff"
-          secondaryColor="#3483FA"
-          handleClick={handleHomeClick}
-        />
-        <CtaButton
-          text="Comprar"
-          primaryColor="#3483FA"
-          secondaryColor="#fff"
-          handleClick={handleBuyProduct}
-        />
+        <CtaButton variant="secondary" fullWidth onClick={handleHomeClick}>
+          Início
+        </CtaButton>
+        <CtaButton variant="primary" fullWidth onClick={handleBuyProduct}>
+          Comprar
+        </CtaButton>
       </CtaButtonContainer>
     </>
   );

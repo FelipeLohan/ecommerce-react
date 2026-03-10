@@ -85,12 +85,7 @@ const Confirmation = () => {
 
       <CtaButtonContainer>
         <Link to="/">
-        <CtaButton
-          text="Inicio"
-          primaryColor="#3483FA"
-          secondaryColor="#fff"
-          handleClick={null}
-        />
+          <CtaButton variant="primary">Início</CtaButton>
         </Link>
       </CtaButtonContainer>
     </>

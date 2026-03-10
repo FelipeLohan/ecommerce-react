@@ -120,24 +120,15 @@ const Cart = () => {
         )}
       </ProductDetailsInCartContainer>
       <CtaButtonContainer>
-        <CtaButton
-          text="Finalizar pedido"
-          primaryColor="#3483FA"
-          secondaryColor="#fff"
-          handleClick={handlePlaceOrderClick}
-        />
-        <CtaButton
-          text="Continuar comprando"
-          primaryColor="#fff"
-          secondaryColor="#3483FA"
-          handleClick={handleWhileBuying}
-        />
-        <CtaButton
-        text="Limpar carrinho"
-        primaryColor="#fff"
-        secondaryColor="#3483FA"
-        handleClick={handleClearCart}
-        />
+        <CtaButton variant="primary" fullWidth onClick={handlePlaceOrderClick}>
+          Finalizar pedido
+        </CtaButton>
+        <CtaButton variant="secondary" fullWidth onClick={handleWhileBuying}>
+          Continuar comprando
+        </CtaButton>
+        <CtaButton variant="ghost" fullWidth onClick={handleClearCart}>
+          Limpar carrinho
+        </CtaButton>
       </CtaButtonContainer>
     </>
   );

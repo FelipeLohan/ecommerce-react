@@ -132,12 +132,9 @@ const ProductListing = () => {
       <NewProductContainer>
         <h1>Contagem de produtos</h1>
         
-          <CtaButton
-            text="Novo"
-            primaryColor="#fff"
-            secondaryColor="#3483FA"
-            handleClick={handleNewProductClick}
-          />
+          <CtaButton variant="primary" onClick={handleNewProductClick}>
+            Novo produto
+          </CtaButton>
         
       </NewProductContainer>
 
