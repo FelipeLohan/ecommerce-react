@@ -1,6 +1,6 @@
 # Etapa 05 — FormInput, FormTextArea e SearchInput
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens)
 
 ---
@@ -115,8 +115,8 @@ Atualizar para:
 
 ## Critério de Conclusão
 
-- [ ] FormInput com hover/focus/error/disabled visíveis
-- [ ] FormTextArea com os mesmos estados
-- [ ] SearchInput redesenhado como pill com ícone
-- [ ] React-Select com estilo moderno e focus ring
-- [ ] Sem `border: 1px solid #d9d9d9` hardcoded restantes
+- [x] FormInput com hover/focus/error/disabled visíveis
+- [x] FormTextArea com os mesmos estados
+- [x] SearchInput redesenhado como pill com ícone
+- [x] React-Select com estilo moderno e focus ring
+- [x] Sem `border: 1px solid #d9d9d9` hardcoded restantes
