@@ -6,6 +6,8 @@ import { Cart } from "./routes/ClientHome/Cart";
 import { useEffect, useState } from "react";
 import { ContextCartQuantity } from "./utils/context-cart";
 import { Login } from "./routes/ClientHome/Login";
+import { Register } from "./routes/ClientHome/Register";
+import { MyAccount } from "./routes/ClientHome/MyAccount";
 import { Admin } from "./routes/Admin";
 import { AdminHome } from "./routes/Admin/AdminHome";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
@@ -53,6 +55,15 @@ function App() {
                 />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/my-account"
+                  element={
+                    <PrivateRoute>
+                      <MyAccount />
+                    </PrivateRoute>
+                  }
+                />
                 <Route
                   path="/confirmation/:orderId"
                   element={
