@@ -12,9 +12,11 @@ const DetailsButton = styled.div`
   font-weight: ${tokens.fontWeight.medium};
   text-align: center;
   border-radius: ${tokens.radius.md};
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity ${tokens.transition.base}, transform ${tokens.transition.base};
+  transition: background ${tokens.transition.base};
+
+  &:hover {
+    background: ${tokens.colors.primary[700]};
+  }
 `;
 
 const CardImage = styled.img`
@@ -46,10 +48,6 @@ const CardContainer = styled.div`
     transform: scale(1.03);
   }
 
-  &:hover ${DetailsButton} {
-    opacity: 1;
-    transform: translateY(0);
-  }
 `;
 
 const CardBody = styled.div`
