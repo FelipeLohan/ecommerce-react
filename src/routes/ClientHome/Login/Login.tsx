@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as authService from "../../../services/auth-service.ts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AlertTriangle } from "lucide-react";
 import { ContextToken } from "../../../utils/context-token.ts";
 import { FormInput } from "../../../components/Forminput/FormInput.tsx";
 import { CtaButton } from "../../../components/CtaButton";
@@ -143,6 +144,23 @@ const SubmitWrapper = styled.div`
   margin-top: 8px;
 `;
 
+const RegisterLink = styled.p`
+  margin: 20px 0 0;
+  font-size: ${tokens.fontSize.sm};
+  color: ${tokens.colors.neutral[500]};
+  text-align: center;
+
+  a {
+    color: ${tokens.colors.primary[600]};
+    font-weight: ${tokens.fontWeight.medium};
+    text-decoration: underline;
+
+    &:hover {
+      color: ${tokens.colors.primary[700]};
+    }
+  }
+`;
+
 /* ── Component ───────────────────────────────────────────── */
 const Login = () => {
   const navigate = useNavigate();
@@ -244,7 +262,7 @@ const Login = () => {
 
               {submitResponseFail && (
                 <ErrorBanner>
-                  <span>⚠</span>
+                  <AlertTriangle size={16} />
                   Usuário ou senha inválidos. Tente novamente.
                 </ErrorBanner>
               )}
@@ -261,6 +279,10 @@ const Login = () => {
               </SubmitWrapper>
             </FieldsColumn>
           </form>
+
+          <RegisterLink>
+            Não tem conta? <Link to="/register">Criar conta</Link>
+          </RegisterLink>
         </FormCard>
       </FormPanel>
     </PageGrid>
