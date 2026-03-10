@@ -1,6 +1,6 @@
 # Etapa 11 — Dialogs (Info e Confirmation)
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 04 (CtaButton)
 
 ---
@@ -124,10 +124,10 @@ margin-top: 24px;
 
 ## Critério de Conclusão
 
-- [ ] Overlay com `backdrop-filter: blur(4px)`
-- [ ] Container sem borda dura — apenas sombra xl
-- [ ] Animação `slideUp` na abertura
-- [ ] Botão fechar (X) no canto superior do DialogInfo
-- [ ] Ícone contextual colorido (success/info/warning/error)
-- [ ] DialogConfirmation com botões lado a lado usando tokens
-- [ ] Sem `border: 3px solid rgb(165,165,165)` no código
+- [x] Overlay com `backdrop-filter: blur(4px)`
+- [x] Container sem borda dura — apenas sombra xl
+- [x] Animação `slideUp` na abertura
+- [x] Botão fechar (X) no canto superior do DialogInfo
+- [x] Ícone contextual colorido (success/info/warning/error)
+- [x] DialogConfirmation com botões lado a lado usando tokens
+- [x] Sem `border: 3px solid rgb(165,165,165)` no código
