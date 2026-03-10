@@ -11,6 +11,8 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Runtime env injected by docker-entrypoint.sh (empty in dev) -->
+    <script src="/env-config.js" onerror="window.__ENV__={}"></script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
