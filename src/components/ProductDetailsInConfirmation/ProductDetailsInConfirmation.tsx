@@ -1,80 +1,73 @@
 import styled from "styled-components";
 import { tokens } from "../../styles/tokens.ts";
 
-const ProductDetailsInCartContainer = styled.div`
+const Row = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  background-color: #fff;
-  border-bottom: 1px solid #c2c2c2;
-  padding: 20px;
-
-  img {
-    width: 40%;
-  }
-`;
-
-const ProductCartInfo = styled.div`
-  box-sizing: fit-content;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-
-  h3,
-  p {
-    font-size: ${tokens.fontSize.sm};
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  div span {
-    padding: 5px;
-    border: 1px solid #000;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-`;
-
-const ProductCartPrice = styled.div`
-  box-sizing: fit-content;
-  display: flex;
-  color: #0caf1d;
-  font-size: ${tokens.fontSize.lg};
   align-items: center;
+  gap: 16px;
+  padding: 16px 28px;
+  border-bottom: 1px solid ${tokens.colors.neutral[100]};
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
-const ProductCartInfoImageContainer = styled.div`
+
+const Thumbnail = styled.img`
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: ${tokens.radius.md};
+  flex-shrink: 0;
+  border: 1px solid ${tokens.colors.neutral[100]};
+`;
+
+const Info = styled.div`
+  flex: 1;
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const Name = styled.h3`
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[800]};
+  margin: 0;
+  line-height: ${tokens.lineHeight.snug};
+`;
+
+const QuantityBadge = styled.span`
+  font-size: ${tokens.fontSize.xs};
+  color: ${tokens.colors.neutral[500]};
+`;
+
+const Price = styled.p`
+  font-size: ${tokens.fontSize.base};
+  font-weight: ${tokens.fontWeight.bold};
+  color: ${tokens.colors.success[600]};
+  margin: 0;
+  flex-shrink: 0;
 `;
 
 type Props = {
-  quantity: number,
-  name: string,
-  price: number,
-  imgUrl: string
-}
+  quantity: number;
+  name: string;
+  price: number;
+  imgUrl: string;
+};
 
-const ProductDetailsInConfirmation = ({quantity, name, price, imgUrl}: Props) => {
+const ProductDetailsInConfirmation = ({ quantity, name, price, imgUrl }: Props) => {
   return (
-    <>
-      <ProductDetailsInCartContainer>
-        <ProductCartInfoImageContainer>
-          <img src={imgUrl} alt={name} />
-          <ProductCartInfo>
-            <h3>{name}</h3>
-          </ProductCartInfo>
-        </ProductCartInfoImageContainer>
-        <ProductCartPrice>
-          <p>{(price * quantity).toFixed(2)}</p>
-        </ProductCartPrice>
-      </ProductDetailsInCartContainer>
-    </>
+    <Row>
+      <Thumbnail src={imgUrl} alt={name} />
+      <Info>
+        <Name>{name}</Name>
+        <QuantityBadge>Qtd: {quantity}</QuantityBadge>
+      </Info>
+      <Price>R$ {(price * quantity).toFixed(2)}</Price>
+    </Row>
   );
 };
 
-export { ProductDetailsInConfirmation }
+export { ProductDetailsInConfirmation };
