@@ -1,6 +1,6 @@
 # Etapa 03 — GlobalStyle e Reset Moderno
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 02 (tipografia)
 
 ---
@@ -127,8 +127,9 @@ input, textarea, select {
 
 ## Critério de Conclusão
 
-- [ ] Background da página via token (sem `#E8E8E8` hardcoded)
-- [ ] `focus-visible` funcional em todos os elementos interativos
-- [ ] Scrollbar customizada visível no Chrome/Edge
-- [ ] `::selection` com cor da brand
-- [ ] Antialiasing aplicado
+- [x] Background da página via token (sem `#E8E8E8` hardcoded)
+- [x] `:focus-visible` com ring `primary.500` em todos os elementos interativos
+- [x] Scrollbar customizada (webkit) fina e discreta
+- [x] `::selection` com `primary.100` / `primary.900`
+- [x] Antialiasing aplicado (`-webkit-font-smoothing: antialiased`)
+- [x] GlobalStyle extraído para `src/styles/global.ts`
