@@ -1,43 +1,77 @@
 import CartIconSvg from "../../assets/CartIcon.svg";
-import styled from "styled-components";
-import { useContext } from "react";
+import styled, { css, keyframes } from "styled-components";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ContextCartQuantity } from "../../utils/context-cart.ts";
+import { tokens } from "../../styles/tokens.ts";
 
-const CartQuantity = styled.div`
-  display: flex;
-  justify-content: center;
-  background-color: #ff0000;
+const bounce = keyframes`
+  0%, 100% { transform: scale(1); }
+  30%       { transform: scale(1.3); }
+  60%       { transform: scale(0.9); }
+`;
+
+const CartIconWrapper = styled.div<{ $bouncing: boolean }>`
   position: relative;
-  border-radius: 50%;
-  bottom: 10px;
-  left: 14px;
-  padding: 2px 4px;
-  font-size: 12px;
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  ${({ $bouncing }) =>
+    $bouncing &&
+    css`
+      animation: ${bounce} 400ms ease;
+    `}
 `;
 
 const CartIconImage = styled.img`
-  position: absolute;
+  width: 24px;
+  height: 24px;
+
+  @media (max-width: 600px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
-const CartIconContainer = styled.div`
+const Badge = styled.span`
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: ${tokens.colors.danger[500]};
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: ${tokens.fontWeight.semibold};
+  border-radius: ${tokens.radius.full};
+  border: 2px solid #ffffff;
   display: flex;
-  justify-content: center;
   align-items: center;
-`
+  justify-content: center;
+  line-height: 1;
+`;
 
 const CartIcon = () => {
   const { contextCartQuantity } = useContext(ContextCartQuantity);
+  const [bouncing, setBouncing] = useState(false);
+  const prevQtyRef = useRef(contextCartQuantity);
+
+  useEffect(() => {
+    if (contextCartQuantity > prevQtyRef.current) {
+      setBouncing(true);
+      const timer = setTimeout(() => setBouncing(false), 400);
+      prevQtyRef.current = contextCartQuantity;
+      return () => clearTimeout(timer);
+    }
+    prevQtyRef.current = contextCartQuantity;
+  }, [contextCartQuantity]);
 
   return (
-    <>
-      <CartIconContainer>
-        <CartIconImage src={CartIconSvg} />
-        {contextCartQuantity !== 0 && (
-          <CartQuantity>{contextCartQuantity}</CartQuantity>
-        )}
-      </CartIconContainer>
-    </>
+    <CartIconWrapper $bouncing={bouncing}>
+      <CartIconImage src={CartIconSvg} alt="Carrinho" />
+      {contextCartQuantity > 0 && <Badge>{contextCartQuantity}</Badge>}
+    </CartIconWrapper>
   );
 };
 

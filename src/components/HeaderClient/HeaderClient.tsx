@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 import { CartIcon } from "../CartIcon";
 import AdminIcon from "../../assets/AdminIcon.svg";
@@ -8,88 +9,114 @@ import { ContextToken } from "../../utils/context-token.ts";
 import { LoggedUser } from "../LoggedUser/LoggedUser.tsx";
 import { tokens } from "../../styles/tokens.ts";
 
-const HeaderClientContainer = styled.header`
+const HeaderClientContainer = styled.header<{ $scrolled: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
+  padding: 0 ${tokens.spacing[10]};
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid ${tokens.colors.neutral[100]};
+  box-shadow: ${tokens.shadow.sm};
+  transition: box-shadow ${tokens.transition.base};
 
-  background-color: #ffe500;
-  color: #636363;
+  ${({ $scrolled }) =>
+    $scrolled &&
+    css`
+      box-shadow: ${tokens.shadow.md};
+    `}
 
-  h1 {
-    color: #636363;
+  @media (max-width: 420px) {
+    padding: 0 ${tokens.spacing[4]};
+  }
+`;
+
+const Logo = styled(Link)`
+  font-size: ${tokens.fontSize.xl};
+  font-weight: ${tokens.fontWeight.bold};
+  color: ${tokens.colors.primary[600]};
+  letter-spacing: -0.02em;
+  text-decoration: none;
+
+  &:hover {
+    color: ${tokens.colors.primary[700]};
   }
 
   @media (max-width: 600px) {
-    h1 {
-      font-size: ${tokens.fontSize["2xl"]};
-    }
+    font-size: ${tokens.fontSize.lg};
+  }
+`;
+
+const NavActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${tokens.spacing[4]};
+`;
+
+const AdminLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: ${tokens.radius.md};
+  transition: background-color ${tokens.transition.fast};
+
+  &:hover {
+    background-color: ${tokens.colors.neutral[100]};
   }
 
-  @media (max-width: 420px) {
-    justify-content: center;
-    gap: 30px;
+  img {
+    width: 22px;
+    height: 22px;
 
-    h1 {
-      font-size: ${tokens.fontSize["3xl"]};
+    @media (max-width: 600px) {
+      width: 18px;
+      height: 18px;
     }
   }
 `;
 
-const LoginCartContainer = styled.div`
+const CartLink = styled(Link)`
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 15px;
+  padding: 6px;
+  border-radius: ${tokens.radius.md};
+  transition: background-color ${tokens.transition.fast};
 
-  a {
-    color: #636363;
-  }
-
-  @media (max-width: 600px) {
-    width: 130px;
-
-    a {
-      font-size: ${tokens.fontSize.lg};
-    }
-
-    img {
-      width: 20px;
-    }
-
-    @media (max-width: 420px) {
-      img {
-        width: 20px;
-      }
-    }
+  &:hover {
+    background-color: ${tokens.colors.neutral[100]};
   }
 `;
 
 const HeaderClient = () => {
   const { contextTokenPayload } = useContext(ContextToken);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <>
-      <HeaderClientContainer>
-        <Link to="/">
-          <div>
-            <h1>Ecommerce</h1>
-          </div>
-        </Link>
-        <LoginCartContainer>
-          {contextTokenPayload && authService.hasAnyRoles(["ROLE_ADMIN"]) && (
-            <Link to="/admin">
-              <img src={AdminIcon} alt="" />
-            </Link>
-          )}
-          <Link to="/cart">
-            <CartIcon />
-          </Link>
-          <LoggedUser />
-        </LoginCartContainer>
-      </HeaderClientContainer>
-    </>
+    <HeaderClientContainer $scrolled={scrolled}>
+      <Logo to="/">Ecommerce</Logo>
+      <NavActions>
+        {contextTokenPayload && authService.hasAnyRoles(["ROLE_ADMIN"]) && (
+          <AdminLink to="/admin">
+            <img src={AdminIcon} alt="Admin" />
+          </AdminLink>
+        )}
+        <CartLink to="/cart">
+          <CartIcon />
+        </CartLink>
+        <LoggedUser />
+      </NavActions>
+    </HeaderClientContainer>
   );
 };
 

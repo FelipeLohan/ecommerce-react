@@ -5,54 +5,70 @@ import { useContext } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
 import { tokens } from "../../styles/tokens.ts";
 
-const UserContainer = styled.div`
+const Avatar = styled.button`
+  width: 34px;
+  height: 34px;
+  border-radius: ${tokens.radius.full};
+  background: ${tokens.colors.primary[100]};
+  color: ${tokens.colors.primary[700]};
+  font-weight: ${tokens.fontWeight.semibold};
+  font-size: ${tokens.fontSize.sm};
+  border: none;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  transition: background-color ${tokens.transition.fast}, color ${tokens.transition.fast};
+  text-transform: uppercase;
+  line-height: 1;
 
-  & h5 {
-    font-size: ${tokens.fontSize.lg};
-    cursor: pointer;
+  &:hover {
+    background: ${tokens.colors.primary[200]};
+    color: ${tokens.colors.primary[800]};
   }
 
-  @media (max-width: 600px) {
-  h4{
-  font-size: ${tokens.fontSize.lg};
+  &:focus-visible {
+    outline: 2px solid ${tokens.colors.primary[500]};
+    outline-offset: 2px;
   }
+`;
 
-  h5{
-  font-size: ${tokens.fontSize.base};
-  }
-}
+const LoginLink = styled(Link)`
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.medium};
+  color: ${tokens.colors.neutral[600]};
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: ${tokens.radius.md};
+  border: 1.5px solid ${tokens.colors.neutral[300]};
+  transition: border-color ${tokens.transition.fast}, color ${tokens.transition.fast},
+    background-color ${tokens.transition.fast};
 
-@media (max-width: 420px){
-  h4{
-  font-size: ${tokens.fontSize.xl};
+  &:hover {
+    border-color: ${tokens.colors.primary[400]};
+    color: ${tokens.colors.primary[600]};
+    background-color: ${tokens.colors.primary[50]};
   }
-
-  h5{
-  font-size: ${tokens.fontSize.xl};
-  }
-}
 `;
 
 const LoggedUser = () => {
   const { contextTokenPayload, setContextTokenPayload } = useContext(ContextToken);
 
-  function handleLogoutClick(){
-    authService.logout() 
-    setContextTokenPayload(undefined)
-  } 
+  function handleLogoutClick() {
+    authService.logout();
+    setContextTokenPayload(undefined);
+  }
 
-  return contextTokenPayload && authService.isAuthenticated() ? (
-    <UserContainer>
-      <h4>{contextTokenPayload?.user_name}</h4>
-      <h5 onClick={handleLogoutClick} >Sair</h5>
-    </UserContainer>
-  ) : (
-    <Link to="/login">Entrar</Link>
-  );
+  if (contextTokenPayload && authService.isAuthenticated()) {
+    const initial = contextTokenPayload.user_name?.charAt(0) ?? "U";
+    return (
+      <Avatar onClick={handleLogoutClick} title={`${contextTokenPayload.user_name} — Sair`}>
+        {initial}
+      </Avatar>
+    );
+  }
+
+  return <LoginLink to="/login">Entrar</LoginLink>;
 };
 
 export { LoggedUser };

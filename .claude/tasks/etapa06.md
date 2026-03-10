@@ -1,6 +1,6 @@
 # Etapa 06 — Headers (Client e Admin)
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapa 01 (tokens), Etapa 02 (tipografia)
 
 ---
@@ -159,10 +159,10 @@ font-weight: 600;
 
 ## Critério de Conclusão
 
-- [ ] HeaderClient sem `#ffe500` — branco com glass effect
-- [ ] Header sticky no topo com z-index correto
-- [ ] Nav links com underline animado no hover
-- [ ] CartIcon badge moderno com borda branca
-- [ ] LoggedUser como avatar com inicial
-- [ ] HeaderAdmin dark, sem `#0caf1d`
-- [ ] Active state visível no link atual do admin
+- [x] HeaderClient sem `#ffe500` — branco com glass effect
+- [x] Header sticky no topo com z-index correto
+- [x] Nav links com underline animado no hover
+- [x] CartIcon badge moderno com borda branca
+- [x] LoggedUser como avatar com inicial
+- [x] HeaderAdmin dark, sem `#0caf1d`
+- [x] Active state visível no link atual do admin
