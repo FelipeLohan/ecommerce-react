@@ -52,7 +52,7 @@ input, textarea, select, button {
   font-size: inherit;
 }
 
-button, [role="button"] {
+button, [role="button"], label[for] {
   cursor: pointer;
 }
 

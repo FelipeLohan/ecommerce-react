@@ -18,6 +18,7 @@ import { ContextToken } from "./utils/context-token";
 import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
 import { ProductListing } from "./routes/Admin/ProductListing/ProductListing.tsx";
 import { ProductForm } from "./routes/Admin/ProductForm/ProductForm.tsx";
+import { ToastProvider } from "./components/Toast";
 
 function App() {
   const [contextCartQuantity, setContextCartQuantity] = useState<number>(0);
@@ -34,7 +35,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ToastProvider>
       <ContextToken.Provider
         value={{ contextTokenPayload, setContextTokenPayload }}
       >
@@ -79,7 +80,7 @@ function App() {
           </HistoryRouter>
         </ContextCartQuantity.Provider>
       </ContextToken.Provider>
-    </>
+    </ToastProvider>
   );
 }
 

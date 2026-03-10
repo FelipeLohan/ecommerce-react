@@ -1,6 +1,6 @@
 # Etapa 13 — Micro-interações e Polish Final
 
-**Status:** [ ] Pendente
+**Status:** [x] Concluída
 **Depende de:** Etapas 01–12 concluídas
 
 ---
@@ -174,12 +174,12 @@ transition: opacity token.transition.base, transform token.transition.base;
 
 ## Critério de Conclusão
 
-- [ ] Skeleton shimmer visível durante loading da lista de produtos
-- [ ] Spinner no botão ao submeter formulários/login
-- [ ] Toast de sucesso ao adicionar ao carrinho
-- [ ] Toast de sucesso ao salvar/excluir produto no admin
-- [ ] Toast de erro no login com mensagem legível
-- [ ] Bounce no ícone do carrinho ao adicionar item
-- [ ] Shadow dinâmica no header ao fazer scroll
-- [ ] Back-to-top button funcional após 500px de scroll
-- [ ] `cursor: pointer` em todos elementos clicáveis
+- [x] Skeleton shimmer visível durante loading da lista de produtos
+- [x] Spinner no botão ao submeter formulários/login
+- [x] Toast de sucesso ao adicionar ao carrinho
+- [x] Toast de sucesso ao salvar/excluir produto no admin
+- [x] Toast de erro no login com mensagem legível
+- [x] Bounce no ícone do carrinho ao adicionar item
+- [x] Shadow dinâmica no header ao fazer scroll
+- [x] Back-to-top button funcional após 500px de scroll
+- [x] `cursor: pointer` em todos elementos clicáveis

@@ -1,13 +1,15 @@
-import { Outlet } from "react-router-dom"
-import { HeaderClient } from "../../components/HeaderClient"
+import { Outlet } from "react-router-dom";
+import { HeaderClient } from "../../components/HeaderClient";
+import { BackToTop } from "../../components/BackToTop";
 
 const ClientHome = () => {
-  return(
+  return (
     <>
-    <HeaderClient/>
-    <Outlet/>
+      <HeaderClient />
+      <Outlet />
+      <BackToTop />
     </>
-  )
-}
+  );
+};
 
-export { ClientHome }
+export { ClientHome };

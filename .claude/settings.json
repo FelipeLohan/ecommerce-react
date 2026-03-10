@@ -7,7 +7,22 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(npx vite:*)",
-      "Bash(/home/work/vscode-ws/ecommerce-react/index.html:*)"
+      "Bash(/home/work/vscode-ws/ecommerce-react/index.html:*)",
+      "Bash(sed -i 's/- \\\\[ \\\\]/- [x]/g' /home/work/vscode-ws/ecommerce-react/.claude/tasks/etapa07.md)",
+      "Bash(sed -i 's/- \\\\[ \\\\]/- [x]/g' /home/work/vscode-ws/ecommerce-react/.claude/tasks/etapa08.md)",
+      "Bash(sed -i 's/- \\\\[ \\\\]/- [x]/g' /home/work/vscode-ws/ecommerce-react/.claude/tasks/etapa09.md)",
+      "Bash(sed -i 's/- \\\\[ \\\\]/- [x]/g' /home/work/vscode-ws/ecommerce-react/.claude/tasks/etapa11.md)",
+      "Bash(sed -i 's/- \\\\[ \\\\]/- [x]/g' /home/work/vscode-ws/ecommerce-react/.claude/tasks/etapa12.md)",
+      "Bash(npx tsc:*)",
+      "Bash(__NEW_LINE_bd2ad618d7980900__ git:*)",
+      "Bash(__NEW_LINE_27c9c81aec4231e1__ git:*)",
+      "Bash(__NEW_LINE_a08d9531cd720225__ git:*)",
+      "Bash(__NEW_LINE_6e8d4529397d6bb3__ git:*)",
+      "Bash(__NEW_LINE_e09124fb83f50760__ git:*)",
+      "Bash(__NEW_LINE_d8176483dea38f3f__ git:*)",
+      "Bash(__NEW_LINE_49b0e089c044f394__ git:*)",
+      "Bash(__NEW_LINE_20ee99047120dbf5__ git:*)",
+      "Bash(__NEW_LINE_242cbce2b33e84dc__ git:*)"
     ],
     "additionalDirectories": [
       "/home/work/.claude/projects/-home-work-vscode-ws-ecommerce-react",

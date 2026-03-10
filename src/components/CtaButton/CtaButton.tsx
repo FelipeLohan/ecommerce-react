@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { tokens } from "../../styles/tokens.ts";
 
 type Variant = "primary" | "secondary" | "danger" | "ghost";
@@ -9,6 +9,7 @@ type Props = {
   size?: Size;
   fullWidth?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
@@ -67,6 +68,20 @@ const sizeStyles: Record<Size, ReturnType<typeof css>> = {
   `,
 };
 
+const spin = keyframes`
+  to { transform: rotate(360deg); }
+`;
+
+const Spinner = styled.span`
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: ${tokens.radius.full};
+  display: inline-block;
+  animation: ${spin} 600ms linear infinite;
+`;
+
 const StyledButton = styled.button<{ $variant: Variant; $size: Size; $fullWidth: boolean }>`
   display: inline-flex;
   align-items: center;
@@ -111,6 +126,7 @@ const CtaButton = ({
   size = "md",
   fullWidth = false,
   disabled = false,
+  isLoading = false,
   onClick,
   children,
   type = "button",
@@ -119,11 +135,11 @@ const CtaButton = ({
     $variant={variant}
     $size={size}
     $fullWidth={fullWidth}
-    disabled={disabled}
+    disabled={disabled || isLoading}
     onClick={onClick}
     type={type}
   >
-    {children}
+    {isLoading ? <Spinner /> : children}
   </StyledButton>
 );
 
