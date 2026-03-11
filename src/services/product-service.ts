@@ -6,8 +6,8 @@ export function findPageRequest(
   page: number,
   name: string,
   categoryId: number,
+  sort: string,
   size?: number,
-  sort?: string,
 ) {
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -16,8 +16,8 @@ export function findPageRequest(
       page,
       name,
       categoryId,
+      sort,
       size: size ?? 12,
-      sort: sort ?? "name"
     },
   };
 
