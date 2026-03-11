@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
 import { tokens } from "../../../styles/tokens.ts";
 import { ArrowUpDown, Check, SearchX } from "lucide-react";
+import { HeroBanner } from "../../../components/HeroBanner";
 
 const SORT_OPTIONS = [
   { label: "Nome A-Z",    value: "name,asc"   },
@@ -17,6 +18,7 @@ const SORT_OPTIONS = [
 ] as const;
 
 type SortValue = typeof SORT_OPTIONS[number]["value"];
+
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
@@ -232,6 +234,8 @@ const Catalog = () => {
 
   return (
     <>
+      <HeroBanner />
+
       <CategoryFilterContainerMargin>
         <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
       </CategoryFilterContainerMargin>
