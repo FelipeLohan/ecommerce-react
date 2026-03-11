@@ -1,20 +1,35 @@
-# Plano — Filtro por Categoria no Catálogo
+# Plano — Ordenação de Produtos no Catálogo
 
 ## Objetivo
-Permitir que o usuário filtre produtos por categoria na tela de catálogo,
-usando os query params `name` e `categoryId` que o backend já suporta.
+Permitir que o usuário ordene os produtos por nome (A-Z, Z-A) ou preço
+(menor → maior, maior → menor) usando o query param `sort` que o backend
+já suporta.
+
+## Valores de sort aceitos pelo backend
+| Opção | sort param |
+|-------|-----------|
+| Nome A-Z | `name,asc` |
+| Nome Z-A | `name,desc` |
+| Menor preço | `price,asc` |
+| Maior preço | `price,desc` |
 
 ## Etapas
 
 | # | Arquivo(s) | O que fazer |
 |---|-----------|-------------|
-| 01 | `product-service.ts` | Adicionar `categoryId` em `findPageRequest()` |
-| 02 | `CategoryFilter/` (novo componente) | Chips visuais de categoria (Todas + lista) |
-| 03 | `Catalog.tsx` | Integrar componente + estado + chamada com filtro |
+| 01 | `product-service.ts` | Substituir `sort` hardcoded por parâmetro dinâmico |
+| 02 | `Catalog.tsx` | Adicionar estado `sort`, toolbar com `<select>` e integrar na chamada |
 
-## Fluxo esperado
-1. Catálogo carrega → busca categorias (GET /categories) e renderiza chips
-2. "Todas" selecionado por padrão (categoryId = 0)
-3. Usuário clica em chip → categoryId atualiza → produtos recarregam do zero (page=0)
-4. Busca por nome continua funcionando combinada com o filtro de categoria
-5. Ao trocar categoria, reset do nome na SearchInput (ou manter — decidir na etapa 03)
+## Resultado esperado
+Toolbar entre os chips de categoria e o grid com um `<select>` de ordenação.
+Ao trocar a opção, reseta para page=0 e rebusca com o novo `sort`.
+
+```
+[ Todas ]  [ Livros ]  [ Eletrônicos ]   ...chips de categoria...
+
+Ordenar por: [ Nome A-Z ▾ ]              ← novo select
+
+┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐
+│      │ │      │ │      │ │      │
+└──────┘ └──────┘ └──────┘ └──────┘
+```

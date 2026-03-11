@@ -3,31 +3,24 @@
 ## Arquivo
 `src/services/product-service.ts`
 
-## O que mudar
+## Problema atual
+O parâmetro `sort` em `findPageRequest` tem default hardcoded `"name"`,
+sem possibilidade de controle externo real (o caller não o usa).
 
-Adicionar `categoryId: number` como parâmetro em `findPageRequest()` e
-incluí-lo nos `params` do axios.
+## Mudança
+Tornar `sort` um parâmetro sem default fixo — o caller passa o valor
+desejado diretamente. Manter assinatura compatível com o uso existente.
 
 ### Antes
 ```ts
 export function findPageRequest(
   page: number,
   name: string,
+  categoryId: number,
   size?: number,
-  sort?: string,
-) {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: "/products",
-    params: {
-      page,
-      name,
-      size: size ?? 12,
-      sort: sort ?? "name"
-    },
-  };
-  return requestBackend(config);
-}
+  sort?: string,   // ignorado — sempre cai no default "name"
+)
+  params: { ..., sort: sort ?? "name" }
 ```
 
 ### Depois
@@ -36,24 +29,12 @@ export function findPageRequest(
   page: number,
   name: string,
   categoryId: number,
+  sort: string,    // obrigatório — quem chama decide
   size?: number,
-  sort?: string,
-) {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: "/products",
-    params: {
-      page,
-      name,
-      categoryId,
-      size: size ?? 12,
-      sort: sort ?? "name"
-    },
-  };
-  return requestBackend(config);
-}
+)
+  params: { ..., sort }
 ```
 
-## Notas
-- `categoryId = 0` desabilita o filtro no backend (sem necessidade de omitir o param)
-- Nenhuma outra chamada usa `findPageRequest` além do `Catalog.tsx`
+## Impacto
+- `Catalog.tsx` → passa o estado `sort`
+- `ProductListing.tsx` (admin) → passa `"name,asc"` como default fixo
