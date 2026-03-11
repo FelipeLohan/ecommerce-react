@@ -28,12 +28,10 @@ const FooterGrid = styled.div`
   }
 `;
 
-const FooterLogo = styled.span`
+const FooterLogo = styled.img`
+  height: 32px;
+  width: auto;
   display: block;
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.primary[400]};
-  letter-spacing: -0.02em;
   margin-bottom: ${tokens.spacing[2]};
 `;
 
@@ -113,7 +111,7 @@ export function FooterClient() {
       <FooterInner>
         <FooterGrid>
           <div>
-            <FooterLogo>Ecommerce</FooterLogo>
+            <FooterLogo src="/Brand_White.svg" alt="Ecommerce" />
             <FooterTagline>
               Projeto de portfólio desenvolvido com React, TypeScript e Spring Boot.
             </FooterTagline>
