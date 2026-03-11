@@ -2,6 +2,7 @@ import styled, { keyframes } from "styled-components";
 import { SearchInput } from "../../../components/SearchInput";
 import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
+import { CategoryFilter } from "../../../components/CategoryFilter";
 import * as productService from "../../../services/product-service.ts";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -34,6 +35,10 @@ const CardLink = styled(Link)`
   display: block;
 `;
 
+const CategoryFilterContainerMargin = styled.div`
+  margin-top: ${tokens.spacing[4]};
+`;
+
 const CtaLoadMoreContainerMargin = styled.div`
   margin-top: ${tokens.spacing[6]};
   margin-bottom: ${tokens.spacing[10]};
@@ -63,6 +68,7 @@ const SKELETON_COUNT = 8;
 type QueryParams = {
   page: number;
   name: string;
+  categoryId: number;
 };
 
 const Catalog = () => {
@@ -72,6 +78,7 @@ const Catalog = () => {
   const [queryParams, setQueryParam] = useState<QueryParams>({
     page: 0,
     name: "",
+    categoryId: 0,
   });
 
   const [isLast, setIsLast] = useState(false);
@@ -80,7 +87,7 @@ const Catalog = () => {
     if (queryParams.page === 0) setIsLoading(true);
 
     productService
-      .findPageRequest(queryParams.page, queryParams.name)
+      .findPageRequest(queryParams.page, queryParams.name, queryParams.categoryId)
       .then((response) => {
         setIsLast(response.data.last);
         const nextPage = response.data.content;
@@ -93,7 +100,12 @@ const Catalog = () => {
 
   function handleSearch(searchText: string) {
     setProducts([]);
-    setQueryParam({ page: 0, name: searchText });
+    setQueryParam((prev) => ({ ...prev, page: 0, name: searchText }));
+  }
+
+  function handleCategoryChange(categoryId: number) {
+    setProducts([]);
+    setQueryParam((prev) => ({ ...prev, page: 0, categoryId }));
   }
 
   function handleNextPage() {
@@ -105,6 +117,13 @@ const Catalog = () => {
       <SearchInputContainerMargin>
         <SearchInput onSearch={handleSearch} />
       </SearchInputContainerMargin>
+
+      <CategoryFilterContainerMargin>
+        <CategoryFilter
+          selectedId={queryParams.categoryId}
+          onChange={handleCategoryChange}
+        />
+      </CategoryFilterContainerMargin>
 
       <ProductsCardsGridContainer>
         {isLoading
