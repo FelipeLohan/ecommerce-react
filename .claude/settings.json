@@ -26,7 +26,8 @@
     ],
     "additionalDirectories": [
       "/home/work/.claude/projects/-home-work-vscode-ws-ecommerce-react",
-      "/home/work/vscode-ws/ecommerce-react/.claude"
+      "/home/work/vscode-ws/ecommerce-react/.claude",
+      "/home/work/vscode-ws/ecommerce-react/.claude/tasks"
     ]
   }
 }

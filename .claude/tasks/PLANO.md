@@ -1,28 +1,20 @@
-# Plano — Menu do Usuário + Página Minha Conta
+# Plano — Filtro por Categoria no Catálogo
 
-## Visão geral
-Ao clicar no avatar do usuário no header, exibir um dropdown com duas opções:
-- **Minha conta** → navega para `/my-account` (página com dados do usuário)
-- **Sair** → encerra a sessão
+## Objetivo
+Permitir que o usuário filtre produtos por categoria na tela de catálogo,
+usando os query params `name` e `categoryId` que o backend já suporta.
 
 ## Etapas
 
-| # | Arquivo | Descrição |
-|---|---------|-----------|
-| 01 | `etapa-01-dropdown.md` | Adicionar dropdown ao `LoggedUser` com "Minha conta" e "Sair" |
-| 02 | `etapa-02-page.md` | Criar página `src/routes/ClientHome/MyAccount/` |
-| 03 | `etapa-03-route.md` | Registrar rota `/my-account` (PrivateRoute) no `App.tsx` |
+| # | Arquivo(s) | O que fazer |
+|---|-----------|-------------|
+| 01 | `product-service.ts` | Adicionar `categoryId` em `findPageRequest()` |
+| 02 | `CategoryFilter/` (novo componente) | Chips visuais de categoria (Todas + lista) |
+| 03 | `Catalog.tsx` | Integrar componente + estado + chamada com filtro |
 
 ## Fluxo esperado
-```
-Header (avatar) → clica → dropdown abre
-  ├── "Minha conta" → navega para /my-account
-  │     └── GET /users/me (findMe já existe em user-service.ts)
-  │           └── exibe nome, email do usuário
-  └── "Sair" → authService.logout() + limpa contexto → redireciona para /
-```
-
-## Estado atual do LoggedUser
-- Avatar já existe como `<button>` com a inicial do usuário
-- Clique atual faz logout direto — será substituído por abrir/fechar dropdown
-- `findMe()` já existe em `user-service.ts` (GET /users/me com withCredentials)
+1. Catálogo carrega → busca categorias (GET /categories) e renderiza chips
+2. "Todas" selecionado por padrão (categoryId = 0)
+3. Usuário clica em chip → categoryId atualiza → produtos recarregam do zero (page=0)
+4. Busca por nome continua funcionando combinada com o filtro de categoria
+5. Ao trocar categoria, reset do nome na SearchInput (ou manter — decidir na etapa 03)
