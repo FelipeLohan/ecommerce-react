@@ -5,6 +5,7 @@ import { ProductDTO } from "../models/product";
 export function findPageRequest(
   page: number,
   name: string,
+  categoryId: number,
   size?: number,
   sort?: string,
 ) {
@@ -14,6 +15,7 @@ export function findPageRequest(
     params: {
       page,
       name,
+      categoryId,
       size: size ?? 12,
       sort: sort ?? "name"
     },
