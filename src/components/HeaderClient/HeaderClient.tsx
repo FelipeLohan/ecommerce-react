@@ -40,19 +40,24 @@ const HeaderClientContainer = styled.header<{ $scrolled: boolean }>`
 `;
 
 const Logo = styled(Link)`
-  font-size: ${tokens.fontSize.xl};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.primary[600]};
-  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
   text-decoration: none;
   flex-shrink: 0;
 
-  &:hover {
-    color: ${tokens.colors.primary[700]};
+  img {
+    height: 36px;
+    width: auto;
+    display: block;
+    transition: opacity ${tokens.transition.fast};
+
+    @media (max-width: 600px) {
+      height: 28px;
+    }
   }
 
-  @media (max-width: 600px) {
-    font-size: ${tokens.fontSize.lg};
+  &:hover img {
+    opacity: 0.85;
   }
 `;
 
@@ -181,7 +186,9 @@ const HeaderClient = () => {
 
   return (
     <HeaderClientContainer $scrolled={scrolled}>
-      <Logo to="/">Ecommerce</Logo>
+      <Logo to="/">
+        <img src="/Brand.svg" alt="Ecommerce" />
+      </Logo>
 
       <SearchForm onSubmit={handleSubmit}>
         <SearchField
