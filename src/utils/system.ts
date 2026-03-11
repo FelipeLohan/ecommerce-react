@@ -8,7 +8,7 @@ const runtimeEnv = (window as any).__ENV__ ?? {};
 export const BASE_URL =
   runtimeEnv.VITE_BACKEND_URL ||
   import.meta.env.VITE_BACKEND_URL ||
-  "https://ecommerce-spring-ec44b57ed84d.herokuapp.com";
+  "http://localhost:8080";
 
 export const CLIENT_ID =
   runtimeEnv.VITE_CLIENT_ID ||
