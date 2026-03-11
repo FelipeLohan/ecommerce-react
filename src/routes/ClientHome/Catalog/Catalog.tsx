@@ -1,32 +1,42 @@
 import styled, { keyframes } from "styled-components";
-import { SearchInput } from "../../../components/SearchInput";
 import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
 import { CategoryFilter } from "../../../components/CategoryFilter";
 import * as productService from "../../../services/product-service.ts";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
 import { tokens } from "../../../styles/tokens.ts";
+import { ArrowUpDown, Check, SearchX } from "lucide-react";
 
-const SearchInputContainerMargin = styled.div`
-  margin-top: ${tokens.spacing[10]};
-`;
+const SORT_OPTIONS = [
+  { label: "Nome A-Z",    value: "name,asc"   },
+  { label: "Nome Z-A",    value: "name,desc"  },
+  { label: "Menor preço", value: "price,asc"  },
+  { label: "Maior preço", value: "price,desc" },
+] as const;
+
+type SortValue = typeof SORT_OPTIONS[number]["value"];
 
 const ProductsCardsGridContainer = styled.div`
   width: 90%;
-  margin: ${tokens.spacing[8]} auto 0;
+  margin: ${tokens.spacing[4]} auto 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 
+  @media (max-width: ${tokens.breakpoint.lg}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   @media (max-width: ${tokens.breakpoint.md}) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
-  @media (max-width: 420px) {
-    grid-template-columns: 1fr;
-    width: 90%;
+  @media (max-width: ${tokens.breakpoint.sm}) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 `;
 
@@ -36,7 +46,82 @@ const CardLink = styled(Link)`
 `;
 
 const CategoryFilterContainerMargin = styled.div`
-  margin-top: ${tokens.spacing[4]};
+  margin-top: ${tokens.spacing[8]};
+`;
+
+const ToolbarRow = styled.div`
+  width: 90%;
+  margin: ${tokens.spacing[4]} auto 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: ${tokens.spacing[4]};
+
+  @media (max-width: ${tokens.breakpoint.sm}) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`;
+
+const ResultCount = styled.span`
+  font-size: ${tokens.fontSize.sm};
+  color: ${tokens.colors.neutral[500]};
+`;
+
+const SortWrapper = styled.div`
+  position: relative;
+`;
+
+const SortButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: ${tokens.spacing[2]};
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${tokens.fontWeight.medium};
+  color: ${tokens.colors.neutral[700]};
+  background: #ffffff;
+  border: 1.5px solid ${tokens.colors.neutral[200]};
+  border-radius: ${tokens.radius.md};
+  padding: 6px ${tokens.spacing[3]};
+  cursor: pointer;
+  transition: border-color ${tokens.transition.fast}, background ${tokens.transition.fast};
+
+  &:hover {
+    border-color: ${tokens.colors.primary[400]};
+    background: ${tokens.colors.primary[50]};
+  }
+`;
+
+const SortDropdown = styled.ul<{ $open: boolean }>`
+  display: ${({ $open }) => ($open ? "block" : "none")};
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #ffffff;
+  border: 1px solid ${tokens.colors.neutral[200]};
+  border-radius: ${tokens.radius.md};
+  box-shadow: ${tokens.shadow.md};
+  list-style: none;
+  margin: 0;
+  padding: ${tokens.spacing[1]} 0;
+  min-width: 160px;
+  z-index: 50;
+`;
+
+const SortOption = styled.li<{ $active: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${tokens.spacing[2]};
+  padding: 8px ${tokens.spacing[4]};
+  font-size: ${tokens.fontSize.sm};
+  font-weight: ${({ $active }) => $active ? tokens.fontWeight.semibold : tokens.fontWeight.normal};
+  color: ${({ $active }) => $active ? tokens.colors.primary[600] : tokens.colors.neutral[700]};
+  cursor: pointer;
+  transition: background ${tokens.transition.fast};
+
+  &:hover {
+    background: ${tokens.colors.neutral[50]};
+  }
 `;
 
 const CtaLoadMoreContainerMargin = styled.div`
@@ -59,83 +144,145 @@ const SkeletonCard = styled.div`
   background-size: 200% 100%;
   border-radius: ${tokens.radius.lg};
   overflow: hidden;
-  height: 360px;
+  height: 340px;
   animation: ${shimmer} 1.4s ease-in-out infinite;
+`;
+
+const EmptyState = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: ${tokens.spacing[4]};
+  padding: ${tokens.spacing[16]} ${tokens.spacing[6]};
+  color: ${tokens.colors.neutral[400]};
+  text-align: center;
+`;
+
+const EmptyStateTitle = styled.p`
+  font-size: ${tokens.fontSize.lg};
+  font-weight: ${tokens.fontWeight.semibold};
+  color: ${tokens.colors.neutral[600]};
+  margin: 0;
+`;
+
+const EmptyStateSubtitle = styled.p`
+  font-size: ${tokens.fontSize.sm};
+  color: ${tokens.colors.neutral[400]};
+  margin: 0;
 `;
 
 const SKELETON_COUNT = 8;
 
-type QueryParams = {
-  page: number;
-  name: string;
-  categoryId: number;
-};
-
 const Catalog = () => {
+  const [searchParams] = useSearchParams();
+  const name = searchParams.get("name") ?? "";
+
   const [products, setProducts] = useState<ProductDTO[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [queryParams, setQueryParam] = useState<QueryParams>({
-    page: 0,
-    name: "",
-    categoryId: 0,
-  });
-
+  const [categoryId, setCategoryId] = useState(0);
+  const [sort, setSort] = useState<SortValue>("name,asc");
+  const [sortOpen, setSortOpen] = useState(false);
+  const [page, setPage] = useState(0);
   const [isLast, setIsLast] = useState(false);
+  const [totalElements, setTotalElements] = useState(0);
+  const sortRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (queryParams.page === 0) setIsLoading(true);
+    function handleOutsideClick(e: MouseEvent) {
+      if (sortRef.current && !sortRef.current.contains(e.target as Node)) {
+        setSortOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  useEffect(() => {
+    setPage(0);
+    setProducts([]);
+  }, [name, categoryId, sort]);
+
+  useEffect(() => {
+    if (page === 0) setIsLoading(true);
 
     productService
-      .findPageRequest(queryParams.page, queryParams.name, queryParams.categoryId)
+      .findPageRequest(page, name, categoryId, sort)
       .then((response) => {
         setIsLast(response.data.last);
+        setTotalElements(response.data.totalElements);
         const nextPage = response.data.content;
-        setProducts((prev) =>
-          queryParams.page === 0 ? nextPage : prev.concat(nextPage)
-        );
+        setProducts((prev) => (page === 0 ? nextPage : prev.concat(nextPage)));
       })
       .finally(() => setIsLoading(false));
-  }, [queryParams]);
+  }, [page, name, categoryId, sort]);
 
-  function handleSearch(searchText: string) {
-    setProducts([]);
-    setQueryParam((prev) => ({ ...prev, page: 0, name: searchText }));
+  function handleCategoryChange(id: number) {
+    setCategoryId(id);
   }
 
-  function handleCategoryChange(categoryId: number) {
-    setProducts([]);
-    setQueryParam((prev) => ({ ...prev, page: 0, categoryId }));
+  function handleSortChange(value: SortValue) {
+    setSort(value);
+    setSortOpen(false);
   }
 
   function handleNextPage() {
-    setQueryParam((prev) => ({ ...prev, page: prev.page + 1 }));
+    setPage((prev) => prev + 1);
   }
 
   return (
     <>
-      <SearchInputContainerMargin>
-        <SearchInput onSearch={handleSearch} />
-      </SearchInputContainerMargin>
-
       <CategoryFilterContainerMargin>
-        <CategoryFilter
-          selectedId={queryParams.categoryId}
-          onChange={handleCategoryChange}
-        />
+        <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
       </CategoryFilterContainerMargin>
 
-      <ProductsCardsGridContainer>
-        {isLoading
-          ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))
-          : products.map((product) => (
-              <CardLink key={product.id} to={`/product-details/${product.id}`}>
-                <ProductCatalogCard product={product} />
-              </CardLink>
-            ))}
-      </ProductsCardsGridContainer>
+      {!isLoading && products.length > 0 && (
+        <ToolbarRow>
+          <ResultCount>{totalElements} produto(s) encontrado(s)</ResultCount>
+          <SortWrapper ref={sortRef}>
+            <SortButton onClick={() => setSortOpen((prev) => !prev)}>
+              <ArrowUpDown size={14} />
+              {SORT_OPTIONS.find((o) => o.value === sort)?.label}
+            </SortButton>
+            <SortDropdown $open={sortOpen}>
+              {SORT_OPTIONS.map((opt) => (
+                <SortOption
+                  key={opt.value}
+                  $active={sort === opt.value}
+                  onClick={() => handleSortChange(opt.value)}
+                >
+                  {sort === opt.value && <Check size={13} />}
+                  {opt.label}
+                </SortOption>
+              ))}
+            </SortDropdown>
+          </SortWrapper>
+        </ToolbarRow>
+      )}
+
+      {isLoading ? (
+        <ProductsCardsGridContainer>
+          {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </ProductsCardsGridContainer>
+      ) : products.length === 0 ? (
+        <EmptyState>
+          <SearchX size={48} strokeWidth={1.5} />
+          <EmptyStateTitle>Nenhum produto encontrado</EmptyStateTitle>
+          <EmptyStateSubtitle>
+            Tente outros termos ou remova os filtros aplicados.
+          </EmptyStateSubtitle>
+        </EmptyState>
+      ) : (
+        <ProductsCardsGridContainer>
+          {products.map((product) => (
+            <CardLink key={product.id} to={`/product-details/${product.id}`}>
+              <ProductCatalogCard product={product} />
+            </CardLink>
+          ))}
+        </ProductsCardsGridContainer>
+      )}
 
       {!isLoading && !isLast && (
         <CtaLoadMoreContainerMargin onClick={handleNextPage}>
