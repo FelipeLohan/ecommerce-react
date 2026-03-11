@@ -103,7 +103,7 @@ const ProductListing = () => {
 
   useEffect(() => {
     productService
-      .findPageRequest(queryParams.page, queryParams.name)
+      .findPageRequest(queryParams.page, queryParams.name, 0)
       .then((response) => {
         setIsLast(response.data.last);
         const nextPage = response.data.content;
