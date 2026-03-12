@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { ProductDetailsInCart } from "../../../components/ProductDetailInCart";
 import { CtaButton } from "../../../components/CtaButton";
 import { useNavigate } from "react-router-dom";
@@ -7,127 +6,7 @@ import * as cartService from "../../../services/cart-service.ts";
 import * as orderService from "../../../services/order-service.ts";
 import { OrderDTO } from "../../../models/order";
 import { ContextCartQuantity } from "../../../utils/context-cart";
-import { tokens } from "../../../styles/tokens.ts";
 
-/* ── Page wrapper ────────────────────────────────────────── */
-const PageWrapper = styled.div`
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 24px;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    margin: 24px auto;
-  }
-`;
-
-const PageTitle = styled.h1`
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  margin: 0 0 24px;
-`;
-
-const ContentGrid = styled.div`
-  display: grid;
-  grid-template-columns: 65fr 35fr;
-  gap: 24px;
-  align-items: start;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-/* ── Items list ──────────────────────────────────────────── */
-const ItemsList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-/* ── Summary panel ───────────────────────────────────────── */
-const SummaryPanel = styled.aside`
-  background: ${tokens.colors.neutral[50]};
-  border: 1px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.lg};
-  padding: 24px;
-  position: sticky;
-  top: 80px;
-`;
-
-const SummaryTitle = styled.h2`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[900]};
-  margin: 0 0 20px;
-`;
-
-const SummaryRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[600]};
-  padding: 8px 0;
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-`;
-
-const SummaryTotal = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: ${tokens.fontSize.xl};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  padding-top: 16px;
-  margin-top: 8px;
-`;
-
-const SummaryActions = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-`;
-
-const SecureBadge = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.neutral[400]};
-  margin-top: 12px;
-`;
-
-/* ── Empty state ─────────────────────────────────────────── */
-const EmptyState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 80px 24px;
-  text-align: center;
-`;
-
-const EmptyIcon = styled.div`
-  color: ${tokens.colors.neutral[300]};
-`;
-
-const EmptyTitle = styled.p`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[700]};
-  margin: 0;
-`;
-
-const EmptySubtitle = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-  margin: 0;
-`;
-
-/* ── Component ───────────────────────────────────────────── */
 const Cart = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState<OrderDTO>(cartService.getCart());
@@ -165,30 +44,30 @@ const Cart = () => {
   const isEmpty = cart.items.length === 0;
 
   return (
-    <PageWrapper>
-      <PageTitle>Carrinho</PageTitle>
+    <div className="max-w-[1100px] mx-auto mt-10 px-6 md:mt-6">
+      <h1 className="text-2xl font-bold text-neutral-900 m-0 mb-6">Carrinho</h1>
 
       {isEmpty ? (
-        <EmptyState>
-          <EmptyIcon>
+        <div className="flex flex-col items-center justify-center gap-4 py-20 px-6 text-center">
+          <div className="text-neutral-300">
             <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"/>
               <circle cx="20" cy="21" r="1"/>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
             </svg>
-          </EmptyIcon>
-          <EmptyTitle>Seu carrinho está vazio</EmptyTitle>
-          <EmptySubtitle>Adicione produtos para continuar comprando.</EmptySubtitle>
-          <div style={{ marginTop: "8px" }}>
+          </div>
+          <p className="text-lg font-semibold text-neutral-700 m-0">Seu carrinho está vazio</p>
+          <p className="text-sm text-neutral-400 m-0">Adicione produtos para continuar comprando.</p>
+          <div className="mt-2">
             <CtaButton variant="primary" onClick={handleWhileBuying}>
               Explorar produtos
             </CtaButton>
           </div>
-        </EmptyState>
+        </div>
       ) : (
-        <ContentGrid>
+        <div className="grid gap-6 items-start [grid-template-columns:65fr_35fr] md:grid-cols-1">
           {/* Items list */}
-          <ItemsList>
+          <div className="flex flex-col gap-4">
             {cart.items.map((item) => (
               <ProductDetailsInCart
                 key={item.productId}
@@ -203,44 +82,44 @@ const Cart = () => {
             <CtaButton variant="ghost" fullWidth onClick={handleClearCart}>
               Limpar carrinho
             </CtaButton>
-          </ItemsList>
+          </div>
 
           {/* Summary panel */}
-          <SummaryPanel>
-            <SummaryTitle>Resumo do pedido</SummaryTitle>
+          <aside className="bg-neutral-50 border border-neutral-200 rounded-lg p-6 sticky top-20">
+            <h2 className="text-lg font-semibold text-neutral-900 m-0 mb-5">Resumo do pedido</h2>
 
             {cart.items.map((item) => (
-              <SummaryRow key={item.productId}>
+              <div key={item.productId} className="flex justify-between text-sm text-neutral-600 py-2 border-b border-neutral-100">
                 <span>{item.name} × {item.quantity}</span>
                 <span>R$ {(item.price * item.quantity).toFixed(2)}</span>
-              </SummaryRow>
+              </div>
             ))}
 
-            <SummaryTotal>
+            <div className="flex justify-between items-center text-xl font-bold text-neutral-900 pt-4 mt-2">
               <span>Total</span>
               <span>R$ {cart.total.toFixed(2)}</span>
-            </SummaryTotal>
+            </div>
 
-            <SummaryActions>
+            <div className="flex flex-col gap-3 mt-4">
               <CtaButton variant="primary" fullWidth size="lg" onClick={handlePlaceOrderClick}>
                 Finalizar pedido
               </CtaButton>
               <CtaButton variant="secondary" fullWidth onClick={handleWhileBuying}>
                 Continuar comprando
               </CtaButton>
-            </SummaryActions>
+            </div>
 
-            <SecureBadge>
+            <div className="flex items-center justify-center gap-1.5 text-xs text-neutral-400 mt-3">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
               Compra 100% segura
-            </SecureBadge>
-          </SummaryPanel>
-        </ContentGrid>
+            </div>
+          </aside>
+        </div>
       )}
-    </PageWrapper>
+    </div>
   );
 };
 

@@ -1,155 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ShoppingCart, ArrowLeft } from "lucide-react";
 import { CategoryCard } from "../CategoryCard";
 import { CtaButton } from "../CtaButton";
 import { ProductDTO } from "../../models/product";
-import { tokens } from "../../styles/tokens.ts";
 
-/* ── Page wrapper ─────────────────────────────────────── */
-const PageWrapper = styled.section`
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 0 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  align-items: start;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin: 24px auto;
-  }
-`;
-
-/* ── Left panel — Image ───────────────────────────────── */
-const ProductImage = styled.img`
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: ${tokens.radius.lg};
-  box-shadow: ${tokens.shadow.md};
-  display: block;
-`;
-
-/* ── Right panel — Info ───────────────────────────────── */
-const InfoPanel = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const Breadcrumb = styled.nav`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-
-  a {
-    color: ${tokens.colors.neutral[400]};
-    text-decoration: none;
-
-    &:hover {
-      color: ${tokens.colors.primary[600]};
-    }
-  }
-
-  span {
-    margin: 0 6px;
-  }
-`;
-
-const CategoriesRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`;
-
-const ProductName = styled.h1`
-  font-size: ${tokens.fontSize["3xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  line-height: ${tokens.lineHeight.snug};
-  margin: 0;
-`;
-
-const Price = styled.p`
-  font-size: ${tokens.fontSize["4xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.primary[600]};
-  margin: 0;
-`;
-
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid ${tokens.colors.neutral[100]};
-  margin: 4px 0;
-`;
-
-const Description = styled.p`
-  font-size: ${tokens.fontSize.base};
-  color: ${tokens.colors.neutral[600]};
-  line-height: ${tokens.lineHeight.relaxed};
-  margin: 0;
-`;
-
-const QuantityRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const QuantityLabel = styled.span`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-`;
-
-const QtyButton = styled.button`
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.md};
-  background: #ffffff;
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-  cursor: pointer;
-  transition: border-color ${tokens.transition.fast}, background ${tokens.transition.fast},
-    color ${tokens.transition.fast};
-  line-height: 1;
-
-  &:hover {
-    border-color: ${tokens.colors.primary[500]};
-    background: ${tokens.colors.primary[50]};
-    color: ${tokens.colors.primary[600]};
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-`;
-
-const QtyValue = styled.span`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[800]};
-  min-width: 32px;
-  text-align: center;
-`;
-
-const ActionsColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 8px;
-`;
-
-/* ── Component ────────────────────────────────────────── */
 type Props = {
   product: ProductDTO;
   onBuy: (quantity: number) => void;
@@ -160,65 +15,71 @@ const ProductDetailsCard = ({ product, onBuy, onBack }: Props) => {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <PageWrapper>
+    <section className="max-w-[1100px] mx-auto my-10 px-6 grid grid-cols-2 gap-12 items-start md:grid-cols-1 md:gap-6 md:my-6">
       {/* Left — image */}
-      <ProductImage src={product.imgUrl} alt={product.name} />
+      <img
+        src={product.imgUrl}
+        alt={product.name}
+        className="w-full aspect-square object-cover rounded-lg shadow-md block"
+      />
 
       {/* Right — info */}
-      <InfoPanel>
-        <Breadcrumb>
-          <Link to="/">Início</Link>
-          <span>›</span>
-          <Link to="/">Catálogo</Link>
-          <span>›</span>
+      <div className="flex flex-col gap-4">
+        <nav className="text-sm text-neutral-400">
+          <Link to="/" className="text-neutral-400 no-underline hover:text-primary-600">Início</Link>
+          <span className="mx-1.5">›</span>
+          <Link to="/" className="text-neutral-400 no-underline hover:text-primary-600">Catálogo</Link>
+          <span className="mx-1.5">›</span>
           {product.name}
-        </Breadcrumb>
+        </nav>
 
         {product.categories?.length > 0 && (
-          <CategoriesRow>
+          <div className="flex flex-wrap gap-2">
             {product.categories.map((cat) => (
               <CategoryCard key={cat.id} name={cat.name} />
             ))}
-          </CategoriesRow>
+          </div>
         )}
 
-        <ProductName>{product.name}</ProductName>
-        <Price>R$ {product.price.toFixed(2)}</Price>
+        <h1 className="text-3xl font-bold text-neutral-900 leading-snug m-0">{product.name}</h1>
+        <p className="text-4xl font-bold text-primary-600 m-0">R$ {product.price.toFixed(2)}</p>
 
-        <Divider />
+        <hr className="border-none border-t border-neutral-100 my-1" />
 
-        <Description>{product.description}</Description>
+        <p className="text-base text-neutral-600 leading-relaxed m-0">{product.description}</p>
 
-        <QuantityRow>
-          <QuantityLabel>Quantidade:</QuantityLabel>
-          <QtyButton
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium text-neutral-700">Quantidade:</span>
+          <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             disabled={quantity <= 1}
             aria-label="Diminuir quantidade"
+            className="w-9 h-9 flex items-center justify-center border-[1.5px] border-neutral-200 rounded-md bg-white text-lg font-medium text-neutral-700 cursor-pointer transition-[border-color,background,color] duration-150 leading-none hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             −
-          </QtyButton>
-          <QtyValue>{quantity}</QtyValue>
-          <QtyButton
+          </button>
+          <span className="text-lg font-semibold text-neutral-800 min-w-8 text-center">{quantity}</span>
+          <button
             type="button"
             onClick={() => setQuantity((q) => q + 1)}
             aria-label="Aumentar quantidade"
+            className="w-9 h-9 flex items-center justify-center border-[1.5px] border-neutral-200 rounded-md bg-white text-lg font-medium text-neutral-700 cursor-pointer transition-[border-color,background,color] duration-150 leading-none hover:border-primary-500 hover:bg-primary-50 hover:text-primary-600"
           >
             +
-          </QtyButton>
-        </QuantityRow>
+          </button>
+        </div>
 
-        <ActionsColumn>
+        <div className="flex flex-col gap-3 mt-2">
           <CtaButton variant="primary" fullWidth size="lg" onClick={() => onBuy(quantity)}>
             <ShoppingCart size={16} style={{ marginRight: 8 }} /> Adicionar ao carrinho
           </CtaButton>
           <CtaButton variant="secondary" fullWidth onClick={onBack}>
             <ArrowLeft size={16} style={{ marginRight: 8 }} /> Voltar ao catálogo
           </CtaButton>
-        </ActionsColumn>
-      </InfoPanel>
-    </PageWrapper>
+        </div>
+      </div>
+    </section>
   );
 };
 

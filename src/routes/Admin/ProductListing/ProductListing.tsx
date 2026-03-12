@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { CtaButton } from "../../../components/CtaButton";
 import { SearchInput } from "../../../components/SearchInput";
 import { ProductAdminListCard } from "../../../components/ProductAdminListCard";
@@ -9,76 +8,13 @@ import { ProductDTO } from "../../../models/product";
 import { DialogInfo } from "../../../components/DialogInfo/DialogInfo.tsx";
 import { DialogConfirmation } from "../../../components/DialogConfirmation/DialogConfirmation.tsx";
 import { useNavigate } from "react-router-dom";
-import { tokens } from "../../../styles/tokens.ts";
 import { ContextToast } from "../../../utils/context-toast.ts";
 
-/* ── Page ────────────────────────────────────────────────── */
-const PageWrapper = styled.div`
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 24px 40px;
-`;
-
-const PageHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 24px;
-`;
-
-const PageTitle = styled.h1`
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  margin: 0;
-`;
-
-const SearchBarContainer = styled.div`
-  margin-bottom: 20px;
-`;
-
-const CtaLoadMoreContainerMargin = styled.div`
-  margin-top: 20px;
-`;
-
-/* ── Table ───────────────────────────────────────────────── */
-const TableWrapper = styled.div`
-  background: #ffffff;
-  border-radius: ${tokens.radius.lg};
-  box-shadow: ${tokens.shadow.sm};
-  overflow: hidden;
-`;
-
-const StyledTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const Th = styled.th`
-  background: ${tokens.colors.neutral[50]};
-  font-size: ${tokens.fontSize.xs};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[500]};
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-`;
-
-const HoverTr = styled.tr`
-  &:hover td {
-    background: ${tokens.colors.neutral[50]};
-  }
-`;
-
-/* ── Types ───────────────────────────────────────────────── */
 type QueryParams = {
   page: number;
   name: string;
 };
 
-/* ── Component ───────────────────────────────────────────── */
 const ProductListing = () => {
   const navigate = useNavigate();
   const { addToast } = useContext(ContextToast);
@@ -162,32 +98,35 @@ const ProductListing = () => {
   }
 
   return (
-    <PageWrapper>
-      <PageHeader>
-        <PageTitle>Produtos</PageTitle>
+    <div className="max-w-[1100px] mx-auto px-6 pb-10">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-neutral-900 m-0">Produtos</h1>
         <CtaButton variant="primary" onClick={handleNewProductClick}>
           + Novo produto
         </CtaButton>
-      </PageHeader>
+      </div>
 
-      <SearchBarContainer>
+      <div className="mb-5">
         <SearchInput onSearch={handleSearch} />
-      </SearchBarContainer>
+      </div>
 
-      <TableWrapper>
-        <StyledTable>
+      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+        <table className="w-full border-collapse">
           <thead>
             <tr>
-              <Th>#</Th>
-              <Th>Imagem</Th>
-              <Th>Nome</Th>
-              <Th>Preço</Th>
-              <Th>Ações</Th>
+              {["#", "Imagem", "Nome", "Preço", "Ações"].map((h) => (
+                <th
+                  key={h}
+                  className="bg-neutral-50 text-xs font-semibold text-neutral-500 uppercase tracking-[0.05em] px-4 py-3 text-left border-b border-neutral-100"
+                >
+                  {h}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
-              <HoverTr key={product.id}>
+              <tr key={product.id} className="[&:hover_td]:bg-neutral-50">
                 <ProductAdminListCard
                   id={product.id}
                   name={product.name}
@@ -196,16 +135,16 @@ const ProductListing = () => {
                   onDeleteClick={() => handleDeleteClick(product.id)}
                   onUpdateClick={() => handleUpdateClick(product.id)}
                 />
-              </HoverTr>
+              </tr>
             ))}
           </tbody>
-        </StyledTable>
-      </TableWrapper>
+        </table>
+      </div>
 
       {!isLast && (
-        <CtaLoadMoreContainerMargin onClick={handleNextPage}>
+        <div className="mt-5" onClick={handleNextPage}>
           <CtaLoadMore />
-        </CtaLoadMoreContainerMargin>
+        </div>
       )}
 
       {dialogInfoData.visible && (
@@ -222,7 +161,7 @@ const ProductListing = () => {
           id={dialogConfirmationData.id}
         />
       )}
-    </PageWrapper>
+    </div>
   );
 };
 

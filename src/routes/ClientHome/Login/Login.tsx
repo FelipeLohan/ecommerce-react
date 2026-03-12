@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useContext, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
 import * as authService from "../../../services/auth-service.ts";
@@ -7,161 +6,8 @@ import { AlertTriangle } from "lucide-react";
 import { ContextToken } from "../../../utils/context-token.ts";
 import { FormInput } from "../../../components/Forminput/FormInput.tsx";
 import { CtaButton } from "../../../components/CtaButton";
-import { tokens } from "../../../styles/tokens.ts";
 import { ContextToast } from "../../../utils/context-toast.ts";
 
-/* ── Page layout ─────────────────────────────────────────── */
-const PageGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-/* ── Left panel — Brand ──────────────────────────────────── */
-const BrandPanel = styled.div`
-  background: linear-gradient(
-    135deg,
-    ${tokens.colors.primary[600]},
-    ${tokens.colors.primary[900]}
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-  color: #ffffff;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    display: none;
-  }
-`;
-
-const BrandTagline = styled.h1`
-  font-size: ${tokens.fontSize["3xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  line-height: ${tokens.lineHeight.snug};
-  text-align: center;
-  margin: 0 0 16px;
-`;
-
-const BrandSubtitle = styled.p`
-  font-size: ${tokens.fontSize.base};
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  margin: 0;
-  line-height: ${tokens.lineHeight.normal};
-`;
-
-/* ── Right panel — Form ──────────────────────────────────── */
-const FormPanel = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  background: ${tokens.colors.surface.page};
-`;
-
-const FormCard = styled.div`
-  width: 100%;
-  max-width: 440px;
-  background: #ffffff;
-  border-radius: ${tokens.radius.xl};
-  box-shadow: ${tokens.shadow.xl};
-  padding: 48px 40px;
-
-  @media (max-width: ${tokens.breakpoint.sm}) {
-    padding: 32px 24px;
-  }
-`;
-
-const FormLogo = styled.p`
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.primary[600]};
-  margin: 0 0 8px;
-`;
-
-const FormSubtitle = styled.p`
-  font-size: ${tokens.fontSize.base};
-  color: ${tokens.colors.neutral[500]};
-  margin: 0 0 32px;
-`;
-
-const FieldsColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const FieldLabel = styled.label`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-`;
-
-const FieldError = styled.span`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.danger[500]};
-`;
-
-const ForgotLink = styled.a`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.primary[600]};
-  text-decoration: underline;
-  text-align: right;
-  display: block;
-  margin-top: -8px;
-  cursor: pointer;
-
-  &:hover {
-    color: ${tokens.colors.primary[700]};
-  }
-`;
-
-const ErrorBanner = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: ${tokens.colors.danger[50]};
-  border: 1px solid ${tokens.colors.danger[200]};
-  border-radius: ${tokens.radius.md};
-  color: ${tokens.colors.danger[700]};
-  font-size: ${tokens.fontSize.sm};
-`;
-
-const SubmitWrapper = styled.div`
-  margin-top: 8px;
-`;
-
-const RegisterLink = styled.p`
-  margin: 20px 0 0;
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[500]};
-  text-align: center;
-
-  a {
-    color: ${tokens.colors.primary[600]};
-    font-weight: ${tokens.fontWeight.medium};
-    text-decoration: underline;
-
-    &:hover {
-      color: ${tokens.colors.primary[700]};
-    }
-  }
-`;
-
-/* ── Component ───────────────────────────────────────────── */
 const Login = () => {
   const navigate = useNavigate();
   const { addToast } = useContext(ContextToast);
@@ -224,50 +70,57 @@ const Login = () => {
   }
 
   return (
-    <PageGrid>
+    <div className="grid [grid-template-columns:1fr_1fr] min-h-screen md:grid-cols-1">
       {/* Left — brand */}
-      <BrandPanel>
-        <BrandTagline>Bem-vindo de volta!</BrandTagline>
-        <BrandSubtitle>
+      <div
+        className="flex flex-col items-center justify-center p-12 text-white max-md:hidden"
+        style={{ background: "linear-gradient(135deg, var(--color-primary-600), var(--color-primary-900))" }}
+      >
+        <h1 className="text-3xl font-bold leading-snug text-center m-0 mb-4">
+          Bem-vindo de volta!
+        </h1>
+        <p className="text-base text-center m-0 leading-normal" style={{ color: "rgba(255,255,255,0.75)" }}>
           Acesse sua conta e continue comprando os melhores produtos com os
           melhores preços.
-        </BrandSubtitle>
-      </BrandPanel>
+        </p>
+      </div>
 
       {/* Right — form */}
-      <FormPanel>
-        <FormCard>
-          <FormLogo>Ecommerce</FormLogo>
-          <FormSubtitle>Faça login para continuar</FormSubtitle>
+      <div className="flex items-center justify-center px-6 py-12 bg-surface-page">
+        <div className="w-full max-w-[440px] bg-white rounded-xl shadow-xl p-12 sm:p-8">
+          <p className="text-2xl font-bold text-primary-600 m-0 mb-2">Ecommerce</p>
+          <p className="text-base text-neutral-500 m-0 mb-8">Faça login para continuar</p>
 
           <form onSubmit={handleFormSubmit}>
-            <FieldsColumn>
-              <FieldWrapper>
-                <FieldLabel htmlFor="username">E-mail</FieldLabel>
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="username" className="text-sm font-medium text-neutral-700">E-mail</label>
                 <FormInput
                   {...formData.username}
                   onChange={handleInputChange}
                 />
                 {formData.username.value && !formData.username.validation?.(formData.username.value) && (
-                  <FieldError>{formData.username.message}</FieldError>
+                  <span className="text-xs text-danger-500">{formData.username.message}</span>
                 )}
-              </FieldWrapper>
+              </div>
 
-              <FieldWrapper>
-                <FieldLabel htmlFor="password">Senha</FieldLabel>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="password" className="text-sm font-medium text-neutral-700">Senha</label>
                 <FormInput {...formData.password} onChange={handleInputChange} />
-              </FieldWrapper>
+              </div>
 
-              <ForgotLink>Esqueci minha senha</ForgotLink>
+              <a className="text-sm text-primary-600 underline text-right block -mt-2 cursor-pointer hover:text-primary-700">
+                Esqueci minha senha
+              </a>
 
               {submitResponseFail && (
-                <ErrorBanner>
+                <div className="flex items-center gap-2 px-3.5 py-2.5 bg-danger-50 border border-danger-200 rounded-md text-danger-700 text-sm">
                   <AlertTriangle size={16} />
                   Usuário ou senha inválidos. Tente novamente.
-                </ErrorBanner>
+                </div>
               )}
 
-              <SubmitWrapper>
+              <div className="mt-2">
                 <CtaButton
                   variant="primary"
                   fullWidth
@@ -276,16 +129,19 @@ const Login = () => {
                 >
                   Entrar
                 </CtaButton>
-              </SubmitWrapper>
-            </FieldsColumn>
+              </div>
+            </div>
           </form>
 
-          <RegisterLink>
-            Não tem conta? <Link to="/register">Criar conta</Link>
-          </RegisterLink>
-        </FormCard>
-      </FormPanel>
-    </PageGrid>
+          <p className="mt-5 text-sm text-neutral-500 text-center m-0">
+            Não tem conta?{" "}
+            <Link to="/register" className="text-primary-600 font-medium underline hover:text-primary-700">
+              Criar conta
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

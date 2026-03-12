@@ -1,161 +1,9 @@
-import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Mail, Hash, ArrowLeft } from "lucide-react";
 import * as userService from "../../../services/user-service.ts";
 import { UserDTO } from "../../../models/user.ts";
-import { tokens } from "../../../styles/tokens.ts";
 
-/* ── Animation ───────────────────────────────────────────── */
-const fadeUp = keyframes`
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-/* ── Layout ──────────────────────────────────────────────── */
-const Page = styled.div`
-  min-height: 100vh;
-  background: ${tokens.colors.surface.page};
-  padding: 48px 16px 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-/* ── Card ────────────────────────────────────────────────── */
-const Card = styled.div`
-  width: 100%;
-  max-width: 480px;
-  background: #ffffff;
-  border-radius: ${tokens.radius.xl};
-  box-shadow: ${tokens.shadow.lg};
-  overflow: hidden;
-  animation: ${fadeUp} 0.4s ease both;
-`;
-
-const CardHeader = styled.div`
-  background: linear-gradient(
-    135deg,
-    ${tokens.colors.primary[600]},
-    ${tokens.colors.primary[900]}
-  );
-  padding: 40px 32px 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-`;
-
-const AvatarLarge = styled.div`
-  width: 72px;
-  height: 72px;
-  border-radius: ${tokens.radius.full};
-  background: rgba(255, 255, 255, 0.2);
-  border: 3px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-`;
-
-const UserName = styled.h1`
-  font-size: ${tokens.fontSize.xl};
-  font-weight: ${tokens.fontWeight.bold};
-  color: #ffffff;
-  margin: 0;
-  text-align: center;
-`;
-
-/* ── Info section ────────────────────────────────────────── */
-const InfoList = styled.div`
-  padding: 8px 0;
-`;
-
-const InfoRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 28px;
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const InfoIcon = styled.div`
-  width: 36px;
-  height: 36px;
-  border-radius: ${tokens.radius.md};
-  background: ${tokens.colors.primary[50]};
-  color: ${tokens.colors.primary[600]};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-`;
-
-const InfoText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-`;
-
-const InfoLabel = styled.span`
-  font-size: ${tokens.fontSize.xs};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[400]};
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-`;
-
-const InfoValue = styled.span`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[800]};
-`;
-
-/* ── Skeleton ────────────────────────────────────────────── */
-const pulse = keyframes`
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
-`;
-
-const Skeleton = styled.div<{ $w?: string; $h?: string }>`
-  width: ${({ $w }) => $w ?? "100%"};
-  height: ${({ $h }) => $h ?? "16px"};
-  border-radius: ${tokens.radius.md};
-  background: ${tokens.colors.neutral[200]};
-  animation: ${pulse} 1.4s ease infinite;
-`;
-
-/* ── Back link ───────────────────────────────────────────── */
-const BackRow = styled.div`
-  margin-top: 24px;
-  width: 100%;
-  max-width: 480px;
-  animation: ${fadeUp} 0.4s 0.1s ease both;
-`;
-
-const BackLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[500]};
-  text-decoration: none;
-  transition: color ${tokens.transition.fast};
-
-  &:hover {
-    color: ${tokens.colors.primary[600]};
-  }
-`;
-
-/* ── Component ───────────────────────────────────────────── */
 const MyAccount = () => {
   const [user, setUser] = useState<UserDTO>();
 
@@ -166,52 +14,87 @@ const MyAccount = () => {
   const initial = user?.name?.charAt(0) ?? "U";
 
   return (
-    <Page>
-      <Card>
-        <CardHeader>
-          <AvatarLarge>
-            {user ? initial : <Skeleton $w="32px" $h="32px" />}
-          </AvatarLarge>
+    <div className="min-h-screen bg-surface-page px-4 pt-12 pb-16 flex flex-col items-center">
+      {/* Card */}
+      <div
+        className="w-full max-w-[480px] bg-white rounded-xl shadow-lg overflow-hidden"
+        style={{ animation: "fade-up 0.4s ease both" }}
+      >
+        {/* Header */}
+        <div
+          className="px-8 pt-10 pb-8 flex flex-col items-center gap-3"
+          style={{ background: "linear-gradient(135deg, var(--color-primary-600), var(--color-primary-900))" }}
+        >
+          <div className="w-18 h-18 rounded-full flex items-center justify-center text-2xl font-bold text-white uppercase"
+            style={{ background: "rgba(255,255,255,0.2)", border: "3px solid rgba(255,255,255,0.4)", width: 72, height: 72 }}>
+            {user ? initial : (
+              <div
+                className="w-8 h-8 rounded-md bg-neutral-200"
+                style={{ animation: "pulse 1.4s ease infinite" }}
+              />
+            )}
+          </div>
           {user ? (
-            <UserName>{user.name}</UserName>
+            <h1 className="text-xl font-bold text-white m-0 text-center">{user.name}</h1>
           ) : (
-            <Skeleton $w="140px" $h="22px" />
+            <div
+              className="w-[140px] h-[22px] rounded-md bg-neutral-200"
+              style={{ animation: "pulse 1.4s ease infinite" }}
+            />
           )}
-        </CardHeader>
+        </div>
 
-        <InfoList>
-          <InfoRow>
-            <InfoIcon><Mail size={17} /></InfoIcon>
-            <InfoText>
-              <InfoLabel>E-mail</InfoLabel>
+        {/* Info list */}
+        <div className="py-2">
+          <div className="flex items-center gap-3.5 px-7 py-4 border-b border-neutral-100">
+            <div className="w-9 h-9 rounded-md bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+              <Mail size={17} />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs font-medium text-neutral-400 uppercase tracking-[0.05em]">E-mail</span>
               {user ? (
-                <InfoValue>{user.email}</InfoValue>
+                <span className="text-sm font-medium text-neutral-800">{user.email}</span>
               ) : (
-                <Skeleton $w="180px" />
+                <div
+                  className="w-[180px] h-4 rounded-md bg-neutral-200"
+                  style={{ animation: "pulse 1.4s ease infinite" }}
+                />
               )}
-            </InfoText>
-          </InfoRow>
+            </div>
+          </div>
 
-          <InfoRow>
-            <InfoIcon><Hash size={17} /></InfoIcon>
-            <InfoText>
-              <InfoLabel>ID da conta</InfoLabel>
+          <div className="flex items-center gap-3.5 px-7 py-4">
+            <div className="w-9 h-9 rounded-md bg-primary-50 text-primary-600 flex items-center justify-center shrink-0">
+              <Hash size={17} />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs font-medium text-neutral-400 uppercase tracking-[0.05em]">ID da conta</span>
               {user ? (
-                <InfoValue>#{user.id}</InfoValue>
+                <span className="text-sm font-medium text-neutral-800">#{user.id}</span>
               ) : (
-                <Skeleton $w="60px" />
+                <div
+                  className="w-[60px] h-4 rounded-md bg-neutral-200"
+                  style={{ animation: "pulse 1.4s ease infinite" }}
+                />
               )}
-            </InfoText>
-          </InfoRow>
-        </InfoList>
-      </Card>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <BackRow>
-        <BackLink to="/catalog">
+      {/* Back link */}
+      <div
+        className="mt-6 w-full max-w-[480px]"
+        style={{ animation: "fade-up 0.4s 0.1s ease both" }}
+      >
+        <Link
+          to="/catalog"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-neutral-500 no-underline transition-colors duration-150 hover:text-primary-600"
+        >
           <ArrowLeft size={15} /> Voltar ao catálogo
-        </BackLink>
-      </BackRow>
-    </Page>
+        </Link>
+      </div>
+    </div>
   );
 };
 

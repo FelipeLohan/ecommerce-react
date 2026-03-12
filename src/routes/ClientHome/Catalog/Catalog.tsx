@@ -1,4 +1,3 @@
-import styled, { keyframes } from "styled-components";
 import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
 import { CtaLoadMore } from "../../../components/CtaLoadMore";
 import { CategoryFilter } from "../../../components/CategoryFilter";
@@ -6,9 +5,9 @@ import * as productService from "../../../services/product-service.ts";
 import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
-import { tokens } from "../../../styles/tokens.ts";
 import { ArrowUpDown, Check, SearchX } from "lucide-react";
 import { HeroBanner } from "../../../components/HeroBanner";
+import { cn } from "../../../lib/cn.ts";
 
 const SORT_OPTIONS = [
   { label: "Nome A-Z",    value: "name,asc"   },
@@ -18,161 +17,6 @@ const SORT_OPTIONS = [
 ] as const;
 
 type SortValue = typeof SORT_OPTIONS[number]["value"];
-
-
-const ProductsCardsGridContainer = styled.div`
-  width: 90%;
-  margin: ${tokens.spacing[4]} auto 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-
-  @media (max-width: ${tokens.breakpoint.lg}) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  @media (max-width: ${tokens.breakpoint.sm}) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-`;
-
-const CardLink = styled(Link)`
-  text-decoration: none;
-  display: block;
-`;
-
-const CategoryFilterContainerMargin = styled.div`
-  margin-top: ${tokens.spacing[8]};
-`;
-
-const ToolbarRow = styled.div`
-  width: 90%;
-  margin: ${tokens.spacing[4]} auto 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: ${tokens.spacing[4]};
-
-  @media (max-width: ${tokens.breakpoint.sm}) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
-
-const ResultCount = styled.span`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[500]};
-`;
-
-const SortWrapper = styled.div`
-  position: relative;
-`;
-
-const SortButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[2]};
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-  background: #ffffff;
-  border: 1.5px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.md};
-  padding: 6px ${tokens.spacing[3]};
-  cursor: pointer;
-  transition: border-color ${tokens.transition.fast}, background ${tokens.transition.fast};
-
-  &:hover {
-    border-color: ${tokens.colors.primary[400]};
-    background: ${tokens.colors.primary[50]};
-  }
-`;
-
-const SortDropdown = styled.ul<{ $open: boolean }>`
-  display: ${({ $open }) => ($open ? "block" : "none")};
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  background: #ffffff;
-  border: 1px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.md};
-  box-shadow: ${tokens.shadow.md};
-  list-style: none;
-  margin: 0;
-  padding: ${tokens.spacing[1]} 0;
-  min-width: 160px;
-  z-index: 50;
-`;
-
-const SortOption = styled.li<{ $active: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[2]};
-  padding: 8px ${tokens.spacing[4]};
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${({ $active }) => $active ? tokens.fontWeight.semibold : tokens.fontWeight.normal};
-  color: ${({ $active }) => $active ? tokens.colors.primary[600] : tokens.colors.neutral[700]};
-  cursor: pointer;
-  transition: background ${tokens.transition.fast};
-
-  &:hover {
-    background: ${tokens.colors.neutral[50]};
-  }
-`;
-
-const CtaLoadMoreContainerMargin = styled.div`
-  margin-top: ${tokens.spacing[6]};
-  margin-bottom: ${tokens.spacing[10]};
-`;
-
-const shimmer = keyframes`
-  0%   { background-position: -200% 0; }
-  100% { background-position:  200% 0; }
-`;
-
-const SkeletonCard = styled.div`
-  background: linear-gradient(
-    90deg,
-    ${tokens.colors.neutral[100]} 25%,
-    ${tokens.colors.neutral[200]} 50%,
-    ${tokens.colors.neutral[100]} 75%
-  );
-  background-size: 200% 100%;
-  border-radius: ${tokens.radius.lg};
-  overflow: hidden;
-  height: 340px;
-  animation: ${shimmer} 1.4s ease-in-out infinite;
-`;
-
-const EmptyState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: ${tokens.spacing[4]};
-  padding: ${tokens.spacing[16]} ${tokens.spacing[6]};
-  color: ${tokens.colors.neutral[400]};
-  text-align: center;
-`;
-
-const EmptyStateTitle = styled.p`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[600]};
-  margin: 0;
-`;
-
-const EmptyStateSubtitle = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-  margin: 0;
-`;
 
 const SKELETON_COUNT = 8;
 
@@ -236,62 +80,78 @@ const Catalog = () => {
     <>
       <HeroBanner />
 
-      <CategoryFilterContainerMargin>
+      <div className="mt-8">
         <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
-      </CategoryFilterContainerMargin>
+      </div>
 
       {!isLoading && products.length > 0 && (
-        <ToolbarRow>
-          <ResultCount>{totalElements} produto(s) encontrado(s)</ResultCount>
-          <SortWrapper ref={sortRef}>
-            <SortButton onClick={() => setSortOpen((prev) => !prev)}>
+        <div className="w-[90%] mx-auto mt-4 flex justify-between items-center gap-4 max-sm:flex-col max-sm:items-start">
+          <span className="text-sm text-neutral-500">{totalElements} produto(s) encontrado(s)</span>
+
+          <div className="relative" ref={sortRef}>
+            <button
+              onClick={() => setSortOpen((prev) => !prev)}
+              className="flex items-center gap-2 text-sm font-medium text-neutral-700 bg-white border-[1.5px] border-neutral-200 rounded-md px-3 py-1.5 cursor-pointer transition-[border-color,background] duration-150 hover:border-primary-400 hover:bg-primary-50"
+            >
               <ArrowUpDown size={14} />
               {SORT_OPTIONS.find((o) => o.value === sort)?.label}
-            </SortButton>
-            <SortDropdown $open={sortOpen}>
-              {SORT_OPTIONS.map((opt) => (
-                <SortOption
-                  key={opt.value}
-                  $active={sort === opt.value}
-                  onClick={() => handleSortChange(opt.value)}
-                >
-                  {sort === opt.value && <Check size={13} />}
-                  {opt.label}
-                </SortOption>
-              ))}
-            </SortDropdown>
-          </SortWrapper>
-        </ToolbarRow>
+            </button>
+
+            {sortOpen && (
+              <ul className="absolute right-0 top-[calc(100%+6px)] bg-white border border-neutral-200 rounded-md shadow-md list-none m-0 py-1 min-w-[160px] z-50">
+                {SORT_OPTIONS.map((opt) => (
+                  <li
+                    key={opt.value}
+                    onClick={() => handleSortChange(opt.value)}
+                    className={cn(
+                      "flex items-center gap-2 px-4 py-2 text-sm cursor-pointer transition-colors duration-150 hover:bg-neutral-50",
+                      sort === opt.value
+                        ? "font-semibold text-primary-600"
+                        : "font-normal text-neutral-700"
+                    )}
+                  >
+                    {sort === opt.value && <Check size={13} />}
+                    {opt.label}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
       )}
 
       {isLoading ? (
-        <ProductsCardsGridContainer>
+        <div className="w-[90%] mx-auto mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-4 sm:gap-3">
           {Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-            <SkeletonCard key={i} />
+            <div
+              key={i}
+              className="rounded-lg overflow-hidden h-[340px]"
+              style={{ animation: "shimmer 1.4s ease-in-out infinite", background: "linear-gradient(90deg, var(--color-neutral-100) 25%, var(--color-neutral-200) 50%, var(--color-neutral-100) 75%)", backgroundSize: "200% 100%" }}
+            />
           ))}
-        </ProductsCardsGridContainer>
+        </div>
       ) : products.length === 0 ? (
-        <EmptyState>
+        <div className="flex flex-col items-center justify-center gap-4 py-16 px-6 text-neutral-400 text-center">
           <SearchX size={48} strokeWidth={1.5} />
-          <EmptyStateTitle>Nenhum produto encontrado</EmptyStateTitle>
-          <EmptyStateSubtitle>
+          <p className="text-lg font-semibold text-neutral-600 m-0">Nenhum produto encontrado</p>
+          <p className="text-sm text-neutral-400 m-0">
             Tente outros termos ou remova os filtros aplicados.
-          </EmptyStateSubtitle>
-        </EmptyState>
+          </p>
+        </div>
       ) : (
-        <ProductsCardsGridContainer>
+        <div className="w-[90%] mx-auto mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-4 sm:gap-3">
           {products.map((product) => (
-            <CardLink key={product.id} to={`/product-details/${product.id}`}>
+            <Link key={product.id} to={`/product-details/${product.id}`} className="no-underline block">
               <ProductCatalogCard product={product} />
-            </CardLink>
+            </Link>
           ))}
-        </ProductsCardsGridContainer>
+        </div>
       )}
 
       {!isLoading && !isLast && (
-        <CtaLoadMoreContainerMargin onClick={handleNextPage}>
+        <div className="mt-6 mb-10" onClick={handleNextPage}>
           <CtaLoadMore />
-        </CtaLoadMoreContainerMargin>
+        </div>
       )}
     </>
   );

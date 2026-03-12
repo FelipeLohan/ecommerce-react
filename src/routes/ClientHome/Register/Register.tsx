@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as forms from "../../../utils/forms.ts";
@@ -6,148 +5,7 @@ import * as userService from "../../../services/user-service.ts";
 import { FormInput } from "../../../components/Forminput/FormInput.tsx";
 import { CtaButton } from "../../../components/CtaButton";
 import { ContextToast } from "../../../utils/context-toast.ts";
-import { tokens } from "../../../styles/tokens.ts";
 
-/* ── Page layout ─────────────────────────────────────────── */
-const PageGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 100vh;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-/* ── Left panel — Brand ──────────────────────────────────── */
-const BrandPanel = styled.div`
-  background: linear-gradient(
-    135deg,
-    ${tokens.colors.primary[600]},
-    ${tokens.colors.primary[900]}
-  );
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-  color: #ffffff;
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    display: none;
-  }
-`;
-
-const BrandTagline = styled.h1`
-  font-size: ${tokens.fontSize["3xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  line-height: ${tokens.lineHeight.snug};
-  text-align: center;
-  margin: 0 0 16px;
-`;
-
-const BrandSubtitle = styled.p`
-  font-size: ${tokens.fontSize.base};
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-  margin: 0;
-  line-height: ${tokens.lineHeight.normal};
-`;
-
-/* ── Right panel — Form ──────────────────────────────────── */
-const FormPanel = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 24px;
-  background: ${tokens.colors.surface.page};
-
-  @media (max-width: ${tokens.breakpoint.md}) {
-    padding: 32px 16px;
-  }
-`;
-
-const FormCard = styled.div`
-  width: 100%;
-  max-width: 480px;
-  background: #ffffff;
-  border-radius: ${tokens.radius.xl};
-  box-shadow: ${tokens.shadow.xl};
-  padding: 48px 40px;
-
-  @media (max-width: ${tokens.breakpoint.sm}) {
-    padding: 32px 24px;
-  }
-`;
-
-const FormLogo = styled.p`
-  font-size: ${tokens.fontSize["2xl"]};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.primary[600]};
-  margin: 0 0 8px;
-`;
-
-const FormSubtitle = styled.p`
-  font-size: ${tokens.fontSize.base};
-  color: ${tokens.colors.neutral[500]};
-  margin: 0 0 32px;
-`;
-
-const FieldsColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-const TwoColumns = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-
-  @media (max-width: ${tokens.breakpoint.sm}) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const FieldLabel = styled.label`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-`;
-
-const FieldError = styled.span`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.danger[500]};
-`;
-
-const SubmitWrapper = styled.div`
-  margin-top: 8px;
-`;
-
-const LoginLink = styled.p`
-  margin: 20px 0 0;
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[500]};
-  text-align: center;
-
-  a {
-    color: ${tokens.colors.primary[600]};
-    font-weight: ${tokens.fontWeight.medium};
-    text-decoration: underline;
-
-    &:hover {
-      color: ${tokens.colors.primary[700]};
-    }
-  }
-`;
-
-/* ── Helpers ─────────────────────────────────────────────── */
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const initialForm = {
@@ -200,7 +58,6 @@ const initialForm = {
   },
 };
 
-/* ── Component ───────────────────────────────────────────── */
 const Register = () => {
   const navigate = useNavigate();
   const { addToast } = useContext(ContextToast);
@@ -272,84 +129,89 @@ const Register = () => {
   }
 
   return (
-    <PageGrid>
+    <div className="grid [grid-template-columns:1fr_1fr] min-h-screen md:grid-cols-1">
       {/* Left — brand */}
-      <BrandPanel>
-        <BrandTagline>Crie sua conta grátis!</BrandTagline>
-        <BrandSubtitle>
+      <div
+        className="flex flex-col items-center justify-center p-12 text-white max-md:hidden"
+        style={{ background: "linear-gradient(135deg, var(--color-primary-600), var(--color-primary-900))" }}
+      >
+        <h1 className="text-3xl font-bold leading-snug text-center m-0 mb-4">
+          Crie sua conta grátis!
+        </h1>
+        <p className="text-base text-center m-0 leading-normal" style={{ color: "rgba(255,255,255,0.75)" }}>
           Cadastre-se e comece a comprar os melhores produtos com os melhores
           preços. É rápido e fácil.
-        </BrandSubtitle>
-      </BrandPanel>
+        </p>
+      </div>
 
       {/* Right — form */}
-      <FormPanel>
-        <FormCard>
-          <FormLogo>Ecommerce</FormLogo>
-          <FormSubtitle>Preencha os dados para criar sua conta</FormSubtitle>
+      <div className="flex items-center justify-center px-6 py-12 bg-surface-page md:px-4 md:py-8">
+        <div className="w-full max-w-[480px] bg-white rounded-xl shadow-xl p-12 sm:p-8">
+          <p className="text-2xl font-bold text-primary-600 m-0 mb-2">Ecommerce</p>
+          <p className="text-base text-neutral-500 m-0 mb-8">Preencha os dados para criar sua conta</p>
 
           <form onSubmit={handleFormSubmit}>
-            <FieldsColumn>
+            <div className="flex flex-col gap-5">
               {/* Nome */}
-              <FieldWrapper>
-                <FieldLabel htmlFor="name">Nome completo</FieldLabel>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="name" className="text-sm font-medium text-neutral-700">Nome completo</label>
                 <FormInput {...formData.name} onChange={handleInputChange} />
                 {isFieldInvalid(formData.name) && (
-                  <FieldError>{formData.name.message}</FieldError>
+                  <span className="text-xs text-danger-500">{formData.name.message}</span>
                 )}
-              </FieldWrapper>
+              </div>
 
               {/* Email */}
-              <FieldWrapper>
-                <FieldLabel htmlFor="email">E-mail</FieldLabel>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="email" className="text-sm font-medium text-neutral-700">E-mail</label>
                 <FormInput {...formData.email} onChange={handleInputChange} />
                 {isFieldInvalid(formData.email) && (
-                  <FieldError>{formData.email.message}</FieldError>
+                  <span className="text-xs text-danger-500">{formData.email.message}</span>
                 )}
-              </FieldWrapper>
+              </div>
 
               {/* Telefone + Data de nascimento */}
-              <TwoColumns>
-                <FieldWrapper>
-                  <FieldLabel htmlFor="phone">Telefone</FieldLabel>
+              <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="phone" className="text-sm font-medium text-neutral-700">Telefone</label>
                   <FormInput {...formData.phone} onChange={handleInputChange} />
                   {isFieldInvalid(formData.phone) && (
-                    <FieldError>{formData.phone.message}</FieldError>
+                    <span className="text-xs text-danger-500">{formData.phone.message}</span>
                   )}
-                </FieldWrapper>
+                </div>
 
-                <FieldWrapper>
-                  <FieldLabel htmlFor="birthDate">Data de nascimento</FieldLabel>
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="birthDate" className="text-sm font-medium text-neutral-700">Data de nascimento</label>
                   <FormInput {...formData.birthDate} onChange={handleInputChange} />
                   {isFieldInvalid(formData.birthDate) && (
-                    <FieldError>{formData.birthDate.message}</FieldError>
+                    <span className="text-xs text-danger-500">{formData.birthDate.message}</span>
                   )}
-                </FieldWrapper>
-              </TwoColumns>
+                </div>
+              </div>
 
               {/* Senha + Confirmar senha */}
-              <TwoColumns>
-                <FieldWrapper>
-                  <FieldLabel htmlFor="password">Senha</FieldLabel>
+              <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="password" className="text-sm font-medium text-neutral-700">Senha</label>
                   <FormInput {...formData.password} onChange={handleInputChange} />
                   {isFieldInvalid(formData.password) && (
-                    <FieldError>{formData.password.message}</FieldError>
+                    <span className="text-xs text-danger-500">{formData.password.message}</span>
                   )}
-                </FieldWrapper>
+                </div>
 
-                <FieldWrapper>
-                  <FieldLabel htmlFor="confirmPassword">Confirmar senha</FieldLabel>
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="confirmPassword" className="text-sm font-medium text-neutral-700">Confirmar senha</label>
                   <FormInput
                     {...formData.confirmPassword}
                     onChange={handleInputChange}
                   />
                   {passwordMismatch && (
-                    <FieldError>{formData.confirmPassword.message}</FieldError>
+                    <span className="text-xs text-danger-500">{formData.confirmPassword.message}</span>
                   )}
-                </FieldWrapper>
-              </TwoColumns>
+                </div>
+              </div>
 
-              <SubmitWrapper>
+              <div className="mt-2">
                 <CtaButton
                   variant="primary"
                   fullWidth
@@ -358,16 +220,19 @@ const Register = () => {
                 >
                   Criar conta
                 </CtaButton>
-              </SubmitWrapper>
-            </FieldsColumn>
+              </div>
+            </div>
           </form>
 
-          <LoginLink>
-            Já tem conta? <Link to="/login">Fazer login</Link>
-          </LoginLink>
-        </FormCard>
-      </FormPanel>
-    </PageGrid>
+          <p className="mt-5 text-sm text-neutral-500 text-center m-0">
+            Já tem conta?{" "}
+            <Link to="/login" className="text-primary-600 font-medium underline hover:text-primary-700">
+              Fazer login
+            </Link>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

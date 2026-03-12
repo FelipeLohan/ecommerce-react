@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
 import { FormInput } from "../../../components/Forminput";
 import { useContext, useEffect, useState } from "react";
 import * as forms from "../../../utils/forms.ts";
@@ -9,113 +8,8 @@ import { FormTextArea } from "../../../components/FormTextArea/FormTextArea.tsx"
 import { CategoryDTO } from "../../../models/category.ts";
 import { FormSelect } from "../../../components/FormSelect/FormSelect.tsx";
 import { CtaButton } from "../../../components/CtaButton";
-import { tokens } from "../../../styles/tokens.ts";
 import { ContextToast } from "../../../utils/context-toast.ts";
 
-/* ── Card ────────────────────────────────────────────────── */
-const PageWrapper = styled.div`
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 24px 40px;
-`;
-
-const FormCard = styled.div`
-  background: #ffffff;
-  border-radius: ${tokens.radius.lg};
-  box-shadow: ${tokens.shadow.md};
-  overflow: hidden;
-`;
-
-const CardHeader = styled.div`
-  padding: 24px 32px;
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-`;
-
-const CardTitle = styled.h1`
-  font-size: ${tokens.fontSize.xl};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  margin: 0;
-`;
-
-const CardBody = styled.div`
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
-
-const CardFooter = styled.div`
-  padding: 20px 32px;
-  border-top: 1px solid ${tokens.colors.neutral[100]};
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-`;
-
-/* ── Section ─────────────────────────────────────────────── */
-const SectionLabel = styled.p`
-  font-size: ${tokens.fontSize.xs};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[500]};
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-bottom: 8px;
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-  margin: 0 0 16px;
-`;
-
-const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-/* ── Field ───────────────────────────────────────────────── */
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const FieldLabel = styled.label`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[700]};
-
-  .required {
-    color: ${tokens.colors.danger[500]};
-    margin-left: 2px;
-  }
-`;
-
-const FieldError = styled.span`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.danger[500]};
-`;
-
-const FieldHint = styled.span`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.neutral[400]};
-`;
-
-/* ── Image preview ───────────────────────────────────────── */
-const ImagePreview = styled.img`
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-  border-radius: ${tokens.radius.md};
-  border: 1px solid ${tokens.colors.neutral[100]};
-  display: block;
-`;
-
-const RequiredNote = styled.p`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.neutral[400]};
-  margin: 0;
-`;
-
-/* ── Component ───────────────────────────────────────────── */
 const ProductForm = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -242,116 +136,121 @@ const ProductForm = () => {
     }
   }
 
+  const sectionLabel = "text-xs font-semibold text-neutral-500 uppercase tracking-[0.05em] pb-2 border-b border-neutral-100 m-0 mb-4";
+  const fieldError = "text-xs text-danger-500";
+
   return (
-    <PageWrapper>
-      <FormCard>
-        <CardHeader>
-          <CardTitle>{isEditing ? "Editar produto" : "Novo produto"}</CardTitle>
-        </CardHeader>
+    <div className="max-w-[700px] mx-auto px-6 pb-10">
+      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        {/* Header */}
+        <div className="px-8 py-6 border-b border-neutral-100">
+          <h1 className="text-xl font-bold text-neutral-900 m-0">
+            {isEditing ? "Editar produto" : "Novo produto"}
+          </h1>
+        </div>
 
         <form onSubmit={handleSubmitForm}>
-          <CardBody>
+          {/* Body */}
+          <div className="px-8 py-8 flex flex-col gap-6">
             {/* Section 1 — Basic info */}
             <div>
-              <SectionLabel>Informações básicas</SectionLabel>
-              <Section>
-                <FieldWrapper>
-                  <FieldLabel htmlFor="name">
-                    Nome <span className="required">*</span>
-                  </FieldLabel>
+              <p className={sectionLabel}>Informações básicas</p>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="name" className="text-sm font-medium text-neutral-700">
+                    Nome <span className="text-danger-500 ml-0.5">*</span>
+                  </label>
                   <FormInput {...formData.name} onChange={handleInputChange} />
                   {formData.name.value && !formData.name.validation(formData.name.value) && (
-                    <FieldError>{formData.name.message}</FieldError>
+                    <span className={fieldError}>{formData.name.message}</span>
                   )}
-                </FieldWrapper>
+                </div>
 
-                <FieldWrapper>
-                  <FieldLabel htmlFor="price">
-                    Preço (R$) <span className="required">*</span>
-                  </FieldLabel>
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="price" className="text-sm font-medium text-neutral-700">
+                    Preço (R$) <span className="text-danger-500 ml-0.5">*</span>
+                  </label>
                   <FormInput {...formData.price} onChange={handleInputChange} />
                   {formData.price.value && !formData.price.validation(formData.price.value) && (
-                    <FieldError>{formData.price.message}</FieldError>
+                    <span className={fieldError}>{formData.price.message}</span>
                   )}
-                </FieldWrapper>
+                </div>
 
-                <FieldWrapper>
-                  <FieldLabel htmlFor="description">
-                    Descrição <span className="required">*</span>
-                  </FieldLabel>
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="description" className="text-sm font-medium text-neutral-700">
+                    Descrição <span className="text-danger-500 ml-0.5">*</span>
+                  </label>
                   <FormTextArea {...formData.description} onChange={handleInputChange} />
                   {formData.description.value && !formData.description.validation(formData.description.value) && (
-                    <FieldError>{formData.description.message}</FieldError>
+                    <span className={fieldError}>{formData.description.message}</span>
                   )}
-                </FieldWrapper>
-              </Section>
+                </div>
+              </div>
             </div>
 
             {/* Section 2 — Media */}
             <div>
-              <SectionLabel>Mídia</SectionLabel>
-              <Section>
-                <FieldWrapper>
-                  <FieldLabel htmlFor="imgUrl">URL da imagem</FieldLabel>
+              <p className={sectionLabel}>Mídia</p>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="imgUrl" className="text-sm font-medium text-neutral-700">URL da imagem</label>
                   <FormInput {...formData.imgUrl} onChange={handleInputChange} />
-                </FieldWrapper>
+                </div>
                 {formData.imgUrl.value && (
-                  <ImagePreview
+                  <img
                     src={formData.imgUrl.value}
                     alt="Preview"
+                    className="w-full max-h-[200px] object-cover rounded-md border border-neutral-100 block"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
                     onLoad={(e) => { (e.target as HTMLImageElement).style.display = "block"; }}
                   />
                 )}
-              </Section>
+              </div>
             </div>
 
             {/* Section 3 — Categories */}
             <div>
-              <SectionLabel>Categorias</SectionLabel>
-              <Section>
-                <FieldWrapper>
-                  <FieldLabel htmlFor="categories">
-                    Categorias <span className="required">*</span>
-                  </FieldLabel>
-                  <FormSelect
-                    {...formData.categories}
-                    options={categories}
-                    isMulti
-                    onChange={(obj: CategoryDTO[]) => {
-                      const newFormData = forms.updateAndValidate(formData, "categories", obj);
-                      setFormData(newFormData);
-                    }}
-                    getOptionLabel={(obj: CategoryDTO) => obj.name}
-                    getOptionValue={(obj: CategoryDTO) => String(obj.id)}
-                  />
-                  <FieldHint>Segure Ctrl para selecionar múltiplas categorias.</FieldHint>
-                  {formData.categories.value.length === 0 && (
-                    <FieldError>{formData.categories.message}</FieldError>
-                  )}
-                </FieldWrapper>
-              </Section>
+              <p className={sectionLabel}>Categorias</p>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="categories" className="text-sm font-medium text-neutral-700">
+                  Categorias <span className="text-danger-500 ml-0.5">*</span>
+                </label>
+                <FormSelect
+                  {...formData.categories}
+                  options={categories}
+                  isMulti
+                  onChange={(obj: CategoryDTO[]) => {
+                    const newFormData = forms.updateAndValidate(formData, "categories", obj);
+                    setFormData(newFormData);
+                  }}
+                  getOptionLabel={(obj: CategoryDTO) => obj.name}
+                  getOptionValue={(obj: CategoryDTO) => String(obj.id)}
+                />
+                <span className="text-xs text-neutral-400">Segure Ctrl para selecionar múltiplas categorias.</span>
+                {formData.categories.value.length === 0 && (
+                  <span className={fieldError}>{formData.categories.message}</span>
+                )}
+              </div>
             </div>
-          </CardBody>
+          </div>
 
-          <CardFooter>
-            <RequiredNote>* Campos obrigatórios</RequiredNote>
-            <div style={{ display: "flex", gap: "12px" }}>
-              <CtaButton
-                variant="secondary"
-                type="button"
-                onClick={() => navigate("/admin/products")}
-              >
-                Cancelar
-              </CtaButton>
-              <CtaButton variant="primary" type="submit" isLoading={isSubmitting}>
-                {isEditing ? "Salvar alterações" : "Criar produto"}
-              </CtaButton>
-            </div>
-          </CardFooter>
+          {/* Footer */}
+          <div className="px-8 py-5 border-t border-neutral-100 flex justify-end items-center gap-3">
+            <p className="text-xs text-neutral-400 m-0 mr-auto">* Campos obrigatórios</p>
+            <CtaButton
+              variant="secondary"
+              type="button"
+              onClick={() => navigate("/admin/products")}
+            >
+              Cancelar
+            </CtaButton>
+            <CtaButton variant="primary" type="submit" isLoading={isSubmitting}>
+              {isEditing ? "Salvar alterações" : "Criar produto"}
+            </CtaButton>
+          </div>
         </form>
-      </FormCard>
-    </PageWrapper>
+      </div>
+    </div>
   );
 };
 
