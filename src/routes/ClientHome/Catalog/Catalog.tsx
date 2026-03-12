@@ -89,9 +89,9 @@ const Catalog = () => {
           <div className="relative" ref={sortRef}>
             <button
               onClick={() => setSortOpen((prev) => !prev)}
-              className="flex items-center gap-2 text-sm font-medium text-neutral-700 bg-white border-[1.5px] border-neutral-200 rounded-md px-3 py-1.5 cursor-pointer transition-[border-color,background] duration-150 hover:border-primary-400 hover:bg-primary-50"
+              className="flex items-center gap-2 max-sm:gap-1.5 text-sm max-sm:text-xs font-medium text-neutral-700 bg-white border-[1.5px] border-neutral-200 rounded-md px-3 max-sm:px-2.5 py-1.5 max-sm:py-1 cursor-pointer transition-[border-color,background] duration-150 hover:border-primary-400 hover:bg-primary-50"
             >
-              <ArrowUpDown size={14} />
+              <ArrowUpDown size={14} className="max-sm:w-3 max-sm:h-3" />
               {SORT_OPTIONS.find((o) => o.value === sort)?.label}
             </button>
 

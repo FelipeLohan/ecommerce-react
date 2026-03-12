@@ -46,7 +46,7 @@ export function CategoryFilter({ selectedId, onChange }: Props) {
       <button
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "flex items-center gap-2 px-4 py-2 rounded-full border-[1.5px] text-sm font-medium cursor-pointer",
+          "flex items-center gap-2 max-sm:gap-1.5 px-4 max-sm:px-3 py-2 max-sm:py-1 rounded-full border-[1.5px] text-sm max-sm:text-xs font-medium cursor-pointer",
           "transition-[background,color,border-color,box-shadow] duration-[150ms]",
           open || selectedId !== 0
             ? "bg-primary-500 border-primary-500 text-white hover:bg-primary-600 hover:border-primary-600"
