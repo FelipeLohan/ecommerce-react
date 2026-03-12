@@ -14,7 +14,7 @@ const ProductCatalogCard = ({ product }: Props) => {
       <img
         src={product.imgUrl}
         alt={product.name}
-        className="w-full h-60 object-cover block transition-transform duration-[400ms] group-hover:scale-[1.03]"
+        className="w-full h-60 object-cover max-sm:object-contain max-sm:p-2 block transition-transform duration-[400ms] group-hover:scale-[1.03]"
       />
 
       {/* Corpo */}

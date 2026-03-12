@@ -1,5 +1,5 @@
 import { ProductCatalogCard } from "../../../components/ProductCatalogCard";
-import { CtaLoadMore } from "../../../components/CtaLoadMore";
+import { Pagination } from "../../../components/Pagination";
 import { CategoryFilter } from "../../../components/CategoryFilter";
 import * as productService from "../../../services/product-service.ts";
 import { Link, useSearchParams } from "react-router-dom";
@@ -18,7 +18,8 @@ const SORT_OPTIONS = [
 
 type SortValue = typeof SORT_OPTIONS[number]["value"];
 
-const SKELETON_COUNT = 8;
+const SKELETON_COUNT = 12;
+const PAGE_SIZE = 12;
 
 const Catalog = () => {
   const [searchParams] = useSearchParams();
@@ -30,7 +31,7 @@ const Catalog = () => {
   const [sort, setSort] = useState<SortValue>("name,asc");
   const [sortOpen, setSortOpen] = useState(false);
   const [page, setPage] = useState(0);
-  const [isLast, setIsLast] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -44,21 +45,21 @@ const Catalog = () => {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  // Reset to page 0 when filters change
   useEffect(() => {
     setPage(0);
-    setProducts([]);
   }, [name, categoryId, sort]);
 
   useEffect(() => {
-    if (page === 0) setIsLoading(true);
+    setIsLoading(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     productService
-      .findPageRequest(page, name, categoryId, sort)
+      .findPageRequest(page, name, categoryId, sort, PAGE_SIZE)
       .then((response) => {
-        setIsLast(response.data.last);
+        setTotalPages(response.data.totalPages);
         setTotalElements(response.data.totalElements);
-        const nextPage = response.data.content;
-        setProducts((prev) => (page === 0 ? nextPage : prev.concat(nextPage)));
+        setProducts(response.data.content);
       })
       .finally(() => setIsLoading(false));
   }, [page, name, categoryId, sort]);
@@ -72,22 +73,19 @@ const Catalog = () => {
     setSortOpen(false);
   }
 
-  function handleNextPage() {
-    setPage((prev) => prev + 1);
-  }
-
   return (
     <>
       <HeroBanner />
 
-      <div className="mt-8">
-        <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
-      </div>
+      <div className="mt-8 w-[90%] mx-auto flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
+          {!isLoading && products.length > 0 && (
+            <span className="text-sm text-neutral-400 max-sm:hidden">{totalElements} produto(s)</span>
+          )}
+        </div>
 
-      {!isLoading && products.length > 0 && (
-        <div className="w-[90%] mx-auto mt-4 flex justify-between items-center gap-4 max-sm:flex-col max-sm:items-start">
-          <span className="text-sm text-neutral-500">{totalElements} produto(s) encontrado(s)</span>
-
+        {!isLoading && products.length > 0 && (
           <div className="relative" ref={sortRef}>
             <button
               onClick={() => setSortOpen((prev) => !prev)}
@@ -117,8 +115,8 @@ const Catalog = () => {
               </ul>
             )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {isLoading ? (
         <div className="w-[90%] mx-auto mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-4 sm:gap-3">
@@ -148,11 +146,7 @@ const Catalog = () => {
         </div>
       )}
 
-      {!isLoading && !isLast && (
-        <div className="mt-6 mb-10" onClick={handleNextPage}>
-          <CtaLoadMore />
-        </div>
-      )}
+      <Pagination currentPage={page} totalPages={totalPages} onChange={setPage} />
     </>
   );
 };
