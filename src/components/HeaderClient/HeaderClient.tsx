@@ -1,16 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CartIcon } from "../CartIcon";
-import AdminIcon from "../../assets/AdminIcon.svg";
-import * as authService from "../../services/auth-service.ts";
-import { useContext } from "react";
-import { ContextToken } from "../../utils/context-token.ts";
 import { LoggedUser } from "../LoggedUser/LoggedUser.tsx";
 import { Search } from "lucide-react";
 import { cn } from "../../lib/cn.ts";
 
 const HeaderClient = () => {
-  const { contextTokenPayload } = useContext(ContextToken);
   const [scrolled, setScrolled] = useState(false);
   const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState(searchParams.get("name") ?? "");
@@ -54,7 +49,7 @@ const HeaderClient = () => {
           <img
             src="/Brand.svg"
             alt="Ecommerce"
-            className="h-9 w-auto block transition-opacity duration-[150ms] group-hover:opacity-85 sm:h-7"
+            className="h-7 w-auto block transition-opacity duration-[150ms] group-hover:opacity-85 sm:h-8"
           />
         </Link>
 
@@ -81,14 +76,6 @@ const HeaderClient = () => {
 
         {/* Actions */}
         <nav className="flex items-center gap-4 flex-shrink-0">
-          {contextTokenPayload && authService.hasAnyRoles(["ROLE_ADMIN"]) && (
-            <Link
-              to="/admin"
-              className="flex items-center p-1.5 rounded-md transition-colors duration-[150ms] hover:bg-neutral-100"
-            >
-              <img src={AdminIcon} alt="Admin" className="w-[22px] h-[22px] sm:w-[18px] sm:h-[18px]" />
-            </Link>
-          )}
           <Link
             to="/cart"
             className="flex items-center p-1.5 rounded-md transition-colors duration-[150ms] hover:bg-neutral-100"

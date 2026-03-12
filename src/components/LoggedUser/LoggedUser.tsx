@@ -2,7 +2,7 @@ import * as authService from "../../services/auth-service.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, LayoutDashboard } from "lucide-react";
 import { cn } from "../../lib/cn.ts";
 
 const LoggedUser = () => {
@@ -67,6 +67,21 @@ const LoggedUser = () => {
             </div>
 
             <div className="h-px bg-neutral-100" />
+
+            {authService.hasAnyRoles(["ROLE_ADMIN"]) && (
+              <>
+                <Link
+                  role="menuitem"
+                  to="/admin"
+                  onClick={() => setIsOpen(false)}
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-neutral-700 no-underline transition-[background-color,color] duration-[150ms] hover:bg-neutral-50 hover:text-neutral-900"
+                >
+                  <LayoutDashboard size={15} />
+                  Painel de administrador
+                </Link>
+                <div className="h-px bg-neutral-100" />
+              </>
+            )}
 
             <button
               role="menuitem"
