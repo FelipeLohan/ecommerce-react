@@ -81,7 +81,7 @@ const Catalog = () => {
         <div className="flex items-center gap-3">
           <CategoryFilter selectedId={categoryId} onChange={handleCategoryChange} />
           {!isLoading && products.length > 0 && (
-            <span className="text-sm text-neutral-400">{totalElements} produto(s)</span>
+            <span className="text-sm text-neutral-400 max-sm:hidden">{totalElements} produto(s)</span>
           )}
         </div>
 
