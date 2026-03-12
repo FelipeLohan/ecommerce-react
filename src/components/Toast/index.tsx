@@ -1,96 +1,24 @@
 import { useState, useCallback } from "react";
-import styled, { keyframes } from "styled-components";
-import { tokens } from "../../styles/tokens";
 import { ContextToast, ToastItem, ToastType } from "../../utils/context-toast";
+import { cn } from "../../lib/cn";
 
-const toastIn = keyframes`
-  from { opacity: 0; transform: translateX(110%); }
-  to   { opacity: 1; transform: translateX(0); }
-`;
-
-const progressShrink = keyframes`
-  from { width: 100%; }
-  to   { width: 0%; }
-`;
-
-const ToastsContainer = styled.div`
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 9999;
-  pointer-events: none;
-`;
-
-type ColorConfig = {
-  bg: string;
-  border: string;
-  icon: string;
-  bar: string;
+const bgMap: Record<ToastType, string> = {
+  success: "bg-success-50 border-success-200",
+  error:   "bg-danger-50 border-danger-200",
+  info:    "bg-primary-50 border-primary-200",
 };
 
-const colorMap: Record<ToastType, ColorConfig> = {
-  success: {
-    bg:     tokens.colors.success[50],
-    border: tokens.colors.success[200],
-    icon:   tokens.colors.success[600],
-    bar:    tokens.colors.success[500],
-  },
-  error: {
-    bg:     tokens.colors.danger[50],
-    border: tokens.colors.danger[200],
-    icon:   tokens.colors.danger[600],
-    bar:    tokens.colors.danger[500],
-  },
-  info: {
-    bg:     tokens.colors.primary[50],
-    border: tokens.colors.primary[200],
-    icon:   tokens.colors.primary[600],
-    bar:    tokens.colors.primary[500],
-  },
+const dotMap: Record<ToastType, string> = {
+  success: "bg-success-600",
+  error:   "bg-danger-600",
+  info:    "bg-primary-600",
 };
 
-const ToastBox = styled.div<{ $type: ToastType }>`
-  min-width: 260px;
-  max-width: 340px;
-  background: ${({ $type }) => colorMap[$type].bg};
-  border: 1px solid ${({ $type }) => colorMap[$type].border};
-  border-radius: ${tokens.radius.md};
-  box-shadow: ${tokens.shadow.md};
-  overflow: hidden;
-  animation: ${toastIn} 300ms ease forwards;
-  pointer-events: auto;
-`;
-
-const ToastBody = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-`;
-
-const IconDot = styled.span<{ $type: ToastType }>`
-  width: 8px;
-  height: 8px;
-  flex-shrink: 0;
-  border-radius: ${tokens.radius.full};
-  background: ${({ $type }) => colorMap[$type].icon};
-`;
-
-const ToastMessage = styled.span`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[800]};
-  flex: 1;
-  line-height: ${tokens.lineHeight.normal};
-`;
-
-const ProgressBar = styled.div<{ $type: ToastType }>`
-  height: 3px;
-  background: ${({ $type }) => colorMap[$type].bar};
-  animation: ${progressShrink} 3000ms linear forwards;
-`;
+const barMap: Record<ToastType, string> = {
+  success: "bg-success-500",
+  error:   "bg-danger-500",
+  info:    "bg-primary-500",
+};
 
 let nextId = 0;
 
@@ -110,17 +38,31 @@ const ToastProvider = ({ children }: Props) => {
   return (
     <ContextToast.Provider value={{ addToast }}>
       {children}
-      <ToastsContainer>
+      <div className="fixed bottom-6 right-6 flex flex-col gap-2.5 z-[9999] pointer-events-none">
         {toasts.map((toast) => (
-          <ToastBox key={toast.id} $type={toast.type}>
-            <ToastBody>
-              <IconDot $type={toast.type} />
-              <ToastMessage>{toast.message}</ToastMessage>
-            </ToastBody>
-            <ProgressBar $type={toast.type} />
-          </ToastBox>
+          <div
+            key={toast.id}
+            className={cn(
+              "min-w-[260px] max-w-[340px] border rounded-md shadow-md overflow-hidden pointer-events-auto",
+              bgMap[toast.type]
+            )}
+            style={{ animation: "toast-in 300ms ease forwards" }}
+          >
+            <div className="flex items-center gap-2.5 px-4 py-3">
+              <span
+                className={cn("w-2 h-2 flex-shrink-0 rounded-full", dotMap[toast.type])}
+              />
+              <span className="text-sm text-neutral-800 flex-1 leading-normal">
+                {toast.message}
+              </span>
+            </div>
+            <div
+              className={cn("h-[3px]", barMap[toast.type])}
+              style={{ animation: "progress-shrink 3000ms linear forwards" }}
+            />
+          </div>
         ))}
-      </ToastsContainer>
+      </div>
     </ContextToast.Provider>
   );
 };

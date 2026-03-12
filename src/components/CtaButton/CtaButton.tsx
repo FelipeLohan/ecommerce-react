@@ -1,5 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
-import { tokens } from "../../styles/tokens.ts";
+import { cn } from "../../lib/cn";
 
 type Variant = "primary" | "secondary" | "danger" | "ghost";
 type Size = "sm" | "md" | "lg";
@@ -15,111 +14,29 @@ type Props = {
   type?: "button" | "submit" | "reset";
 };
 
-const variantStyles: Record<Variant, ReturnType<typeof css>> = {
-  primary: css`
-    background-color: ${tokens.colors.primary[600]};
-    color: #ffffff;
-    border: 2px solid ${tokens.colors.primary[600]};
-    &:hover:not(:disabled) {
-      background-color: ${tokens.colors.primary[700]};
-      border-color: ${tokens.colors.primary[700]};
-    }
-  `,
-  secondary: css`
-    background-color: transparent;
-    color: ${tokens.colors.primary[600]};
-    border: 2px solid ${tokens.colors.primary[600]};
-    &:hover:not(:disabled) {
-      background-color: ${tokens.colors.primary[50]};
-    }
-  `,
-  danger: css`
-    background-color: ${tokens.colors.danger[600]};
-    color: #ffffff;
-    border: 2px solid ${tokens.colors.danger[600]};
-    &:hover:not(:disabled) {
-      background-color: ${tokens.colors.danger[700]};
-      border-color: ${tokens.colors.danger[700]};
-    }
-  `,
-  ghost: css`
-    background-color: transparent;
-    color: ${tokens.colors.primary[600]};
-    border: 2px solid transparent;
-    &:hover:not(:disabled) {
-      background-color: ${tokens.colors.primary[50]};
-      border-color: ${tokens.colors.primary[100]};
-    }
-  `,
+const variantClasses: Record<Variant, string> = {
+  primary:
+    "bg-primary-600 text-white border-2 border-primary-600 hover:not-disabled:bg-primary-700 hover:not-disabled:border-primary-700",
+  secondary:
+    "bg-transparent text-primary-600 border-2 border-primary-600 hover:not-disabled:bg-primary-50",
+  danger:
+    "bg-danger-600 text-white border-2 border-danger-600 hover:not-disabled:bg-danger-700 hover:not-disabled:border-danger-700",
+  ghost:
+    "bg-transparent text-primary-600 border-2 border-transparent hover:not-disabled:bg-primary-50 hover:not-disabled:border-primary-100",
 };
 
-const sizeStyles: Record<Size, ReturnType<typeof css>> = {
-  sm: css`
-    padding: 8px 16px;
-    font-size: ${tokens.fontSize.xs};
-  `,
-  md: css`
-    padding: 10px 24px;
-    font-size: ${tokens.fontSize.sm};
-  `,
-  lg: css`
-    padding: 14px 32px;
-    font-size: ${tokens.fontSize.base};
-  `,
+const sizeClasses: Record<Size, string> = {
+  sm: "px-4 py-2 text-xs",
+  md: "px-6 py-2.5 text-sm",
+  lg: "px-8 py-3.5 text-base",
 };
 
-const spin = keyframes`
-  to { transform: rotate(360deg); }
-`;
-
-const Spinner = styled.span`
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  border-top-color: #ffffff;
-  border-radius: ${tokens.radius.full};
-  display: inline-block;
-  animation: ${spin} 600ms linear infinite;
-`;
-
-const StyledButton = styled.button<{ $variant: Variant; $size: Size; $fullWidth: boolean }>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: ${tokens.radius.lg};
-  font-weight: ${tokens.fontWeight.medium};
-  cursor: pointer;
-  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
-
-  transition:
-    background-color ${tokens.transition.base},
-    border-color ${tokens.transition.base},
-    box-shadow ${tokens.transition.base},
-    transform ${tokens.transition.fast};
-
-  &:hover:not(:disabled) {
-    box-shadow: ${tokens.shadow.md};
-    transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    box-shadow: ${tokens.shadow.sm};
-    transform: translateY(0);
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${tokens.colors.primary[500]};
-    outline-offset: 2px;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  ${({ $variant }) => variantStyles[$variant]}
-  ${({ $size }) => sizeStyles[$size]}
-`;
+const Spinner = () => (
+  <span
+    className="inline-block w-[18px] h-[18px] rounded-full border-2 border-white/35 border-t-white"
+    style={{ animation: "btn-spin 600ms linear infinite" }}
+  />
+);
 
 const CtaButton = ({
   variant = "primary",
@@ -131,16 +48,24 @@ const CtaButton = ({
   children,
   type = "button",
 }: Props) => (
-  <StyledButton
-    $variant={variant}
-    $size={size}
-    $fullWidth={fullWidth}
+  <button
+    type={type}
     disabled={disabled || isLoading}
     onClick={onClick}
-    type={type}
+    className={cn(
+      "inline-flex items-center justify-center rounded-lg font-medium cursor-pointer",
+      "transition-[background-color,border-color,box-shadow,transform] duration-[250ms]",
+      "hover:not-disabled:-translate-y-px hover:not-disabled:shadow-md",
+      "active:not-disabled:translate-y-0 active:not-disabled:shadow-sm",
+      "focus-visible:outline-2 focus-visible:outline-primary-500 focus-visible:outline-offset-2",
+      "disabled:opacity-50 disabled:cursor-not-allowed",
+      variantClasses[variant],
+      sizeClasses[size],
+      fullWidth && "w-full"
+    )}
   >
     {isLoading ? <Spinner /> : children}
-  </StyledButton>
+  </button>
 );
 
 export { CtaButton };

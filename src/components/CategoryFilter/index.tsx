@@ -1,46 +1,12 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { CategoryDTO } from "../../models/category";
 import * as categoryService from "../../services/category-service";
-import { tokens } from "../../styles/tokens";
+import { cn } from "../../lib/cn";
 
 type Props = {
   selectedId: number;
   onChange: (id: number) => void;
 };
-
-const FilterRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${tokens.spacing[2]};
-  padding: 0 5%;
-`;
-
-const Chip = styled.button<{ $active: boolean }>`
-  padding: 6px ${tokens.spacing[4]};
-  border-radius: ${tokens.radius.full};
-  border: 1.5px solid ${({ $active }) =>
-    $active ? tokens.colors.primary[500] : tokens.colors.neutral[300]};
-  background: ${({ $active }) =>
-    $active ? tokens.colors.primary[500] : "transparent"};
-  color: ${({ $active }) =>
-    $active ? tokens.colors.neutral[0] : tokens.colors.neutral[600]};
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${({ $active }) =>
-    $active ? tokens.fontWeight.semibold : tokens.fontWeight.normal};
-  cursor: pointer;
-  transition: background ${tokens.transition.fast},
-              color ${tokens.transition.fast},
-              border-color ${tokens.transition.fast};
-
-  &:hover {
-    background: ${({ $active }) =>
-      $active ? tokens.colors.primary[600] : tokens.colors.primary[50]};
-    border-color: ${tokens.colors.primary[400]};
-    color: ${({ $active }) =>
-      $active ? tokens.colors.neutral[0] : tokens.colors.primary[600]};
-  }
-`;
 
 export function CategoryFilter({ selectedId, onChange }: Props) {
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
@@ -51,20 +17,29 @@ export function CategoryFilter({ selectedId, onChange }: Props) {
     });
   }, []);
 
+  const chipClass = (active: boolean) =>
+    cn(
+      "px-4 py-1.5 rounded-full border-[1.5px] text-sm cursor-pointer",
+      "transition-[background,color,border-color] duration-[150ms]",
+      active
+        ? "bg-primary-500 border-primary-500 text-white font-semibold hover:bg-primary-600 hover:border-primary-600"
+        : "bg-transparent border-neutral-300 text-neutral-600 font-normal hover:bg-primary-50 hover:border-primary-400 hover:text-primary-600"
+    );
+
   return (
-    <FilterRow>
-      <Chip $active={selectedId === 0} onClick={() => onChange(0)}>
+    <div className="flex flex-wrap gap-2 px-[5%]">
+      <button className={chipClass(selectedId === 0)} onClick={() => onChange(0)}>
         Todas
-      </Chip>
+      </button>
       {categories.map((cat) => (
-        <Chip
+        <button
           key={cat.id}
-          $active={selectedId === cat.id}
+          className={chipClass(selectedId === cat.id)}
           onClick={() => onChange(cat.id)}
         >
           {cat.name}
-        </Chip>
+        </button>
       ))}
-    </FilterRow>
+    </div>
   );
 }
