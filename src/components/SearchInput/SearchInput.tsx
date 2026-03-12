@@ -1,81 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { Search, X } from "lucide-react";
-import { tokens } from "../../styles/tokens.ts";
-
-const SearchInputContainer = styled.form`
-  display: flex;
-  align-items: center;
-  width: 90%;
-  margin: 0 auto;
-  background: #ffffff;
-  border: 1.5px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.full};
-  overflow: hidden;
-  transition: border-color ${tokens.transition.fast}, box-shadow ${tokens.transition.fast};
-
-  &:focus-within {
-    border-color: ${tokens.colors.primary[400]};
-    box-shadow: 0 0 0 3px ${tokens.colors.primary[100]};
-  }
-
-  @media (max-width: 420px) {
-    width: 100%;
-  }
-`;
-
-const SearchIcon = styled.span`
-  padding: 0 14px 0 16px;
-  color: ${tokens.colors.neutral[400]};
-  font-size: ${tokens.fontSize.base};
-  pointer-events: none;
-  user-select: none;
-`;
-
-const SearchField = styled.input`
-  flex: 1;
-  padding: 11px 8px;
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[800]};
-  background: transparent;
-  border: none;
-  outline: none;
-
-  &::placeholder {
-    color: ${tokens.colors.neutral[400]};
-  }
-`;
-
-const SearchButton = styled.button`
-  padding: 11px 20px;
-  background-color: ${tokens.colors.primary[600]};
-  color: #ffffff;
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  border: none;
-  cursor: pointer;
-  border-radius: 0 ${tokens.radius.full} ${tokens.radius.full} 0;
-  transition: background-color ${tokens.transition.fast};
-  white-space: nowrap;
-
-  &:hover {
-    background-color: ${tokens.colors.primary[700]};
-  }
-`;
-
-const ClearButton = styled.button`
-  padding: 11px 14px;
-  background: transparent;
-  color: ${tokens.colors.neutral[400]};
-  font-size: ${tokens.fontSize.sm};
-  border: none;
-  cursor: pointer;
-  transition: color ${tokens.transition.fast};
-
-  &:hover {
-    color: ${tokens.colors.neutral[600]};
-  }
-`;
 
 type Props = {
   onSearch: (value: string) => void;
@@ -100,21 +24,40 @@ const SearchInput = ({ onSearch }: Props) => {
   }
 
   return (
-    <SearchInputContainer onSubmit={handleSubmit}>
-      <SearchIcon><Search size={16} /></SearchIcon>
-      <SearchField
-        onChange={handleInputValue}
-        value={inputValue}
+    <form
+      onSubmit={handleSubmit}
+      className="flex items-center w-[90%] mx-auto bg-white border-[1.5px] border-neutral-200 rounded-full overflow-hidden transition-[border-color,box-shadow] duration-[150ms] focus-within:border-primary-400 focus-within:shadow-[0_0_0_3px_var(--color-primary-100)] max-[420px]:w-full"
+    >
+      <span className="pl-4 pr-3.5 text-neutral-400 pointer-events-none select-none">
+        <Search size={16} />
+      </span>
+
+      <input
         type="text"
+        value={inputValue}
+        onChange={handleInputValue}
         placeholder="Nome do produto"
+        className="flex-1 py-[11px] px-2 text-sm text-neutral-800 bg-transparent border-none outline-none placeholder:text-neutral-400"
       />
+
       {inputValue && (
-        <ClearButton onClick={handleReset} type="reset" aria-label="Limpar">
+        <button
+          type="reset"
+          onClick={handleReset}
+          aria-label="Limpar"
+          className="px-3.5 py-[11px] bg-transparent text-neutral-400 border-none cursor-pointer transition-colors duration-[150ms] hover:text-neutral-600"
+        >
           <X size={14} />
-        </ClearButton>
+        </button>
       )}
-      <SearchButton type="submit">Buscar</SearchButton>
-    </SearchInputContainer>
+
+      <button
+        type="submit"
+        className="px-5 py-[11px] bg-primary-600 text-white text-sm font-medium border-none cursor-pointer rounded-r-full whitespace-nowrap transition-colors duration-[150ms] hover:bg-primary-700"
+      >
+        Buscar
+      </button>
+    </form>
   );
 };
 

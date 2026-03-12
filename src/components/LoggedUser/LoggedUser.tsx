@@ -1,127 +1,10 @@
-import styled, { keyframes } from "styled-components";
 import * as authService from "../../services/auth-service.ts";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useRef, useState, useEffect } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
 import { User, LogOut } from "lucide-react";
-import { tokens } from "../../styles/tokens.ts";
+import { cn } from "../../lib/cn.ts";
 
-/* ── Animations ──────────────────────────────────────────── */
-const fadeSlideIn = keyframes`
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
-`;
-
-/* ── Styled components ───────────────────────────────────── */
-const AvatarWrapper = styled.div`
-  position: relative;
-`;
-
-const Avatar = styled.button`
-  width: 34px;
-  height: 34px;
-  border-radius: ${tokens.radius.full};
-  background: ${tokens.colors.primary[100]};
-  color: ${tokens.colors.primary[700]};
-  font-weight: ${tokens.fontWeight.semibold};
-  font-size: ${tokens.fontSize.sm};
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color ${tokens.transition.fast}, color ${tokens.transition.fast};
-  text-transform: uppercase;
-  line-height: 1;
-
-  &:hover {
-    background: ${tokens.colors.primary[200]};
-    color: ${tokens.colors.primary[800]};
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${tokens.colors.primary[500]};
-    outline-offset: 2px;
-  }
-`;
-
-const DropdownMenu = styled.div`
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  min-width: 200px;
-  background: #ffffff;
-  border: 1px solid ${tokens.colors.neutral[100]};
-  border-radius: ${tokens.radius.lg};
-  box-shadow: ${tokens.shadow.xl};
-  overflow: hidden;
-  z-index: 200;
-  animation: ${fadeSlideIn} 180ms ease;
-`;
-
-const UserInfo = styled.div`
-  padding: 12px 16px;
-  background: ${tokens.colors.neutral[50]};
-
-  span {
-    display: block;
-    font-size: ${tokens.fontSize.sm};
-    font-weight: ${tokens.fontWeight.semibold};
-    color: ${tokens.colors.neutral[800]};
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const DropdownDivider = styled.div`
-  height: 1px;
-  background: ${tokens.colors.neutral[100]};
-`;
-
-const DropdownItem = styled.button<{ $danger?: boolean }>`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 16px;
-  background: transparent;
-  border: none;
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${({ $danger }) =>
-    $danger ? tokens.colors.danger[600] : tokens.colors.neutral[700]};
-  cursor: pointer;
-  text-align: left;
-  transition: background-color ${tokens.transition.fast}, color ${tokens.transition.fast};
-
-  &:hover {
-    background: ${({ $danger }) =>
-      $danger ? tokens.colors.danger[50] : tokens.colors.neutral[50]};
-    color: ${({ $danger }) =>
-      $danger ? tokens.colors.danger[700] : tokens.colors.neutral[900]};
-  }
-`;
-
-const LoginLink = styled(Link)`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[600]};
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: ${tokens.radius.md};
-  border: 1.5px solid ${tokens.colors.neutral[300]};
-  transition: border-color ${tokens.transition.fast}, color ${tokens.transition.fast},
-    background-color ${tokens.transition.fast};
-
-  &:hover {
-    border-color: ${tokens.colors.primary[400]};
-    color: ${tokens.colors.primary[600]};
-    background-color: ${tokens.colors.primary[50]};
-  }
-`;
-
-/* ── Component ───────────────────────────────────────────── */
 const LoggedUser = () => {
   const { contextTokenPayload, setContextTokenPayload } = useContext(ContextToken);
   const [isOpen, setIsOpen] = useState(false);
@@ -158,43 +41,69 @@ const LoggedUser = () => {
 
   if (contextTokenPayload && authService.isAuthenticated()) {
     const initial = contextTokenPayload.user_name?.charAt(0) ?? "U";
+
     return (
-      <AvatarWrapper ref={wrapperRef}>
-        <Avatar
+      <div ref={wrapperRef} className="relative">
+        <button
           onClick={() => setIsOpen((o) => !o)}
           aria-haspopup="true"
           aria-expanded={isOpen}
           title={contextTokenPayload.user_name}
+          className="w-[34px] h-[34px] rounded-full bg-primary-100 text-primary-700 font-semibold text-sm border-none cursor-pointer flex items-center justify-center uppercase leading-none transition-[background-color,color] duration-[150ms] hover:bg-primary-200 hover:text-primary-800 focus-visible:outline-2 focus-visible:outline-primary-500 focus-visible:outline-offset-2"
         >
           {initial}
-        </Avatar>
+        </button>
 
         {isOpen && (
-          <DropdownMenu role="menu">
-            <UserInfo>
-              <span>{contextTokenPayload.user_name}</span>
-            </UserInfo>
+          <div
+            role="menu"
+            className="absolute top-[calc(100%+10px)] right-0 min-w-[200px] bg-white border border-neutral-100 rounded-lg shadow-xl overflow-hidden z-[200]"
+            style={{ animation: "fade-slide-in 180ms ease" }}
+          >
+            <div className="px-4 py-3 bg-neutral-50">
+              <span className="block text-sm font-semibold text-neutral-800 whitespace-nowrap overflow-hidden text-ellipsis">
+                {contextTokenPayload.user_name}
+              </span>
+            </div>
 
-            <DropdownDivider />
+            <div className="h-px bg-neutral-100" />
 
-            <DropdownItem onClick={handleMyAccount} role="menuitem">
+            <button
+              role="menuitem"
+              onClick={handleMyAccount}
+              className="w-full flex items-center gap-2.5 px-4 py-2.5 bg-transparent border-none text-sm font-medium text-neutral-700 cursor-pointer text-left transition-[background-color,color] duration-[150ms] hover:bg-neutral-50 hover:text-neutral-900"
+            >
               <User size={15} />
               Minha conta
-            </DropdownItem>
+            </button>
 
-            <DropdownDivider />
+            <div className="h-px bg-neutral-100" />
 
-            <DropdownItem $danger onClick={handleLogout} role="menuitem">
+            <button
+              role="menuitem"
+              onClick={handleLogout}
+              className={cn(
+                "w-full flex items-center gap-2.5 px-4 py-2.5 bg-transparent border-none text-sm font-medium cursor-pointer text-left",
+                "text-danger-600 transition-[background-color,color] duration-[150ms] hover:bg-danger-50 hover:text-danger-700"
+              )}
+            >
               <LogOut size={15} />
               Sair
-            </DropdownItem>
-          </DropdownMenu>
+            </button>
+          </div>
         )}
-      </AvatarWrapper>
+      </div>
     );
   }
 
-  return <LoginLink to="/login">Entrar</LoginLink>;
+  return (
+    <Link
+      to="/login"
+      className="text-sm font-medium text-neutral-600 no-underline px-3 py-1.5 rounded-md border-[1.5px] border-neutral-300 transition-[border-color,color,background-color] duration-[150ms] hover:border-primary-400 hover:text-primary-600 hover:bg-primary-50"
+    >
+      Entrar
+    </Link>
+  );
 };
 
 export { LoggedUser };

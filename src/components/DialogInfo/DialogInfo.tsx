@@ -1,114 +1,47 @@
-import styled, { keyframes } from "styled-components";
 import { X, Info } from "lucide-react";
 import { CtaButton } from "../CtaButton";
-import { tokens } from "../../styles/tokens.ts";
 
-/* ── Animations ──────────────────────────────────────────── */
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to   { opacity: 1; }
-`;
-
-const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-`;
-
-/* ── Overlay ─────────────────────────────────────────────── */
-const Overlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  animation: ${fadeIn} 200ms ease;
-`;
-
-/* ── Modal ───────────────────────────────────────────────── */
-const ModalBox = styled.div`
-  background: #ffffff;
-  border-radius: ${tokens.radius.xl};
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  padding: 32px;
-  width: 90%;
-  max-width: 440px;
-  position: relative;
-  animation: ${slideUp} 250ms cubic-bezier(0.16, 1, 0.3, 1);
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  color: ${tokens.colors.neutral[400]};
-  cursor: pointer;
-  font-size: ${tokens.fontSize.lg};
-  line-height: 1;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  transition: color ${tokens.transition.fast};
-
-  &:hover {
-    color: ${tokens.colors.neutral[700]};
-  }
-`;
-
-const IconCircle = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: ${tokens.radius.full};
-  background: ${tokens.colors.primary[100]};
-  color: ${tokens.colors.primary[600]};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  font-size: 22px;
-`;
-
-const ModalTitle = styled.h2`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[900]};
-  text-align: center;
-  margin: 0 0 8px;
-`;
-
-const ModalMessage = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[600]};
-  text-align: center;
-  line-height: 1.6;
-  margin: 0 0 24px;
-`;
-
-/* ── Types ───────────────────────────────────────────────── */
 type Props = {
   message: string;
   onDialogClose: () => void;
 };
 
-/* ── Component ───────────────────────────────────────────── */
 const DialogInfo = ({ message, onDialogClose }: Props) => {
   return (
-    <Overlay onClick={onDialogClose}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onDialogClose} aria-label="Fechar"><X size={18} /></CloseButton>
-        <IconCircle><Info size={22} /></IconCircle>
-        <ModalTitle>Informação</ModalTitle>
-        <ModalMessage>{message}</ModalMessage>
+    <div
+      className="fixed inset-0 bg-[rgba(15,23,42,0.4)] backdrop-blur-[4px] flex items-center justify-center z-[200]"
+      style={{ animation: "fade-in 200ms ease" }}
+      onClick={onDialogClose}
+    >
+      <div
+        className="bg-white rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] p-8 w-[90%] max-w-[440px] relative"
+        style={{ animation: "slide-up 250ms cubic-bezier(0.16,1,0.3,1)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          onClick={onDialogClose}
+          aria-label="Fechar"
+          className="absolute top-4 right-4 bg-transparent border-none text-neutral-400 cursor-pointer p-1 flex items-center leading-none transition-colors duration-[150ms] hover:text-neutral-700"
+        >
+          <X size={18} />
+        </button>
+
+        <div className="w-12 h-12 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center mx-auto mb-4">
+          <Info size={22} />
+        </div>
+
+        <h2 className="text-lg font-semibold text-neutral-900 text-center m-0 mb-2">
+          Informação
+        </h2>
+        <p className="text-sm text-neutral-600 text-center leading-[1.6] m-0 mb-6">
+          {message}
+        </p>
+
         <CtaButton variant="primary" fullWidth onClick={onDialogClose}>
           Ok, entendi
         </CtaButton>
-      </ModalBox>
-    </Overlay>
+      </div>
+    </div>
   );
 };
 

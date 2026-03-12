@@ -1,113 +1,45 @@
-import styled, { keyframes } from "styled-components";
 import { AlertTriangle } from "lucide-react";
 import { CtaButton } from "../CtaButton";
-import { tokens } from "../../styles/tokens.ts";
 
-/* ── Animations ──────────────────────────────────────────── */
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to   { opacity: 1; }
-`;
-
-const slideUp = keyframes`
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-`;
-
-/* ── Overlay ─────────────────────────────────────────────── */
-const Overlay = styled.div`
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 200;
-  animation: ${fadeIn} 200ms ease;
-`;
-
-/* ── Modal ───────────────────────────────────────────────── */
-const ModalBox = styled.div`
-  background: #ffffff;
-  border-radius: ${tokens.radius.xl};
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  padding: 32px;
-  width: 90%;
-  max-width: 440px;
-  position: relative;
-  animation: ${slideUp} 250ms cubic-bezier(0.16, 1, 0.3, 1);
-`;
-
-const IconCircle = styled.div`
-  width: 48px;
-  height: 48px;
-  border-radius: ${tokens.radius.full};
-  background: ${tokens.colors.danger[100]};
-  color: ${tokens.colors.danger[600]};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 16px;
-  font-size: 22px;
-`;
-
-const ModalTitle = styled.h2`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[900]};
-  text-align: center;
-  margin: 0 0 8px;
-`;
-
-const ModalMessage = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[600]};
-  text-align: center;
-  line-height: 1.6;
-  margin: 0;
-`;
-
-const ButtonRow = styled.div`
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-`;
-
-/* ── Types ───────────────────────────────────────────────── */
 type Props = {
   message: string;
   onDialogAnswer: (answer: boolean, id: number) => void;
   id: number;
 };
 
-/* ── Component ───────────────────────────────────────────── */
 const DialogConfirmation = ({ id, message, onDialogAnswer }: Props) => {
   return (
-    <Overlay onClick={() => onDialogAnswer(false, id)}>
-      <ModalBox onClick={(e) => e.stopPropagation()}>
-        <IconCircle><AlertTriangle size={22} /></IconCircle>
-        <ModalTitle>Confirmar ação</ModalTitle>
-        <ModalMessage>{message}</ModalMessage>
-        <ButtonRow>
-          <CtaButton
-            variant="secondary"
-            fullWidth
-            onClick={() => onDialogAnswer(false, id)}
-          >
+    <div
+      className="fixed inset-0 bg-[rgba(15,23,42,0.4)] backdrop-blur-[4px] flex items-center justify-center z-[200]"
+      style={{ animation: "fade-in 200ms ease" }}
+      onClick={() => onDialogAnswer(false, id)}
+    >
+      <div
+        className="bg-white rounded-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] p-8 w-[90%] max-w-[440px] relative"
+        style={{ animation: "slide-up 250ms cubic-bezier(0.16,1,0.3,1)" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="w-12 h-12 rounded-full bg-danger-100 text-danger-600 flex items-center justify-center mx-auto mb-4">
+          <AlertTriangle size={22} />
+        </div>
+
+        <h2 className="text-lg font-semibold text-neutral-900 text-center m-0 mb-2">
+          Confirmar ação
+        </h2>
+        <p className="text-sm text-neutral-600 text-center leading-[1.6] m-0">
+          {message}
+        </p>
+
+        <div className="flex gap-3 mt-6">
+          <CtaButton variant="secondary" fullWidth onClick={() => onDialogAnswer(false, id)}>
             Cancelar
           </CtaButton>
-          <CtaButton
-            variant="danger"
-            fullWidth
-            onClick={() => onDialogAnswer(true, id)}
-          >
+          <CtaButton variant="danger" fullWidth onClick={() => onDialogAnswer(true, id)}>
             Confirmar
           </CtaButton>
-        </ButtonRow>
-      </ModalBox>
-    </Overlay>
+        </div>
+      </div>
+    </div>
   );
 };
 
