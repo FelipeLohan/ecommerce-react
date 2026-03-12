@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import styled, { css } from "styled-components";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { CartIcon } from "../CartIcon";
 import AdminIcon from "../../assets/AdminIcon.svg";
@@ -7,154 +6,8 @@ import * as authService from "../../services/auth-service.ts";
 import { useContext } from "react";
 import { ContextToken } from "../../utils/context-token.ts";
 import { LoggedUser } from "../LoggedUser/LoggedUser.tsx";
-import { tokens } from "../../styles/tokens.ts";
 import { Search } from "lucide-react";
-
-const HeaderClientContainer = styled.header<{ $scrolled: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: ${tokens.spacing[4]};
-  padding: 0 ${tokens.spacing[10]};
-  height: 64px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid ${tokens.colors.neutral[100]};
-  box-shadow: ${tokens.shadow.sm};
-  transition: box-shadow ${tokens.transition.base};
-
-  ${({ $scrolled }) =>
-    $scrolled &&
-    css`
-      box-shadow: ${tokens.shadow.md};
-    `}
-
-  @media (max-width: 420px) {
-    padding: 0 ${tokens.spacing[4]};
-    gap: ${tokens.spacing[2]};
-  }
-`;
-
-const Logo = styled(Link)`
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-
-  img {
-    height: 36px;
-    width: auto;
-    display: block;
-    transition: opacity ${tokens.transition.fast};
-
-    @media (max-width: 600px) {
-      height: 28px;
-    }
-  }
-
-  &:hover img {
-    opacity: 0.85;
-  }
-`;
-
-const SearchForm = styled.form`
-  flex: 1;
-  max-width: 520px;
-  display: flex;
-  align-items: center;
-  background: ${tokens.colors.neutral[50]};
-  border: 1.5px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.full};
-  overflow: hidden;
-  transition: border-color ${tokens.transition.fast}, box-shadow ${tokens.transition.fast};
-
-  &:focus-within {
-    border-color: ${tokens.colors.primary[400]};
-    box-shadow: 0 0 0 3px ${tokens.colors.primary[100]};
-    background: #ffffff;
-  }
-
-  @media (max-width: 420px) {
-    max-width: none;
-  }
-`;
-
-const SearchField = styled.input`
-  flex: 1;
-  padding: 8px ${tokens.spacing[3]};
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[800]};
-  background: transparent;
-  border: none;
-  outline: none;
-  min-width: 0;
-
-  &::placeholder {
-    color: ${tokens.colors.neutral[400]};
-  }
-`;
-
-const SearchIconButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  background: transparent;
-  border: none;
-  color: ${tokens.colors.neutral[400]};
-  cursor: pointer;
-  transition: color ${tokens.transition.fast};
-  flex-shrink: 0;
-
-  &:hover {
-    color: ${tokens.colors.primary[600]};
-  }
-`;
-
-const NavActions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[4]};
-  flex-shrink: 0;
-`;
-
-const AdminLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  padding: 6px;
-  border-radius: ${tokens.radius.md};
-  transition: background-color ${tokens.transition.fast};
-
-  &:hover {
-    background-color: ${tokens.colors.neutral[100]};
-  }
-
-  img {
-    width: 22px;
-    height: 22px;
-
-    @media (max-width: 600px) {
-      width: 18px;
-      height: 18px;
-    }
-  }
-`;
-
-const CartLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  padding: 6px;
-  border-radius: ${tokens.radius.md};
-  transition: background-color ${tokens.transition.fast};
-
-  &:hover {
-    background-color: ${tokens.colors.neutral[100]};
-  }
-`;
+import { cn } from "../../lib/cn.ts";
 
 const HeaderClient = () => {
   const { contextTokenPayload } = useContext(ContextToken);
@@ -185,35 +38,65 @@ const HeaderClient = () => {
   }
 
   return (
-    <HeaderClientContainer $scrolled={scrolled}>
-      <Logo to="/">
-        <img src="/Brand.svg" alt="Ecommerce" />
-      </Logo>
+    <header
+      className={cn(
+        "flex justify-between items-center gap-4 px-10 h-16",
+        "sticky top-0 z-[100]",
+        "bg-white/85 backdrop-blur-[8px] border-b border-neutral-100",
+        "transition-shadow duration-[250ms]",
+        scrolled ? "shadow-md" : "shadow-sm",
+        "max-[420px]:px-4 max-[420px]:gap-2"
+      )}
+    >
+      {/* Logo */}
+      <Link to="/" className="flex items-center flex-shrink-0 group">
+        <img
+          src="/Brand.svg"
+          alt="Ecommerce"
+          className="h-9 w-auto block transition-opacity duration-[150ms] group-hover:opacity-85 sm:h-7"
+        />
+      </Link>
 
-      <SearchForm onSubmit={handleSubmit}>
-        <SearchField
+      {/* Search form */}
+      <form
+        onSubmit={handleSubmit}
+        className="flex-1 max-w-[520px] flex items-center bg-neutral-50 border-[1.5px] border-neutral-200 rounded-full overflow-hidden transition-[border-color,box-shadow,background] duration-[150ms] focus-within:border-primary-400 focus-within:shadow-[0_0_0_3px_var(--color-primary-100)] focus-within:bg-white max-[420px]:max-w-none"
+      >
+        <input
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           type="text"
           placeholder="Buscar produtos..."
+          className="flex-1 py-2 px-3 text-sm text-neutral-800 bg-transparent border-none outline-none min-w-0 placeholder:text-neutral-400"
         />
-        <SearchIconButton type="submit" aria-label="Buscar">
+        <button
+          type="submit"
+          aria-label="Buscar"
+          className="flex items-center justify-center px-3.5 py-2 bg-transparent border-none text-neutral-400 cursor-pointer flex-shrink-0 transition-colors duration-[150ms] hover:text-primary-600"
+        >
           <Search size={16} />
-        </SearchIconButton>
-      </SearchForm>
+        </button>
+      </form>
 
-      <NavActions>
+      {/* Actions */}
+      <nav className="flex items-center gap-4 flex-shrink-0">
         {contextTokenPayload && authService.hasAnyRoles(["ROLE_ADMIN"]) && (
-          <AdminLink to="/admin">
-            <img src={AdminIcon} alt="Admin" />
-          </AdminLink>
+          <Link
+            to="/admin"
+            className="flex items-center p-1.5 rounded-md transition-colors duration-[150ms] hover:bg-neutral-100"
+          >
+            <img src={AdminIcon} alt="Admin" className="w-[22px] h-[22px] sm:w-[18px] sm:h-[18px]" />
+          </Link>
         )}
-        <CartLink to="/cart">
+        <Link
+          to="/cart"
+          className="flex items-center p-1.5 rounded-md transition-colors duration-[150ms] hover:bg-neutral-100"
+        >
           <CartIcon />
-        </CartLink>
+        </Link>
         <LoggedUser />
-      </NavActions>
-    </HeaderClientContainer>
+      </nav>
+    </header>
   );
 };
 

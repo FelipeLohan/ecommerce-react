@@ -1,127 +1,60 @@
-import styled from "styled-components";
 import HomeIcon from "../../assets/HomeIcon.svg";
 import StockIcon from "../../assets/StockIcon.svg";
 import { LoggedUser } from "../LoggedUser";
 import { NavLink } from "react-router-dom";
-import { tokens } from "../../styles/tokens.ts";
-
-const HeaderAdminContainer = styled.header`
-  background: ${tokens.colors.neutral[900]};
-  margin-bottom: ${tokens.spacing[10]};
-`;
-
-const HeaderAdminContent = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (max-width: 800px) {
-    width: 92%;
-  }
-`;
-
-const Brand = styled.div`
-  font-size: ${tokens.fontSize.lg};
-  font-weight: ${tokens.fontWeight.bold};
-  color: #ffffff;
-  letter-spacing: -0.01em;
-`;
-
-const AdminBadge = styled.span`
-  display: inline-block;
-  background: ${tokens.colors.primary[600]};
-  color: #ffffff;
-  padding: 2px 10px;
-  border-radius: ${tokens.radius.full};
-  font-size: ${tokens.fontSize.xs};
-  font-weight: ${tokens.fontWeight.semibold};
-  margin-left: ${tokens.spacing[2]};
-  vertical-align: middle;
-`;
-
-const NavLinks = styled.nav`
-  display: flex;
-  gap: ${tokens.spacing[8]};
-  align-items: center;
-`;
-
-const NavItem = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[2]};
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[400]};
-  text-decoration: none;
-  padding-bottom: 2px;
-  border-bottom: 2px solid transparent;
-  transition: color ${tokens.transition.fast}, border-color ${tokens.transition.fast};
-
-  img {
-    width: 20px;
-    height: 20px;
-    opacity: 0.6;
-    transition: opacity ${tokens.transition.fast};
-
-    @media (max-width: 600px) {
-      width: 18px;
-      height: 18px;
-    }
-
-    @media (max-width: 420px) {
-      width: 16px;
-      height: 16px;
-    }
-  }
-
-  span {
-    @media (max-width: 800px) {
-      display: none;
-    }
-  }
-
-  &:hover {
-    color: #ffffff;
-
-    img {
-      opacity: 1;
-    }
-  }
-
-  &.active {
-    color: #ffffff;
-    border-bottom-color: ${tokens.colors.primary[400]};
-
-    img {
-      opacity: 1;
-    }
-  }
-`;
+import { cn } from "../../lib/cn.ts";
 
 const HeaderAdmin = () => {
+  const navItem = (isActive: boolean) =>
+    cn(
+      "flex items-center gap-2 text-sm font-medium no-underline pb-0.5 border-b-2 transition-[color,border-color] duration-[150ms]",
+      isActive
+        ? "text-white border-primary-400"
+        : "text-neutral-400 border-transparent hover:text-white"
+    );
+
   return (
-    <HeaderAdminContainer>
-      <HeaderAdminContent>
-        <Brand>
+    <header className="bg-neutral-900 mb-10">
+      <div className="w-4/5 mx-auto h-[60px] flex items-center justify-between max-[800px]:w-[92%]">
+
+        {/* Brand */}
+        <div className="text-lg font-bold text-white tracking-[-0.01em]">
           Admin
-          <AdminBadge>painel</AdminBadge>
-        </Brand>
-        <NavLinks>
-          <NavItem to="/admin/home" className={({ isActive }) => (isActive ? "active" : "")}>
-            <img src={HomeIcon} alt="" />
-            <span>Início</span>
-          </NavItem>
-          <NavItem to="/admin/products" className={({ isActive }) => (isActive ? "active" : "")}>
-            <img src={StockIcon} alt="" />
-            <span>Produtos</span>
-          </NavItem>
+          <span className="inline-block bg-primary-600 text-white px-2.5 py-0.5 rounded-full text-xs font-semibold ml-2 align-middle">
+            painel
+          </span>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex gap-8 items-center">
+          <NavLink
+            to="/admin/home"
+            className={({ isActive }) => navItem(isActive)}
+          >
+            <img
+              src={HomeIcon}
+              alt=""
+              className="w-5 h-5 opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
+            />
+            <span className="max-[800px]:hidden">Início</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/products"
+            className={({ isActive }) => navItem(isActive)}
+          >
+            <img
+              src={StockIcon}
+              alt=""
+              className="w-5 h-5 opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
+            />
+            <span className="max-[800px]:hidden">Produtos</span>
+          </NavLink>
+
           <LoggedUser />
-        </NavLinks>
-      </HeaderAdminContent>
-    </HeaderAdminContainer>
+        </nav>
+      </div>
+    </header>
   );
 };
 

@@ -1,161 +1,77 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Github, Linkedin } from "lucide-react";
-import { tokens } from "../../styles/tokens";
-
-const FooterWrapper = styled.footer`
-  background: ${tokens.colors.neutral[800]};
-  padding: ${tokens.spacing[12]} ${tokens.spacing[10]};
-
-  @media (max-width: 600px) {
-    padding: ${tokens.spacing[10]} ${tokens.spacing[6]};
-  }
-`;
-
-const FooterInner = styled.div`
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-const FooterGrid = styled.div`
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: ${tokens.spacing[12]};
-
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
-    gap: ${tokens.spacing[8]};
-  }
-`;
-
-const FooterLogo = styled.img`
-  height: 32px;
-  width: auto;
-  display: block;
-  margin-bottom: ${tokens.spacing[2]};
-`;
-
-const FooterTagline = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-  line-height: ${tokens.lineHeight.relaxed};
-  margin: 0 0 ${tokens.spacing[5]};
-`;
-
-const SocialLinks = styled.div`
-  display: flex;
-  gap: ${tokens.spacing[3]};
-`;
-
-const SocialLink = styled.a`
-  display: flex;
-  align-items: center;
-  gap: ${tokens.spacing[2]};
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-  text-decoration: none;
-  transition: color ${tokens.transition.fast};
-
-  &:hover {
-    color: ${tokens.colors.neutral[0]};
-  }
-`;
-
-const FooterColTitle = styled.h4`
-  font-size: ${tokens.fontSize.xs};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[300]};
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 ${tokens.spacing[4]};
-`;
-
-const FooterColLinks = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: ${tokens.spacing[2]};
-`;
-
-const FooterLink = styled(Link)`
-  font-size: ${tokens.fontSize.sm};
-  color: ${tokens.colors.neutral[400]};
-  text-decoration: none;
-  transition: color ${tokens.transition.fast};
-
-  &:hover {
-    color: ${tokens.colors.neutral[0]};
-  }
-`;
-
-const Divider = styled.hr`
-  border: none;
-  border-top: 1px solid ${tokens.colors.neutral[700]};
-  margin: ${tokens.spacing[8]} 0;
-`;
-
-const Copyright = styled.p`
-  text-align: center;
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.neutral[500]};
-  margin: 0;
-`;
 
 export function FooterClient() {
   const year = new Date().getFullYear();
 
+  const footerLink = "text-sm text-neutral-400 no-underline transition-colors duration-[150ms] hover:text-white";
+  const socialLink = "flex items-center gap-2 text-sm text-neutral-400 no-underline transition-colors duration-[150ms] hover:text-white";
+  const colTitle = "text-xs font-semibold text-neutral-300 uppercase tracking-[0.08em] m-0 mb-4";
+
   return (
-    <FooterWrapper>
-      <FooterInner>
-        <FooterGrid>
+    <footer className="bg-neutral-800 px-10 py-12 max-[600px]:px-6 max-[600px]:py-10">
+      <div className="max-w-[1200px] mx-auto">
+
+        {/* Grid 3 colunas */}
+        <div className="grid grid-cols-[2fr_1fr_1fr] gap-12 max-[600px]:grid-cols-1 max-[600px]:gap-8">
+
+          {/* Col 1 — Brand */}
           <div>
-            <FooterLogo src="/Brand_White.svg" alt="Ecommerce" />
-            <FooterTagline>
+            <img
+              src="/Brand_White.svg"
+              alt="Ecommerce"
+              className="h-8 w-auto block mb-2"
+            />
+            <p className="text-sm text-neutral-400 leading-relaxed m-0 mb-5">
               Projeto de portfólio desenvolvido com React, TypeScript e Spring Boot.
-            </FooterTagline>
-            <SocialLinks>
-              <SocialLink
+            </p>
+            <div className="flex gap-3">
+              <a
                 href="https://github.com/FelipeLohan/ecommerce-react"
                 target="_blank"
                 rel="noopener noreferrer"
+                className={socialLink}
               >
                 <Github size={16} />
                 GitHub
-              </SocialLink>
-              <SocialLink
+              </a>
+              <a
                 href="https://www.linkedin.com/in/felipe-lohan-767294213/"
                 target="_blank"
                 rel="noopener noreferrer"
+                className={socialLink}
               >
                 <Linkedin size={16} />
                 LinkedIn
-              </SocialLink>
-            </SocialLinks>
+              </a>
+            </div>
           </div>
 
+          {/* Col 2 — Navegação */}
           <div>
-            <FooterColTitle>Navegação</FooterColTitle>
-            <FooterColLinks>
-              <li><FooterLink to="/catalog">Catálogo</FooterLink></li>
-              <li><FooterLink to="/cart">Carrinho</FooterLink></li>
-            </FooterColLinks>
+            <h4 className={colTitle}>Navegação</h4>
+            <ul className="list-none m-0 p-0 flex flex-col gap-2">
+              <li><Link to="/catalog" className={footerLink}>Catálogo</Link></li>
+              <li><Link to="/cart" className={footerLink}>Carrinho</Link></li>
+            </ul>
           </div>
 
+          {/* Col 3 — Conta */}
           <div>
-            <FooterColTitle>Conta</FooterColTitle>
-            <FooterColLinks>
-              <li><FooterLink to="/my-account">Minha Conta</FooterLink></li>
-              <li><FooterLink to="/login">Login</FooterLink></li>
-            </FooterColLinks>
+            <h4 className={colTitle}>Conta</h4>
+            <ul className="list-none m-0 p-0 flex flex-col gap-2">
+              <li><Link to="/my-account" className={footerLink}>Minha Conta</Link></li>
+              <li><Link to="/login" className={footerLink}>Login</Link></li>
+            </ul>
           </div>
-        </FooterGrid>
+        </div>
 
-        <Divider />
+        <hr className="border-none border-t border-neutral-700 my-8" />
 
-        <Copyright>© {year} Felipe Lohan. Todos os direitos reservados.</Copyright>
-      </FooterInner>
-    </FooterWrapper>
+        <p className="text-center text-xs text-neutral-500 m-0">
+          © {year} Felipe Lohan. Todos os direitos reservados.
+        </p>
+      </div>
+    </footer>
   );
 }
