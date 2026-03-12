@@ -10,8 +10,6 @@ type Props = {
 const MAX_VISIBLE = 5;
 
 export function Pagination({ currentPage, totalPages, onChange }: Props) {
-  if (totalPages <= 1) return null;
-
   // Build the window of page numbers to display
   function getPages(): (number | "...")[] {
     if (totalPages <= MAX_VISIBLE + 2) {
