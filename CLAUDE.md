@@ -5,7 +5,7 @@ Aplicação e-commerce full-featured em React + TypeScript. Frontend no Netlify,
 
 - **Frontend:** https://ecommerce-lohan.netlify.app/
 - **Backend API:** https://ecommerce-spring-ec44b57ed84d.herokuapp.com
-- **Stack:** React 18, TypeScript, Vite, styled-components, react-router-dom v6, axios, jwt-decode
+- **Stack:** React 18, TypeScript, Vite 6, Tailwind CSS v4, react-router-dom v6, axios, jwt-decode
 
 ## Comandos
 
@@ -79,10 +79,18 @@ VITE_CLIENT_ID      # OAuth2 client id (default: myclientid)
 VITE_CLIENT_SECRET  # OAuth2 client secret (default: myclientsecret)
 ```
 
+## Estilo / CSS
+
+- **Tailwind CSS v4** com plugin `@tailwindcss/vite` (configuração CSS-first via `@theme` em `src/index.css`)
+- Classes condicionais via `cn()` helper em `src/lib/cn.ts` (clsx + tailwind-merge)
+- Design tokens em `src/styles/tokens.ts` (ainda usado por `react-select` em `src/utils/select-style.ts`)
+- Estilos globais, reset e keyframes em `src/index.css` via `@layer base` / `@layer components`
+- Responsividade **mobile-first**: breakpoints `sm:480px`, `md:768px`, `lg:1024px`, `xl:1280px`
+- `max-md:hidden` / `max-sm:grid-cols-1` etc. para breakpoints máximos
+
 ## Padrões e Convenções
 
-- **CSS-in-JS** com styled-components em todos os componentes e páginas
-- **Responsivo:** `@media` queries com breakpoints 850px (tablet) e 600px / 420px (mobile)
+- **Tailwind CSS** utility classes em todos os componentes e páginas
 - **Serviços:** cada entidade tem seu `*-service.ts` com funções de CRUD via `requestBackend()`
 - **Componentes com pasta própria:** cada componente em `components/NomeComponente/index.tsx`
 - **Rotas como pages:** cada página em `routes/Secao/NomePagina/index.tsx`
@@ -93,7 +101,9 @@ VITE_CLIENT_SECRET  # OAuth2 client secret (default: myclientsecret)
 | Arquivo | Responsabilidade |
 |---------|-----------------|
 | `src/App.tsx` | Roteamento principal + providers de contexto |
-| `src/main.tsx` | Entry point + GlobalStyle |
+| `src/main.tsx` | Entry point |
+| `src/index.css` | Tailwind import, `@theme` tokens, reset, keyframes |
+| `src/lib/cn.ts` | `cn()` helper (clsx + tailwind-merge) |
 | `src/utils/requests.ts` | Axios base + interceptors |
 | `src/utils/system.ts` | Constantes de configuração (BASE_URL, CLIENT_ID) |
 | `src/utils/history.ts` | Instância do history para navegação imperativa |
