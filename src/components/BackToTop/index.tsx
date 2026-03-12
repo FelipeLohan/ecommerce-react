@@ -1,35 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { tokens } from "../../styles/tokens";
-
-const Btn = styled.button<{ $visible: boolean }>`
-  position: fixed;
-  bottom: 80px;
-  right: 24px;
-  width: 44px;
-  height: 44px;
-  border-radius: ${tokens.radius.full};
-  background: ${tokens.colors.primary[600]};
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: ${tokens.shadow.md};
-  z-index: 90;
-  opacity: ${({ $visible }) => ($visible ? "1" : "0")};
-  transform: translateY(${({ $visible }) => ($visible ? "0" : "16px")});
-  pointer-events: ${({ $visible }) => ($visible ? "auto" : "none")};
-  transition:
-    opacity ${tokens.transition.base},
-    transform ${tokens.transition.base},
-    background-color ${tokens.transition.fast};
-
-  &:hover {
-    background: ${tokens.colors.primary[700]};
-  }
-`;
+import { cn } from "../../lib/cn";
 
 const BackToTop = () => {
   const [visible, setVisible] = useState(false);
@@ -41,11 +11,20 @@ const BackToTop = () => {
   }, []);
 
   return (
-    <Btn
-      $visible={visible}
+    <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Voltar ao topo"
       title="Voltar ao topo"
+      className={cn(
+        "fixed bottom-20 right-6 z-[90] w-11 h-11 rounded-full",
+        "bg-primary-600 text-white border-none",
+        "flex items-center justify-center shadow-md",
+        "transition-[opacity,transform] duration-[250ms]",
+        "hover:bg-primary-700",
+        visible
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 translate-y-4 pointer-events-none"
+      )}
     >
       <svg
         width="18"
@@ -59,7 +38,7 @@ const BackToTop = () => {
       >
         <polyline points="18 15 12 9 6 15" />
       </svg>
-    </Btn>
+    </button>
   );
 };
 
