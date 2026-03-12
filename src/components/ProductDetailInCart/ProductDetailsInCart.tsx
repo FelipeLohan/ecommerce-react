@@ -1,116 +1,3 @@
-import styled from "styled-components";
-import { tokens } from "../../styles/tokens.ts";
-
-/* ── Item card ───────────────────────────────────────────── */
-const ItemCard = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  background: #ffffff;
-  border: 1px solid ${tokens.colors.neutral[100]};
-  border-radius: ${tokens.radius.lg};
-  box-shadow: ${tokens.shadow.sm};
-`;
-
-const ItemImage = styled.img`
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: ${tokens.radius.md};
-  flex-shrink: 0;
-`;
-
-const ItemInfo = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-`;
-
-const ItemName = styled.p`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[800]};
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const ItemUnitPrice = styled.p`
-  font-size: ${tokens.fontSize.xs};
-  color: ${tokens.colors.neutral[500]};
-  margin: 0;
-`;
-
-const QtyRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-`;
-
-const QtyBtn = styled.button`
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid ${tokens.colors.neutral[200]};
-  border-radius: ${tokens.radius.md};
-  background: #ffffff;
-  font-size: ${tokens.fontSize.base};
-  font-weight: ${tokens.fontWeight.medium};
-  color: ${tokens.colors.neutral[600]};
-  cursor: pointer;
-  transition: border-color ${tokens.transition.fast}, background ${tokens.transition.fast},
-    color ${tokens.transition.fast};
-  line-height: 1;
-
-  &:hover {
-    border-color: ${tokens.colors.primary[400]};
-    background: ${tokens.colors.primary[50]};
-    color: ${tokens.colors.primary[600]};
-  }
-`;
-
-const QtyValue = styled.span`
-  font-size: ${tokens.fontSize.sm};
-  font-weight: ${tokens.fontWeight.semibold};
-  color: ${tokens.colors.neutral[800]};
-  min-width: 28px;
-  text-align: center;
-`;
-
-const ItemPrice = styled.p`
-  font-size: ${tokens.fontSize.base};
-  font-weight: ${tokens.fontWeight.bold};
-  color: ${tokens.colors.neutral[900]};
-  min-width: 80px;
-  text-align: right;
-  margin: 0;
-  flex-shrink: 0;
-`;
-
-const RemoveButton = styled.button`
-  background: transparent;
-  border: none;
-  color: ${tokens.colors.neutral[400]};
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  transition: color ${tokens.transition.fast};
-  flex-shrink: 0;
-
-  &:hover {
-    color: ${tokens.colors.danger[500]};
-  }
-`;
-
-/* ── Types ───────────────────────────────────────────────── */
 type Props = {
   quantity: number;
   name: string;
@@ -120,7 +7,6 @@ type Props = {
   handleDecreaseClick: () => void;
 };
 
-/* ── Component ───────────────────────────────────────────── */
 const ProductDetailsInCart = ({
   quantity,
   name,
@@ -130,34 +16,55 @@ const ProductDetailsInCart = ({
   handleDecreaseClick,
 }: Props) => {
   return (
-    <ItemCard>
-      <ItemImage src={imgUrl} alt={name} />
+    <div className="flex items-center gap-4 p-4 bg-white border border-neutral-100 rounded-lg shadow-sm">
 
-      <ItemInfo>
-        <ItemName>{name}</ItemName>
-        <ItemUnitPrice>R$ {price.toFixed(2)} cada</ItemUnitPrice>
-        <QtyRow>
-          <QtyBtn onClick={handleDecreaseClick} aria-label="Diminuir">
+      <img src={imgUrl} alt={name} className="w-20 h-20 object-cover rounded-md flex-shrink-0" />
+
+      <div className="flex-1 flex flex-col gap-1 min-w-0">
+        <p className="text-sm font-semibold text-neutral-800 m-0 whitespace-nowrap overflow-hidden text-ellipsis">
+          {name}
+        </p>
+        <p className="text-xs text-neutral-500 m-0">R$ {price.toFixed(2)} cada</p>
+
+        <div className="flex items-center gap-2 mt-1">
+          <button
+            onClick={handleDecreaseClick}
+            aria-label="Diminuir"
+            className="w-7 h-7 flex items-center justify-center border-[1.5px] border-neutral-200 rounded-md bg-white text-base font-medium text-neutral-600 cursor-pointer leading-none transition-[border-color,background,color] duration-[150ms] hover:border-primary-400 hover:bg-primary-50 hover:text-primary-600"
+          >
             −
-          </QtyBtn>
-          <QtyValue>{quantity}</QtyValue>
-          <QtyBtn onClick={handleIncreaseClick} aria-label="Aumentar">
+          </button>
+          <span className="text-sm font-semibold text-neutral-800 min-w-[28px] text-center">
+            {quantity}
+          </span>
+          <button
+            onClick={handleIncreaseClick}
+            aria-label="Aumentar"
+            className="w-7 h-7 flex items-center justify-center border-[1.5px] border-neutral-200 rounded-md bg-white text-base font-medium text-neutral-600 cursor-pointer leading-none transition-[border-color,background,color] duration-[150ms] hover:border-primary-400 hover:bg-primary-50 hover:text-primary-600"
+          >
             +
-          </QtyBtn>
-        </QtyRow>
-      </ItemInfo>
+          </button>
+        </div>
+      </div>
 
-      <ItemPrice>R$ {(price * quantity).toFixed(2)}</ItemPrice>
+      <p className="text-base font-bold text-neutral-900 min-w-[80px] text-right m-0 flex-shrink-0">
+        R$ {(price * quantity).toFixed(2)}
+      </p>
 
-      <RemoveButton onClick={handleDecreaseClick} aria-label="Remover item" title="Remover">
+      <button
+        onClick={handleDecreaseClick}
+        aria-label="Remover item"
+        title="Remover"
+        className="bg-transparent border-none text-neutral-400 cursor-pointer p-1 flex items-center flex-shrink-0 transition-colors duration-[150ms] hover:text-danger-500"
+      >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <polyline points="3 6 5 6 21 6"/>
           <path d="M19 6l-1 14H6L5 6"/>
           <path d="M10 11v6M14 11v6"/>
           <path d="M9 6V4h6v2"/>
         </svg>
-      </RemoveButton>
-    </ItemCard>
+      </button>
+    </div>
   );
 };
 
