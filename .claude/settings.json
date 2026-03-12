@@ -22,7 +22,11 @@
       "Bash(__NEW_LINE_d8176483dea38f3f__ git:*)",
       "Bash(__NEW_LINE_49b0e089c044f394__ git:*)",
       "Bash(__NEW_LINE_20ee99047120dbf5__ git:*)",
-      "Bash(__NEW_LINE_242cbce2b33e84dc__ git:*)"
+      "Bash(__NEW_LINE_242cbce2b33e84dc__ git:*)",
+      "Bash(git rm:*)",
+      "Bash(wc -l /home/work/vscode-ws/ecommerce-react/src/components/*/*.tsx)",
+      "Bash(sort -k2)",
+      "Bash(wc -l /home/work/vscode-ws/ecommerce-react/src/routes/*/*/*.tsx /home/work/vscode-ws/ecommerce-react/src/routes/*/*.tsx)"
     ],
     "additionalDirectories": [
       "/home/work/.claude/projects/-home-work-vscode-ws-ecommerce-react",
