@@ -16,17 +16,21 @@ const ProductDetailsInCart = ({
   handleDecreaseClick,
 }: Props) => {
   return (
-    <div className="flex items-center gap-4 p-4 bg-white border border-neutral-100 rounded-lg shadow-sm">
+    <div className="flex items-center gap-3 max-sm:gap-2.5 p-4 max-sm:p-3 bg-white border border-neutral-100 rounded-lg shadow-sm">
 
-      <img src={imgUrl} alt={name} className="w-20 h-20 object-cover rounded-md flex-shrink-0" />
+      <img src={imgUrl} alt={name} className="w-20 h-20 max-sm:w-14 max-sm:h-14 object-cover rounded-md flex-shrink-0" />
 
       <div className="flex-1 flex flex-col gap-1 min-w-0">
-        <p className="text-sm font-semibold text-neutral-800 m-0 whitespace-nowrap overflow-hidden text-ellipsis">
+        <p className="text-sm font-semibold text-neutral-800 m-0 line-clamp-2 leading-snug">
           {name}
         </p>
         <p className="text-xs text-neutral-500 m-0">R$ {price.toFixed(2)} cada</p>
 
-        <div className="flex items-center gap-2 mt-1">
+        <p className="text-base font-bold text-neutral-900 m-0 mt-1">
+          R$ {(price * quantity).toFixed(2)}
+        </p>
+
+        <div className="flex items-center gap-2">
           <button
             onClick={handleDecreaseClick}
             aria-label="Diminuir"
@@ -46,10 +50,6 @@ const ProductDetailsInCart = ({
           </button>
         </div>
       </div>
-
-      <p className="text-base font-bold text-neutral-900 min-w-[80px] text-right m-0 flex-shrink-0">
-        R$ {(price * quantity).toFixed(2)}
-      </p>
 
       <button
         onClick={handleDecreaseClick}

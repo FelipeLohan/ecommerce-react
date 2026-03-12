@@ -65,7 +65,7 @@ const Cart = () => {
           </div>
         </div>
       ) : (
-        <div className="grid gap-6 items-start [grid-template-columns:65fr_35fr] md:grid-cols-1">
+        <div className="grid grid-cols-1 gap-6 items-start md:[grid-template-columns:65fr_35fr]">
           {/* Items list */}
           <div className="flex flex-col gap-4">
             {cart.items.map((item) => (
@@ -85,7 +85,7 @@ const Cart = () => {
           </div>
 
           {/* Summary panel */}
-          <aside className="bg-neutral-50 border border-neutral-200 rounded-lg p-6 sticky top-20">
+          <aside className="bg-neutral-50 border border-neutral-200 rounded-lg p-6 md:sticky md:top-20">
             <h2 className="text-lg font-semibold text-neutral-900 m-0 mb-5">Resumo do pedido</h2>
 
             {cart.items.map((item) => (
