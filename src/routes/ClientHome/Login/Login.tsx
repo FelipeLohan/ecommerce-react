@@ -70,7 +70,7 @@ const Login = () => {
   }
 
   return (
-    <div className="grid [grid-template-columns:1fr_1fr] min-h-screen md:grid-cols-1">
+    <div className="grid grid-cols-1 min-h-screen md:[grid-template-columns:1fr_1fr]">
       {/* Left — brand */}
       <div
         className="flex flex-col items-center justify-center p-12 text-white max-md:hidden"
@@ -86,8 +86,8 @@ const Login = () => {
       </div>
 
       {/* Right — form */}
-      <div className="flex items-center justify-center px-6 py-12 bg-surface-page">
-        <div className="w-full max-w-[440px] bg-white rounded-xl shadow-xl p-12 sm:p-8">
+      <div className="flex items-center justify-center px-4 py-8 md:px-6 md:py-12 bg-surface-page">
+        <div className="w-full max-w-[440px] bg-white rounded-xl border border-neutral-200 shadow-lg p-6 sm:p-8 md:p-12">
           <p className="text-2xl font-bold text-primary-600 m-0 mb-2">Ecommerce</p>
           <p className="text-base text-neutral-500 m-0 mb-8">Faça login para continuar</p>
 
