@@ -15,7 +15,7 @@ const ProductDetailsCard = ({ product, onBuy, onBack }: Props) => {
   const [quantity, setQuantity] = useState(1);
 
   return (
-    <section className="max-w-[1100px] mx-auto my-10 md:my-6 max-sm:my-4 px-6 max-sm:px-4 grid grid-cols-2 gap-12 md:gap-6 max-sm:gap-4 items-start md:grid-cols-1">
+    <section className="max-w-[1100px] mx-auto my-10 md:my-6 max-sm:my-4 px-6 max-sm:px-4 grid grid-cols-1 gap-6 items-start md:grid-cols-2 md:gap-12">
       {/* Left — image */}
       <img
         src={product.imgUrl}
