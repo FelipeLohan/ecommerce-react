@@ -23,7 +23,7 @@ const ProductCatalogCard = ({ product }: Props) => {
           {product.name}
         </h4>
 
-        {product.categories?.length > 0 && (
+        {product.categories && product.categories.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {product.categories.map((cat) => (
               <CategoryCard key={cat.id} name={cat.name} />

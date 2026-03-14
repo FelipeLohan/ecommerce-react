@@ -33,7 +33,7 @@ const ProductDetailsCard = ({ product, onBuy, onBack }: Props) => {
           {product.name}
         </nav>
 
-        {product.categories?.length > 0 && (
+        {product.categories && product.categories.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {product.categories.map((cat) => (
               <CategoryCard key={cat.id} name={cat.name} />
