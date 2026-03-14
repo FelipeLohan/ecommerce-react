@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { PlusCircle, LayoutList } from "lucide-react";
+import { PlusCircle, LayoutList, Tags } from "lucide-react";
 import { UserDTO } from "../../../models/user";
 import * as userService from "../../../services/user-service.ts";
 
@@ -51,6 +51,19 @@ const AdminHome = () => {
           <div>
             <p className="text-sm font-semibold text-neutral-800 m-0">Gerenciar produtos</p>
             <p className="text-xs text-neutral-400 m-0 mt-0.5">Ver e editar produtos cadastrados</p>
+          </div>
+        </Link>
+
+        <Link
+          to="/admin/categories"
+          className="flex items-center gap-4 p-5 bg-white border border-neutral-200 rounded-lg shadow-sm no-underline transition-[box-shadow,border-color] duration-150 hover:shadow-md hover:border-primary-300 group"
+        >
+          <div className="w-10 h-10 rounded-lg bg-primary-50 flex items-center justify-center flex-shrink-0 transition-colors duration-150 group-hover:bg-primary-100">
+            <Tags size={20} className="text-primary-600" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-neutral-800 m-0">Gerenciar categorias</p>
+            <p className="text-xs text-neutral-400 m-0 mt-0.5">Ver, criar e editar categorias</p>
           </div>
         </Link>
       </div>
