@@ -20,6 +20,8 @@ import { ContextToken } from "./utils/context-token";
 import { Confirmation } from "./components/Confirnation/Confirmation.tsx";
 import { ProductListing } from "./routes/Admin/ProductListing/ProductListing.tsx";
 import { ProductForm } from "./routes/Admin/ProductForm/ProductForm.tsx";
+import { CategoryListing } from "./routes/Admin/CategoryListing";
+import { CategoryForm } from "./routes/Admin/CategoryForm";
 import { ToastProvider } from "./components/Toast";
 
 function App() {
@@ -85,6 +87,8 @@ function App() {
                 <Route path="home" element={<AdminHome />} />
                 <Route path="products" element={<ProductListing />} />
                 <Route path="products/:productId" element={<ProductForm />} />
+                <Route path="categories" element={<CategoryListing />} />
+                <Route path="categories/:categoryId" element={<CategoryForm />} />
               </Route>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
