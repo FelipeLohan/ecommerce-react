@@ -68,6 +68,11 @@ const ProductForm = () => {
       },
       message: "Escolha ao menos uma categoria",
     },
+    isFeatured: {
+      value: false,
+      id: "isFeatured",
+      name: "isFeatured",
+    },
   });
 
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
@@ -87,6 +92,10 @@ const ProductForm = () => {
         );
     }
   }, []);
+
+  function handleCheckboxChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFormData(forms.update(formData, e.target.name, e.target.checked));
+  }
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const result = forms.updateAndValidate(formData, e.target.name, e.target.value);
@@ -208,7 +217,26 @@ const ProductForm = () => {
               </div>
             </div>
 
-            {/* Section 3 — Categories */}
+            {/* Section 3 — Visibility */}
+            <div>
+              <p className={sectionLabel}>Visibilidade</p>
+              <label className="flex items-center gap-3 cursor-pointer w-fit">
+                <input
+                  type="checkbox"
+                  id="isFeatured"
+                  name="isFeatured"
+                  checked={formData.isFeatured.value}
+                  onChange={handleCheckboxChange}
+                  className="w-4 h-4 accent-primary-500"
+                />
+                <span className="text-sm font-medium text-neutral-700">Produto em destaque</span>
+              </label>
+              <p className="text-xs text-neutral-400 mt-1.5">
+                Produtos em destaque aparecem na seção especial da página inicial.
+              </p>
+            </div>
+
+          {/* Section 4 — Categories */}
             <div>
               <p className={sectionLabel}>Categorias</p>
               <div className="flex flex-col gap-1.5">
