@@ -51,6 +51,27 @@ const HeaderAdmin = () => {
             <span className="max-[800px]:hidden">Produtos</span>
           </NavLink>
 
+          <NavLink
+            to="/admin/categories"
+            className={({ isActive }) => navItem(isActive)}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
+            >
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+            <span className="max-[800px]:hidden">Categorias</span>
+          </NavLink>
+
           <LoggedUser />
         </nav>
       </div>
