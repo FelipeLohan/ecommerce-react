@@ -6,5 +6,6 @@ export type ProductDTO = {
   description: string;
   price: number;
   imgUrl: string;
+  isFeatured: boolean;
   categories: CategoryDTO[];
 };
