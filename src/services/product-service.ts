@@ -24,6 +24,10 @@ export function findPageRequest(
   return requestBackend(config);
 }
 
+export function findFeaturedRequest() {
+  return requestBackend({ url: "/products/featured" });
+}
+
 export function findById(id: number) {
   return requestBackend({ url: `/products/${id}` });
 }
