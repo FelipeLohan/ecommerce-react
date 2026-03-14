@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { ProductDTO } from "../../../models/product.ts";
 import { ArrowUpDown, Check, SearchX } from "lucide-react";
 import { HeroBanner } from "../../../components/HeroBanner";
+import { FeaturedProducts } from "../../../components/FeaturedProducts";
 import { cn } from "../../../lib/cn.ts";
 
 const SORT_OPTIONS = [
@@ -76,6 +77,8 @@ const Catalog = () => {
   return (
     <>
       <HeroBanner />
+
+      <FeaturedProducts />
 
       <div className="mt-8 w-[90%] mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
