@@ -1,49 +1,96 @@
-# Ecommerce
+# Ecommerce React
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/FelipeLohan/ecommerce-react/blob/main/LICENSE)
 
-# Sobre o projeto
+Aplicação de e-commerce full-featured desenvolvida com **React** e **TypeScript**, com foco em boas práticas de arquitetura frontend e integração com API REST.
 
-https://ecommerce-lohan.netlify.app/
+**Demo:** https://ecommerce-lohan.netlify.app/
 
-Este é um template de aplicação para Ecommerce, desenvolvido com o objetivo de consolidar minhas habilidades em **React** e **TypeScript**.
+## Funcionalidades
 
-A aplicação conta com diversos recursos essenciais para um ecommerce, incluindo:
-- **Sistema de login** com autenticação baseada em **Token JWT**.
-- **Carrinho de compras**, permitindo ao usuário adicionar, remover e modificar itens antes da finalização do pedido.
-- **Finalização de pedidos**, com um processo simples e intuitivo de checkout.
-- **Área administrativa**, acessível exclusivamente a usuários com o **role de ADMIN**, onde é possível cadastrar, atualizar e remover produtos no banco de dados.
+### Área do cliente
+- Catálogo de produtos com filtro por categoria e busca por nome
+- Página de detalhes do produto
+- Carrinho de compras — adicionar, remover e ajustar quantidades
+- Finalização de pedido com página de confirmação
+- Cadastro e login de usuários
+- Área "Minha Conta" para usuários autenticados
 
-Este projeto demonstra minha capacidade de implementar funcionalidades complexas e de gerenciar diferentes permissões de usuário em uma aplicação de ecommerce.
+### Área administrativa (ROLE_ADMIN)
+- Dashboard administrativo
+- CRUD completo de produtos (listagem, cadastro, edição, exclusão)
+- CRUD completo de categorias
 
-## Layout
+### Autenticação
+- OAuth2 com JWT armazenado em localStorage
+- Rotas protegidas por role (`ROLE_CLIENT`, `ROLE_ADMIN`)
+- Redirecionamento automático em respostas 401/403
 
-![Web 1](https://imgur.com/L5BdIdw.png)
+## Screenshots
 
-![Web 2](https://imgur.com/TYzS4Wy.png)
+![Catálogo](https://imgur.com/L5BdIdw.png)
 
-## Tecnologias utilizadas:
+![Carrinho](https://imgur.com/TYzS4Wy.png)
 
-### Back end:
-- Java
-- Spring Boot
+## Stack
+
+### Frontend
+- React 18 + TypeScript
+- Vite 6
+- Tailwind CSS v4
+- React Router DOM v6
+- Axios
+- jwt-decode
+
+### Backend
+- Java + Spring Boot
 - JPA / Hibernate
 - Maven
-  
-### Front end
-- HTML / CSS / JavaScript / TypeScript
-- ReactJS
-- Styled Components
-- Axios
-- React Router
+- MySQL
 
-### Implantação em produção:
-- Back end: Heroku
-- Front end web: Netlify
-- Banco de dados: MySQL
+### Deploy
+- Frontend: Netlify
+- Backend: Heroku
 
-# Autor
+## Como rodar localmente
 
-Felipe Lohan
+```bash
+# Instalar dependências
+npm install
+
+# Iniciar servidor de desenvolvimento
+npm run dev
+
+# Build para produção
+npm run build
+```
+
+### Variáveis de ambiente
+
+Crie um arquivo `.env` na raiz com:
+
+```env
+VITE_BACKEND_URL=https://ecommerce-spring-ec44b57ed84d.herokuapp.com
+VITE_CLIENT_ID=myclientid
+VITE_CLIENT_SECRET=myclientsecret
+```
+
+## Estrutura do projeto
+
+```
+src/
+├── components/       # Componentes reutilizáveis de UI
+├── routes/
+│   ├── ClientHome/   # Catálogo, Produto, Carrinho, Login, Cadastro, Conta
+│   └── Admin/        # Dashboard, Produtos, Categorias
+├── models/           # Interfaces e tipos TypeScript
+├── services/         # Chamadas à API (axios)
+├── utils/            # Contextos, helpers, configurações
+└── localstorage/     # Persistência de carrinho e token
+```
+
+## Autor
+
+**Felipe Lohan**
 
 https://www.linkedin.com/in/felipe-lohan-767294213/
