@@ -4,7 +4,7 @@
 
 Aplicação de e-commerce full-featured desenvolvida com **React** e **TypeScript**, com foco em boas práticas de arquitetura frontend e integração com API REST.
 
-**Demo:** https://ecommerce-lohan.netlify.app/
+**Demo:** https://ecommerce.felipelohan.com/
 
 ## Funcionalidades
 
@@ -26,12 +26,6 @@ Aplicação de e-commerce full-featured desenvolvida com **React** e **TypeScrip
 - Rotas protegidas por role (`ROLE_CLIENT`, `ROLE_ADMIN`)
 - Redirecionamento automático em respostas 401/403
 
-## Screenshots
-
-![Catálogo](https://imgur.com/L5BdIdw.png)
-
-![Carrinho](https://imgur.com/TYzS4Wy.png)
-
 ## Stack
 
 ### Frontend
@@ -47,6 +41,8 @@ Aplicação de e-commerce full-featured desenvolvida com **React** e **TypeScrip
 - JPA / Hibernate
 - Maven
 - MySQL
+
+Repositório: https://github.com/FelipeLohan/ecommerce-back
 
 ### Deploy
 - Frontend: Netlify
