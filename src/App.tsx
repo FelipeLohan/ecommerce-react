@@ -22,6 +22,7 @@ import { ProductListing } from "./routes/Admin/ProductListing/ProductListing.tsx
 import { ProductForm } from "./routes/Admin/ProductForm/ProductForm.tsx";
 import { CategoryListing } from "./routes/Admin/CategoryListing";
 import { CategoryForm } from "./routes/Admin/CategoryForm";
+import { OrderHistory } from "./routes/Admin/OrderHistory";
 import { ToastProvider } from "./components/Toast";
 
 function App() {
@@ -89,6 +90,7 @@ function App() {
                 <Route path="products/:productId" element={<ProductForm />} />
                 <Route path="categories" element={<CategoryListing />} />
                 <Route path="categories/:categoryId" element={<CategoryForm />} />
+                <Route path="orders" element={<OrderHistory />} />
               </Route>
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
