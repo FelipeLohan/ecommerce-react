@@ -1,11 +1,75 @@
+import { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import HomeIcon from "../../assets/HomeIcon.svg";
 import StockIcon from "../../assets/StockIcon.svg";
 import { LoggedUser } from "../LoggedUser";
-import { NavLink } from "react-router-dom";
 import { cn } from "../../lib/cn.ts";
 
+type NavItem = {
+  to: string;
+  label: string;
+  icon: React.ReactNode;
+};
+
+const navItems: NavItem[] = [
+  {
+    to: "/admin/home",
+    label: "Início",
+    icon: <img src={HomeIcon} alt="" className="w-5 h-5" />,
+  },
+  {
+    to: "/admin/products",
+    label: "Produtos",
+    icon: <img src={StockIcon} alt="" className="w-5 h-5" />,
+  },
+  {
+    to: "/admin/categories",
+    label: "Categorias",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+        <line x1="7" y1="7" x2="7.01" y2="7" />
+      </svg>
+    ),
+  },
+  {
+    to: "/admin/orders",
+    label: "Pedidos",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    ),
+  },
+];
+
 const HeaderAdmin = () => {
-  const navItem = (isActive: boolean) =>
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleOutsideClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    function handleEscape(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  const desktopNavItem = (isActive: boolean) =>
     cn(
       "flex items-center gap-2 text-sm font-medium no-underline pb-0.5 border-b-2 transition-[color,border-color] duration-[150ms]",
       isActive
@@ -13,8 +77,16 @@ const HeaderAdmin = () => {
         : "text-neutral-400 border-transparent hover:text-white"
     );
 
+  const mobileNavItem = (isActive: boolean) =>
+    cn(
+      "flex items-center gap-3 px-4 py-3 text-sm font-medium no-underline rounded-lg transition-[background-color,color] duration-[150ms]",
+      isActive
+        ? "bg-primary-600 text-white"
+        : "text-neutral-300 hover:bg-neutral-800 hover:text-white"
+    );
+
   return (
-    <header className="bg-neutral-900 mb-10">
+    <header className="bg-neutral-900 mb-10" ref={menuRef}>
       <div className="w-4/5 mx-auto h-[60px] flex items-center justify-between max-[800px]:w-[92%]">
 
         {/* Brand */}
@@ -25,80 +97,52 @@ const HeaderAdmin = () => {
           </span>
         </div>
 
-        {/* Nav */}
-        <nav className="flex gap-8 items-center">
-          <NavLink
-            to="/admin/home"
-            className={({ isActive }) => navItem(isActive)}
-          >
-            <img
-              src={HomeIcon}
-              alt=""
-              className="w-5 h-5 opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
-            />
-            <span className="max-[800px]:hidden">Início</span>
-          </NavLink>
-
-          <NavLink
-            to="/admin/products"
-            className={({ isActive }) => navItem(isActive)}
-          >
-            <img
-              src={StockIcon}
-              alt=""
-              className="w-5 h-5 opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
-            />
-            <span className="max-[800px]:hidden">Produtos</span>
-          </NavLink>
-
-          <NavLink
-            to="/admin/categories"
-            className={({ isActive }) => navItem(isActive)}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
-            >
-              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
-              <line x1="7" y1="7" x2="7.01" y2="7"/>
-            </svg>
-            <span className="max-[800px]:hidden">Categorias</span>
-          </NavLink>
-
-          <NavLink
-            to="/admin/orders"
-            className={({ isActive }) => navItem(isActive)}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100 max-[600px]:w-[18px] max-[600px]:h-[18px] max-[420px]:w-4 max-[420px]:h-4"
-            >
-              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-              <polyline points="14 2 14 8 20 8" />
-              <line x1="16" y1="13" x2="8" y2="13" />
-              <line x1="16" y1="17" x2="8" y2="17" />
-              <polyline points="10 9 9 9 8 9" />
-            </svg>
-            <span className="max-[800px]:hidden">Pedidos</span>
-          </NavLink>
-
+        {/* Desktop nav */}
+        <nav className="hidden md:flex gap-8 items-center">
+          {navItems.map(({ to, label, icon }) => (
+            <NavLink key={to} to={to} className={({ isActive }) => desktopNavItem(isActive)}>
+              <span className="opacity-60 transition-opacity duration-[150ms] [.active_&]:opacity-100">
+                {icon}
+              </span>
+              {label}
+            </NavLink>
+          ))}
           <LoggedUser />
         </nav>
+
+        {/* Mobile: LoggedUser + hamburger */}
+        <div className="flex items-center gap-3 md:hidden">
+          <LoggedUser />
+          <button
+            onClick={() => setMenuOpen((prev) => !prev)}
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            className="flex items-center justify-center w-9 h-9 rounded-md text-neutral-300 bg-transparent border-none cursor-pointer transition-colors duration-150 hover:bg-neutral-800 hover:text-white"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div
+          className="md:hidden border-t border-neutral-800 px-4 py-3 flex flex-col gap-1"
+          style={{ animation: "fade-slide-in 150ms ease" }}
+        >
+          {navItems.map(({ to, label, icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) => mobileNavItem(isActive)}
+            >
+              <span className="opacity-70 [.active_&]:opacity-100">{icon}</span>
+              {label}
+            </NavLink>
+          ))}
+        </div>
+      )}
     </header>
   );
 };
