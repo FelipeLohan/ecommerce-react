@@ -45,7 +45,7 @@ const Login = () => {
     authService
       .loginRequest(forms.toValues(formData))
       .then((response) => {
-        authService.saveAccessToken(response.data.access_token);
+        authService.saveAccessToken(response.data.access_token, response.data.expires_in);
         setContextTokenPayload(authService.getAccessTokenPayload());
         setSubmitResponseFail(false);
         navigate("/cart");

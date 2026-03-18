@@ -31,8 +31,8 @@ export function logout() {
   accessTokenRepository.remove();
 }
 
-export function saveAccessToken(token: string) {
-  accessTokenRepository.save(token);
+export function saveAccessToken(token: string, expiresIn?: number) {
+  accessTokenRepository.save(token, expiresIn);
 }
 
 export function getAccessToken() {
